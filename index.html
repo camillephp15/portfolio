@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camille Philippe — Portfolio Ingénieure Cyber & IA</title>
+  
+  <!-- Google Fonts: Space Mono (Titres/Accents) & Space Grotesk (Textes) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandBg: '#fae7e4',
+            brandCard: '#f4d8d4',
+            brandCardAlt: '#edd0cb',
+            brandDark: '#1a1f42',
+            brandBlue: '#1e265c',
+            brandAccent: '#2b3990',
+            brandHighlight: '#3730a3',
+            brandLine: '#dfc0bb',
+          },
+          fontFamily: {
+            mono: ['"Space Mono"', 'monospace'],
+            sans: ['"Space Grotesk"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Application des polices selon la DA choisie */
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: #fae7e4;
+      color: #1a1f42;
+    }
+
+    h1, h2, h3, h4, .font-mono-custom, .nav-item, .tech-badge, button {
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* Effets de carte et transitions soignées */
+    .card-hover {
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 28px -10px rgba(26, 31, 66, 0.18);
+    }
+
+    /* Animation subtile pour la flèche Canva */
+    @keyframes nudgeDown {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+    .animate-arrow {
+      display: inline-block;
+      animation: nudgeDown 1.6s ease-in-out infinite;
+    }
+
+    /* Styles dédiés aux carrousels d'images */
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4/3;
+      border-radius: 1rem;
+      overflow: hidden;
+      background-color: #edd0cb;
+      border: 1px solid #dfc0bb;
+    }
+    .carousel-slides {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.4s ease-in-out;
+    }
+    .carousel-slide {
+      min-width: 100%;
+      height: 100%;
+    }
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(26, 31, 66, 0.75);
+      color: #ffffff;
+      border: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .carousel-btn:hover {
+      background: #1a1f42;
+      transform: translateY(-50%) scale(1.1);
+    }
+    .carousel-btn.prev { left: 10px; }
+    .carousel-btn.next { right: 10px; }
+    .carousel-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .carousel-dot.active {
+      background: #ffffff;
+      transform: scale(1.25);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col bg-brandBg text-brandDark selection:bg-brandBlue selection:text-white">
+
+  <header class="sticky top-0 z-50 bg-brandBg/90 backdrop-blur-md border-b border-brandLine/70">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Logo / Monogramme -->
+      <a href="#accueil" onclick="showView('accueil')" class="text-xl font-bold tracking-wider uppercase font-mono-custom flex items-center gap-2 group">
+        <span class="w-8 h-8 rounded-lg bg-brandDark text-brandBg flex items-center justify-center text-sm font-bold shadow-sm transition-transform group-hover:scale-105">CP</span>
+        <span>Camille Philippe</span>
+      </a>
+
+      <!-- Menu Principal -->
+      <nav class="flex items-center gap-2 sm:gap-6 font-mono-custom text-xs sm:text-sm tracking-wider font-semibold uppercase">
+        <button onclick="showView('accueil')" id="nav-accueil" class="nav-item px-3 py-1.5 rounded-lg border-b-2 border-brandDark text-brandDark transition-all">
+          Accueil
+        </button>
+        <button onclick="showView('projets')" id="nav-projets" class="nav-item px-3 py-1.5 rounded-lg border-b-2 border-transparent text-brandDark/70 hover:text-brandDark transition-all">
+          Projets
+        </button>
+        <button onclick="scrollToProfile()" id="nav-profil" class="nav-item px-3 py-1.5 rounded-lg border-b-2 border-transparent text-brandDark/70 hover:text-brandDark transition-all">
+          Profil
+        </button>
+        <button onclick="showView('contact')" id="nav-contact" class="nav-item px-3 py-1.5 rounded-lg border-b-2 border-transparent text-brandDark/70 hover:text-brandDark transition-all">
+          Contact
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- CONTENEUR PRINCIPAL -->
+  <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
+
+    <!-- ========================================================= -->
+    <!-- VUE 1 : ACCUEIL & PROFIL (Page d'accueil selon ta maquette) -->
+    <!-- ========================================================= -->
+    <div id="view-accueil" class="space-y-24 transition-opacity duration-300">
+      
+      <section id="accueil" class="pt-6 sm:pt-12 pb-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        
+        <!-- Bloc Gauche : Texte & Bouton (Fidèle à ta maquette) -->
+        <div class="lg:col-span-7 space-y-7">
+          <div class="space-y-4">
+            <h1 class="text-3xl sm:text-5xl lg:text-5xl font-extrabold tracking-tight font-mono-custom uppercase text-brandDark leading-tight">
+              Bienvenue sur mon portfolio !
+            </h1>
+          </div>
+
+          <p class="text-base sm:text-lg text-brandDark/90 leading-relaxed max-w-xl font-medium">
+            Je suis <strong class="font-bold text-brandBlue">Camille</strong>, étudiante en deuxième année de 
+            <span class="font-bold text-brandBlue">prépa intégrée</span> à l’école d’ingénieur Léonard de Vinci (<span class="font-bold text-brandBlue">ESILV</span>). 
+            Je suis passionnée par <span class="font-bold text-brandBlue">l’informatique</span>, et je suivrai l’année prochaine une spécialisation en 
+            <span class="font-bold text-brandBlue">cybersécurité et IA</span>.
+          </p>
+
+          <!-- Bouton CTA principal -->
+          <div class="pt-2 flex flex-wrap items-center gap-4">
+            <a href="#cv" onclick="telechargerCV()" class="inline-flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl bg-brandDark text-brandBg font-mono-custom font-bold text-sm tracking-wide uppercase transition-all duration-200 hover:bg-brandBlue hover:shadow-lg active:scale-95 group">
+              <svg class="w-4 h-4 transition-transform group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+              </svg>
+              <span>Téléchargez mon CV !</span>
+            </a>
+            
+            <button onclick="scrollToProfile()" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl border-2 border-brandDark font-mono-custom font-semibold text-sm tracking-wide uppercase text-brandDark hover:bg-brandDark/5 transition-all">
+              <span>Voir mon profil</span>
+              <span>↓</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bloc Droit : Vitrine Projet Interactive avec animation au survol -->
+        <div class="lg:col-span-5 flex flex-col items-start lg:items-center">
+          
+          <!-- Titre au-dessus avec flèche stylisée -->
+          <div class="mb-3 flex items-center gap-2 text-brandDark font-mono-custom text-sm font-bold uppercase tracking-wider">
+            <span>Découvrir mes projets</span>
+            <span class="text-xl animate-arrow">⤵</span>
+          </div>
+
+          <!-- Carte visuelle interactive cliquable menant vers l'onglet projets -->
+          <div onclick="showView('projets')" class="card-hover w-full max-w-sm rounded-3xl overflow-hidden cursor-pointer border-2 border-brandDark/20 bg-brandCard shadow-md relative group">
+            
+            <!-- Aperçu d'un projet tech (SVG illustratif stylisé et soigné) -->
+            <div class="h-64 sm:h-72 w-full bg-gradient-to-br from-indigo-900 via-brandBlue to-slate-900 p-6 flex flex-col justify-between relative overflow-hidden">
+              
+              <!-- Effet de grille cyber en fond -->
+              <div class="absolute inset-0 opacity-15" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 16px 16px;"></div>
+              
+              <!-- Badge en haut -->
+              <div class="relative z-10 flex justify-between items-center">
+                <span class="px-2.5 py-1 rounded-md bg-white/10 backdrop-blur-md text-white font-mono-custom text-xs font-semibold uppercase tracking-wider border border-white/20">
+                  Projet Phare
+                </span>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              </div>
+
+              <!-- Terminal / Aperçu stylisé du site d'organisation -->
+              <div class="relative z-10 space-y-2 p-3 rounded-xl bg-black/40 backdrop-blur-sm border border-white/10 font-mono-custom text-xs text-white/90 transform transition-transform duration-300 group-hover:scale-105">
+                <div class="flex items-center gap-1.5 pb-1 border-b border-white/10 text-white/50 text-[10px]">
+                  <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                  <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <span class="ml-2">app-orga.js</span>
+                </div>
+                <p class="text-emerald-300 font-bold">$ init StudyPlanner()</p>
+                <p class="text-white/70">✓ Modules chargés : 3/3</p>
+                <p class="text-indigo-200">→ Déploiement : GitHub Pages</p>
+              </div>
+
+              <!-- Action au survol (Hover Overlay) -->
+              <div class="relative z-10 flex items-center justify-between text-white font-mono-custom text-xs font-bold pt-2">
+                <span class="group-hover:translate-x-1 transition-transform">Explorer les 3 réalisations</span>
+                <span class="text-base group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </div>
+
+            <!-- Légende sous la carte -->
+            <div class="p-4 bg-brandCard flex items-center justify-between">
+              <div>
+                <p class="font-mono-custom text-xs uppercase font-bold text-brandDark">Site d'orga • Échelle PIX • Pong</p>
+                <p class="text-xs text-brandDark/70">Cliquez pour voir les études de cas</p>
+              </div>
+              <span class="text-xs font-mono-custom font-bold px-2 py-1 rounded bg-brandDark text-brandBg">3 projets</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <section id="profil-section" class="pt-8 border-t border-brandLine space-y-12">
+        
+        <div class="max-w-2xl space-y-3">
+          <span class="text-xs font-mono-custom uppercase tracking-widest font-bold text-brandAccent">01 / Profil & Parcours</span>
+          <h2 class="text-2xl sm:text-4xl font-bold font-mono-custom uppercase text-brandDark">
+            Mon Parcours & Compétences
+          </h2>
+          <p class="text-brandDark/80 text-sm sm:text-base">
+            De la modélisation rigoureuse en prépa intégrée jusqu'au développement de solutions concrètes, découvrez mon profil académique et technique.
+          </p>
+        </div>
+
+        <!-- Grille Parcours / Formations -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <div class="p-6 rounded-2xl bg-brandCard border border-brandLine/60 space-y-3 card-hover">
+            <span class="text-xs font-mono-custom font-bold text-brandAccent">2024 — Présent</span>
+            <h3 class="font-bold text-lg font-mono-custom text-brandDark">Prépa Intégrée (2e année)</h3>
+            <p class="text-xs font-semibold text-brandDark/70 font-mono-custom">ESILV — École Supérieure d'Ingénieurs Léonard de Vinci</p>
+            <p class="text-sm text-brandDark/80">
+              Sciences de l'ingénieur, algorithmique avancée, mathématiques appliquées et projets pluridisciplinaires en équipe.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-brandCard border border-brandLine/60 space-y-3 card-hover">
+            <span class="text-xs font-mono-custom font-bold text-brandAccent">Orientation 2027</span>
+            <h3 class="font-bold text-lg font-mono-custom text-brandDark">Spécialisation Cyber & IA</h3>
+            <p class="text-xs font-semibold text-brandDark/70 font-mono-custom">Cycle Ingénieur (Majeure visée)</p>
+            <p class="text-sm text-brandDark/80">
+              Sécurité des systèmes informatiques, cryptographie, apprentissage automatique et protection des infrastructures.
+            </p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-brandCard border border-brandLine/60 space-y-3 card-hover">
+            <span class="text-xs font-mono-custom font-bold text-brandAccent">Formation continue</span>
+            <h3 class="font-bold text-lg font-mono-custom text-brandDark">CS50x — Harvard University</h3>
+            <p class="text-xs font-semibold text-brandDark/70 font-mono-custom">Introduction to Computer Science</p>
+            <p class="text-sm text-brandDark/80">
+              Fondements informatiques : gestion de mémoire (C), structures de données, programmation système et web.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Grille des compétences techniques organisées -->
+        <div class="space-y-6">
+          <h3 class="text-xl font-bold font-mono-custom uppercase text-brandDark">Boîte à outils & Compétences</h3>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            
+            <!-- Dev & Web -->
+            <div class="p-5 rounded-2xl bg-brandCard/90 border border-brandLine/60 space-y-3">
+              <h4 class="font-mono-custom text-xs font-bold uppercase tracking-wider text-brandAccent">Programmation</h4>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 rounded-lg bg-brandDark text-brandBg font-mono-custom text-xs font-semibold">Python</span>
+                <span class="px-2.5 py-1 rounded-lg bg-brandDark text-brandBg font-mono-custom text-xs font-semibold">C#</span>
+                <span class="px-2.5 py-1 rounded-lg bg-brandDark text-brandBg font-mono-custom text-xs font-semibold">HTML5 / CSS3</span>
+                <span class="px-2.5 py-1 rounded-lg bg-brandDark text-brandBg font-mono-custom text-xs font-semibold">SQL</span>
+              </div>
+            </div>
+
+            <!-- Systèmes & Outils -->
+            <div class="p-5 rounded-2xl bg-brandCard/90 border border-brandLine/60 space-y-3">
+              <h4 class="font-mono-custom text-xs font-bold uppercase tracking-wider text-brandAccent">Outils</h4>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2.5 py-1 rounded-lg bg-brandDark text-brandBg font-mono-custom text-xs font-semibold">Git & GitHub</span>
+                <span class="px-2.5 py-1 rounded-lg bg-brandDark text-brandBg font-mono-custom text-xs font-semibold">Linux (Bash)</span>
+                <span class="px-2.5 py-1 rounded-lg bg-brandDark text-brandBg font-mono-custom text-xs font-semibold">SolidWorks 3D</span>
+                <span class="px-2.5 py-1 rounded-lg bg-brandDark text-brandBg font-mono-custom text-xs font-semibold">VS Code</span>
+              </div>
+            </div>
+
+            <!-- Langues -->
+            <div class="p-5 rounded-2xl bg-brandCard/90 border border-brandLine/60 space-y-3">
+              <h4 class="font-mono-custom text-xs font-bold uppercase tracking-wider text-brandAccent">Langues</h4>
+              <div class="space-y-1.5 text-xs font-mono-custom">
+                <p><strong class="font-bold text-brandDark">Anglais :</strong> Niveau B2 (TOEFEL en préparation)</p>
+                <p><strong class="font-bold text-brandDark">Espagnol :</strong> Niveau B1</p>
+              </div>
+            </div>
+
+            <!-- Soft skills / Rigueur -->
+            <div class="p-5 rounded-2xl bg-brandCard/90 border border-brandLine/60 space-y-3">
+              <h4 class="font-mono-custom text-xs font-bold uppercase tracking-wider text-brandAccent">Atouts & Méthode</h4>
+              <div class="flex flex-wrap gap-1.5 text-xs">
+                <span class="px-2.5 py-1 rounded-lg bg-brandBg border border-brandLine font-mono-custom font-semibold">Ecoute</span>
+                <span class="px-2.5 py-1 rounded-lg bg-brandBg border border-brandLine font-mono-custom font-semibold">Curiosité </span>
+                <span class="px-2.5 py-1 rounded-lg bg-brandBg border border-brandLine font-mono-custom font-semibold">Esprit d'équipe</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- VUE 2 : PROJETS & ENGAGEMENTS ASSOCIATIFS (NOUVELLE VERSION) -->
+    <!-- ========================================================= -->
+    <div id="view-projets" class="hidden space-y-16 transition-opacity duration-300">
+      
+      <div class="max-w-3xl space-y-3">
+        <span class="text-xs font-mono-custom uppercase tracking-widest font-bold text-brandAccent">02 / Réalisations & Engagements</span>
+        <h2 class="text-3xl sm:text-5xl font-bold font-mono-custom uppercase text-brandDark">
+          Mes Projets & Engagements
+        </h2>
+        <p class="text-brandDark/80 text-sm sm:text-base leading-relaxed">
+          Trois projets concrets mettant en valeur mon autonomie en développement web, ma capacité de travail en équipe sur un défi d'ingénierie mécanique, et mes bases solides en algorithmique.
+        </p>
+      </div>
+
+      <div class="space-y-12">
+
+        <!-- PROJET 1 : SITE D'ORGANISATION (Web App) -->
+        <article class="p-6 sm:p-8 rounded-3xl bg-brandCard border border-brandLine/70 card-hover space-y-6">
+          <div class="flex flex-wrap items-start justify-between gap-4 border-b border-brandLine/50 pb-4">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-mono-custom font-bold px-2.5 py-0.5 rounded bg-brandDark text-brandBg">AOÛT 2026</span>
+                <span class="text-xs font-mono-custom text-brandAccent font-bold">APPLICATION WEB PERSONNELLE</span>
+              </div>
+              <h3 class="text-xl sm:text-2xl font-bold font-mono-custom text-brandDark">
+                Site d'Organisation &amp; Gestion de Cours
+              </h3>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Antigravity</span>
+              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">HTML5 / CSS3</span>
+              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">JavaScript</span>
+              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Git / GitHub Pages</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <!-- Carrousel d'images Projet 1 -->
+            <div class="lg:col-span-5">
+              <div class="carousel-container" id="carousel-1">
+                <div class="carousel-slides">
+                  <div class="carousel-slide">
+                    <img src="assets/orga-1.jpg" onerror="this.src='https://placehold.co/800x600/fae7e4/151d65?text=Site+Orga+Vue+1'" alt="Site d'organisation capture 1">
+                  </div>
+                  <div class="carousel-slide">
+                    <img src="assets/orga-2.jpg" onerror="this.src='https://placehold.co/800x600/fae7e4/151d65?text=Site+Orga+Vue+2'" alt="Site d'organisation capture 2">
+                  </div>
+                  <div class="carousel-slide">
+                    <img src="assets/orga-3.jpg" onerror="this.src='https://placehold.co/800x600/fae7e4/151d65?text=Site+Orga+Vue+3'" alt="Site d'organisation capture 3">
+                  </div>
+                </div>
+                <button class="carousel-btn prev" onclick="moveSlide('carousel-1', -1)">‹</button>
+                <button class="carousel-btn next" onclick="moveSlide('carousel-1', 1)">›</button>
+                <div class="carousel-dots">
+                  <span class="carousel-dot active" onclick="goToSlide('carousel-1', 0)"></span>
+                  <span class="carousel-dot" onclick="goToSlide('carousel-1', 1)"></span>
+                  <span class="carousel-dot" onclick="goToSlide('carousel-1', 2)"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Description & Retours Projet 1 -->
+            <div class="lg:col-span-7 space-y-4 text-sm">
+              <p class="text-brandDark/85 leading-relaxed">
+                Conception et déploiement d'une application web sur-mesure répondant à mes besoins quotidiens d'organisation étudiante. Le projet a été modélisé et architecturé de bout en bout grâce à <strong>Antigravity</strong>, en formulant des prompts itératifs précis pour générer une interface fluide, responsive et modulaire, adaptée à la planification de mes cours et de mes révisions.
+              </p>
+
+              <div class="p-4 rounded-xl bg-brandBg border-l-4 border-brandDark space-y-1">
+                <h4 class="font-mono-custom font-bold uppercase text-xs text-brandAccent">Ce que j'en retire</h4>
+                <p class="text-brandDark/85 leading-relaxed">
+                  Maîtrise de l'ingénierie de prompt appliquée au code, intégration d'outils d'IA pour accélérer le prototypage fonctionnel, gestion de versions sous Git et déploiement automatisé sur GitHub Pages.
+                </p>
+              </div>
+
+              <div class="pt-2 flex flex-wrap items-center gap-4">
+                <a href="https://camillephp15.github.io/mon-site-orga/" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brandDark text-brandBg text-xs font-mono-custom font-bold uppercase hover:bg-brandBlue transition-all">
+                  <span>Voir la Démo ↗</span>
+                </a>
+                <a href="https://github.com/camillephp15/mon-site-orga" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-brandDark text-brandDark text-xs font-mono-custom font-bold uppercase hover:bg-brandDark/5 transition-all">
+                  <span>Code GitHub ↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJET 2 : ÉCHELLE DE POMPIER (Projet PIX ESILV) -->
+        <article class="p-6 sm:p-8 rounded-3xl bg-brandCard border border-brandLine/70 card-hover space-y-6">
+          <div class="flex flex-wrap items-start justify-between gap-4 border-b border-brandLine/50 pb-4">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-mono-custom font-bold px-2.5 py-0.5 rounded bg-brandDark text-brandBg">2026</span>
+                <span class="text-xs font-mono-custom text-brandAccent font-bold">PROJET D'INGÉNIERIE PIX (ESILV)</span>
+              </div>
+              <h3 class="text-xl sm:text-2xl font-bold font-mono-custom text-brandDark">
+                Échelle de Pompier à Déploiement Manuel
+              </h3>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">SolidWorks</span>
+              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Ingénierie Mécanique</span>
+              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Gestion d'Équipe</span>
+              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Prototypage</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <!-- Carrousel d'images Projet 2 -->
+            <div class="lg:col-span-5">
+              <div class="carousel-container" id="carousel-2">
+                <div class="carousel-slides">
+                  <div class="carousel-slide">
+                    <img src="assets/pix-1.jpg" onerror="this.src='https://placehold.co/800x600/fae7e4/151d65?text=Échelle+PIX+Vue+3D'" alt="Modélisation 3D échelle pompier">
+                  </div>
+                  <div class="carousel-slide">
+                    <img src="assets/pix-2.jpg" onerror="this.src='https://placehold.co/800x600/fae7e4/151d65?text=Échelle+PIX+Prototype'" alt="Prototype échelle pompier">
+                  </div>
+                  <div class="carousel-slide">
+                    <img src="assets/pix-3.jpg" onerror="this.src='https://placehold.co/800x600/fae7e4/151d65?text=Échelle+PIX+Équipe'" alt="Travail d'équipe PIX">
+                  </div>
+                </div>
+                <button class="carousel-btn prev" onclick="moveSlide('carousel-2', -1)">‹</button>
+                <button class="carousel-btn next" onclick="moveSlide('carousel-2', 1)">›</button>
+                <div class="carousel-dots">
+                  <span class="carousel-dot active" onclick="goToSlide('carousel-2', 0)"></span>
+                  <span class="carousel-dot" onclick="goToSlide('carousel-2', 1)"></span>
+                  <span class="carousel-dot" onclick="goToSlide('carousel-2', 2)"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Description & Retours Projet 2 -->
+            <div class="lg:col-span-7 space-y-4 text-sm">
+              <p class="text-brandDark/85 leading-relaxed">
+                Projet d'ingénierie collaborative mené au sein d'une équipe de 5 étudiants. De l'étude du cahier des charges fonctionnel jusqu'à la fabrication du prototype physique, nous avons imaginé, dimensionné et modélisé en 3D un mécanisme d'échelle télescopique à élongation manuelle.
+              </p>
+
+              <div class="p-4 rounded-xl bg-brandBg border-l-4 border-brandDark space-y-1">
+                <h4 class="font-mono-custom font-bold uppercase text-xs text-brandAccent">Ce que j'en retire</h4>
+                <p class="text-brandDark/85 leading-relaxed">
+                  Gestion de projet en équipe pluridisciplinaire, modélisation volumique sous contraintes mécaniques sur SolidWorks, prototypage rapide et validation expérimentale des tolérances.
+                </p>
+              </div>
+
+              <div class="pt-2 flex items-center gap-3 text-xs font-mono-custom font-bold text-brandDark/80">
+                <span class="px-3 py-1.5 rounded-lg bg-brandBg border border-brandLine">Projet PIX validé avec succès</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- PROJET 3 : PONG PYTHON -->
+        <article class="p-6 sm:p-8 rounded-3xl bg-brandCard border border-brandLine/70 card-hover space-y-6">
+          <div class="flex flex-wrap items-start justify-between gap-4 border-b border-brandLine/50 pb-4">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-mono-custom font-bold px-2.5 py-0.5 rounded bg-brandDark text-brandBg">JUIN 2025</span>
+                <span class="text-xs font-mono-custom text-brandAccent font-bold">PROJET INFORMATIQUE TERMINALE</span>
+              </div>
+              <h3 class="text-xl sm:text-2xl font-bold font-mono-custom text-brandDark">
+                Jeu de Pong Graphique Solo
+              </h3>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Python</span>
+              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Algorithmique</span>
+              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Game Loop</span>
+              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Physique des collisions</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <!-- Carrousel d'images Projet 3 -->
+            <div class="lg:col-span-5">
+              <div class="carousel-container" id="carousel-3">
+                <div class="carousel-slides">
+                  <div class="carousel-slide">
+                    <img src="assets/pong-1.jpg" onerror="this.src='https://placehold.co/800x600/fae7e4/151d65?text=Pong+Python+Jeu'" alt="Pong Python en cours">
+                  </div>
+                  <div class="carousel-slide">
+                    <img src="assets/pong-2.jpg" onerror="this.src='https://placehold.co/800x600/fae7e4/151d65?text=Pong+Python+Code'" alt="Extrait de code Pong">
+                  </div>
+                </div>
+                <button class="carousel-btn prev" onclick="moveSlide('carousel-3', -1)">‹</button>
+                <button class="carousel-btn next" onclick="moveSlide('carousel-3', 1)">›</button>
+                <div class="carousel-dots">
+                  <span class="carousel-dot active" onclick="goToSlide('carousel-3', 0)"></span>
+                  <span class="carousel-dot" onclick="goToSlide('carousel-3', 1)"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Description & Retours Projet 3 -->
+            <div class="lg:col-span-7 space-y-4 text-sm">
+              <p class="text-brandDark/85 leading-relaxed">
+                Développement d'un jeu d'arcade type Pong à un joueur avec interface graphique en Python. Implémentation de la boucle principale du moteur de jeu (<em>game loop</em>), de la détection de trajectoires et de collisions élastiques avec rebonds vectoriels, de la gestion du score et des conditions d'accélération progressive de la balle.
+              </p>
+
+              <div class="p-4 rounded-xl bg-brandBg border-l-4 border-brandDark space-y-1">
+                <h4 class="font-mono-custom font-bold uppercase text-xs text-brandAccent">Ce que j'en retire</h4>
+                <p class="text-brandDark/85 leading-relaxed">
+                  Consolidation des fondations algorithmiques, découpage modulaire du code, gestion d'événements clavier en temps réel et rendu graphique.
+                </p>
+              </div>
+
+              <div class="pt-2 flex items-center gap-3 text-xs font-mono-custom font-bold text-brandDark/80">
+                <span class="px-3 py-1.5 rounded-lg bg-brandBg border border-brandLine">Projet fondateur de mon orientation tech</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- SECTION ENGAGEMENTS & ÉGALITÉ DES CHANCES -->
+      <section class="pt-8 border-t border-brandLine space-y-8">
+        
+        <div class="space-y-2">
+          <span class="text-xs font-mono-custom uppercase tracking-widest font-bold text-brandAccent">Au-delà du code</span>
+          <h3 class="text-2xl sm:text-3xl font-bold font-mono-custom uppercase text-brandDark">
+            Engagements &amp; Égalité des Chances
+          </h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Association Elles Bougent -->
+          <div class="p-6 sm:p-7 rounded-3xl bg-brandCard border-2 border-brandDark/20 space-y-4 card-hover">
+            <div class="flex items-center justify-between">
+              <span class="px-3 py-1 rounded-lg bg-rose-500/10 text-rose-800 border border-rose-300 font-mono-custom text-xs font-bold uppercase">
+                Association Nationale
+              </span>
+              <span class="font-mono-custom text-xs font-bold text-brandDark/60">Engagement actif</span>
+            </div>
+            
+            <h4 class="text-xl font-bold font-mono-custom text-brandDark">Elles bougent</h4>
+            
+            <p class="text-sm text-brandDark/85 leading-relaxed">
+              Engagée en tant que <strong>marraine étudiante</strong> pour promouvoir la place des femmes dans les carrières scientifiques, numériques et technologiques. Témoignages et animations auprès de collégiennes et lycéennes pour déconstruire les stéréotypes de genre et susciter des vocations d'ingénieures.
+            </p>
+            
+            <div class="pt-2 flex items-center gap-2 text-xs font-mono-custom font-bold text-brandBlue">
+              <span>● Pédagogie</span>
+              <span>● Prise de parole</span>
+              <span>● Mixité scientifique</span>
+            </div>
+          </div>
+
+          <!-- La Cordée Mona Lisa -->
+          <div class="p-6 sm:p-7 rounded-3xl bg-brandCard border border-brandLine/70 space-y-4 card-hover">
+            <div class="flex items-center justify-between">
+              <span class="px-3 py-1 rounded-lg bg-brandBg text-brandDark border border-brandLine font-mono-custom text-xs font-bold uppercase">
+                Égalité des chances
+              </span>
+              <span class="font-mono-custom text-xs font-bold text-brandDark/60">Pôle Léonard de Vinci</span>
+            </div>
+            
+            <h4 class="text-xl font-bold font-mono-custom text-brandDark">La Cordée Mona Lisa</h4>
+            
+            <p class="text-sm text-brandDark/85 leading-relaxed">
+              Implication dans le dispositif des <em>Cordées de la réussite</em> porté par le Pôle Léonard de Vinci. Accompagnement, tutorat et ateliers pédagogiques auprès d'élèves de collèges et lycées partenaires pour lutter contre l'autocensure, préparer leur orientation vers l'enseignement supérieur et leur donner confiance dans les filières d'avenir.
+            </p>
+            
+            <div class="pt-2 flex items-center gap-2 text-xs font-mono-custom font-bold text-brandBlue">
+              <span>● Tutorat</span>
+              <span>● Transmission</span>
+              <span>● Égalité des chances</span>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- VUE 3 : CONTACT (Formulaire & Coordonnées directes)       -->
+    <!-- ========================================================= -->
+    <div id="view-contact" class="hidden space-y-12 transition-opacity duration-300">
+      
+      <div class="max-w-2xl space-y-3">
+        <span class="text-xs font-mono-custom uppercase tracking-widest font-bold text-brandAccent">03 / Prise de contact</span>
+        <h2 class="text-3xl sm:text-5xl font-bold font-mono-custom uppercase text-brandDark">
+          Me Contacter
+        </h2>
+        <p class="text-brandDark/80 text-sm sm:text-base leading-relaxed">
+          À la recherche d'une alternance ou d'un stage pour mon cycle ingénieur en Cybersécurité & IA, ou envie d'échanger sur un projet ? N'hésitez pas à m'écrire !
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Coordonnées directes (Gauche) -->
+        <div class="lg:col-span-5 space-y-5">
+          
+          <div class="p-6 rounded-3xl bg-brandCard border border-brandLine/80 space-y-6">
+            <h3 class="font-mono-custom font-bold text-lg uppercase text-brandDark">Coordonnées</h3>
+            
+            <div class="space-y-4 text-sm">
+              
+              <!-- Email -->
+              <a href="mailto:camille.philippe34@gmail.com" class="flex items-center gap-4 p-3 rounded-2xl bg-brandBg border border-brandLine/60 hover:border-brandDark transition-all group">
+                <div class="w-10 h-10 rounded-xl bg-brandDark text-brandBg flex items-center justify-center font-bold text-base group-hover:scale-105 transition-transform">
+                  ✉
+                </div>
+                <div>
+                  <p class="text-xs font-mono-custom font-bold text-brandDark/60 uppercase">Email direct</p>
+                  <p class="font-semibold text-brandDark">camille.philippe34@gmail.com</p>
+                </div>
+              </a>
+
+              <!-- LinkedIn -->
+              <a href="https://linkedin.com" target="_blank" class="flex items-center gap-4 p-3 rounded-2xl bg-brandBg border border-brandLine/60 hover:border-brandDark transition-all group">
+                <div class="w-10 h-10 rounded-xl bg-brandDark text-brandBg flex items-center justify-center font-bold text-sm group-hover:scale-105 transition-transform">
+                  in
+                </div>
+                <div>
+                  <p class="text-xs font-mono-custom font-bold text-brandDark/60 uppercase">LinkedIn</p>
+                  <p class="font-semibold text-brandDark">Camille Philippe</p>
+                </div>
+              </a>
+
+              <!-- GitHub -->
+              <a href="https://github.com/camillephp15" target="_blank" class="flex items-center gap-4 p-3 rounded-2xl bg-brandBg border border-brandLine/60 hover:border-brandDark transition-all group">
+                <div class="w-10 h-10 rounded-xl bg-brandDark text-brandBg flex items-center justify-center font-bold text-sm group-hover:scale-105 transition-transform">
+                  GH
+                </div>
+                <div>
+                  <p class="text-xs font-mono-custom font-bold text-brandDark/60 uppercase">GitHub</p>
+                  <p class="font-semibold text-brandDark">github.com/camillephp15</p>
+                </div>
+              </a>
+
+              <!-- Localisation -->
+              <div class="flex items-center gap-4 p-3 rounded-2xl bg-brandBg/60 border border-brandLine/40">
+                <div class="w-10 h-10 rounded-xl bg-brandDark/20 text-brandDark flex items-center justify-center font-bold text-sm">
+                  📍
+                </div>
+                <div>
+                  <p class="text-xs font-mono-custom font-bold text-brandDark/60 uppercase">Localisation</p>
+                  <p class="font-semibold text-brandDark">Paris La Défense (ESILV) • Île-de-France</p>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Télécharger le CV direct -->
+            <button onclick="telechargerCV()" class="w-full py-3.5 px-4 rounded-xl bg-brandDark text-brandBg font-mono-custom font-bold text-xs uppercase tracking-wider hover:bg-brandBlue transition-all flex items-center justify-center gap-2">
+              <span>Télécharger mon CV complet (PDF)</span>
+              <span>↓</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Formulaire de contact interactif (Droite) -->
+        <div class="lg:col-span-7">
+          <form id="contact-form" onsubmit="handleFormSubmit(event)" class="p-6 sm:p-8 rounded-3xl bg-brandCard border border-brandLine/80 space-y-5">
+            
+            <div class="flex items-center justify-between border-b border-brandLine/50 pb-3">
+              <h3 class="font-mono-custom font-bold text-lg uppercase text-brandDark">Envoyer un message</h3>
+              <span class="text-xs font-mono-custom text-brandDark/60 font-semibold">● Réponse rapide</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="space-y-1.5">
+                <label class="block text-xs font-mono-custom font-bold uppercase text-brandDark">Votre Nom / Entreprise *</label>
+                <input type="text" required placeholder="Ex : Alice Martin" class="w-full px-4 py-3 rounded-xl bg-brandBg border border-brandLine/70 focus:outline-none focus:ring-2 focus:ring-brandDark text-brandDark text-sm">
+              </div>
+              <div class="space-y-1.5">
+                <label class="block text-xs font-mono-custom font-bold uppercase text-brandDark">Votre Email *</label>
+                <input type="email" required placeholder="nom@entreprise.com" class="w-full px-4 py-3 rounded-xl bg-brandBg border border-brandLine/70 focus:outline-none focus:ring-2 focus:ring-brandDark text-brandDark text-sm">
+              </div>
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="block text-xs font-mono-custom font-bold uppercase text-brandDark">Objet *</label>
+              <input type="text" required placeholder="Opportunité d'alternance / Échange technique" class="w-full px-4 py-3 rounded-xl bg-brandBg border border-brandLine/70 focus:outline-none focus:ring-2 focus:ring-brandDark text-brandDark text-sm">
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="block text-xs font-mono-custom font-bold uppercase text-brandDark">Message *</label>
+              <textarea required rows="4" placeholder="Bonjour Camille, nous avons découvert votre profil d'ingénieure..." class="w-full px-4 py-3 rounded-xl bg-brandBg border border-brandLine/70 focus:outline-none focus:ring-2 focus:ring-brandDark text-brandDark text-sm resize-none"></textarea>
+            </div>
+
+            <!-- Message de feedback interactif -->
+            <div id="form-feedback" class="hidden p-4 rounded-xl bg-emerald-100 border border-emerald-300 text-emerald-900 text-sm font-mono-custom">
+              ✓ Merci pour votre message ! Une notification a été préparée et vous pouvez aussi me contacter directement par email.
+            </div>
+
+            <button type="submit" id="btn-submit" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-brandDark text-brandBg font-mono-custom font-bold text-xs uppercase tracking-wider hover:bg-brandBlue transition-all">
+              Transmettre le message
+            </button>
+
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="mt-20 border-t border-brandLine/70 bg-brandCard/50 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono-custom text-brandDark/70">
+      <div>
+        <p>© 2026 Camille Philippe — Étudiante Ingénieure ESILV (Cyber & IA)</p>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="#accueil" onclick="showView('accueil')" class="hover:text-brandDark underline">Accueil</a>
+        <a href="#projets" onclick="showView('projets')" class="hover:text-brandDark underline">Projets</a>
+        <a href="#contact" onclick="showView('contact')" class="hover:text-brandDark underline">Contact</a>
+        <a href="https://github.com/camillephp15" target="_blank" class="hover:text-brandDark underline">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal personnalisée pour simulation du CV -->
+  <div id="cv-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-brandCard max-w-md w-full rounded-3xl p-6 border-2 border-brandDark shadow-2xl space-y-4">
+      <div class="flex justify-between items-center border-b border-brandLine pb-3">
+        <h4 class="font-mono-custom font-bold text-brandDark uppercase text-sm">Téléchargement CV</h4>
+        <button onclick="closeCvModal()" class="text-brandDark font-mono-custom font-bold text-lg hover:opacity-70">✕</button>
+      </div>
+      <p class="text-sm text-brandDark/85">
+        Pour lier votre vrai fichier PDF dans votre projet GitHub, déposez simplement votre fichier dans le dossier racine sous le nom <code class="px-1.5 py-0.5 rounded bg-brandBg font-mono text-xs font-bold">cv-camille-philippe.pdf</code>.
+      </p>
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeCvModal()" class="px-4 py-2 rounded-xl bg-brandDark text-brandBg text-xs font-mono-custom font-bold uppercase">
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Navigation dynamique entre les 3 vues
+    function showView(viewName) {
+      const views = ['accueil', 'projets', 'contact'];
+      
+      views.forEach(v => {
+        const el = document.getElementById('view-' + v);
+        const navBtn = document.getElementById('nav-' + v);
+        
+        if (v === viewName) {
+          el.classList.remove('hidden');
+          if (navBtn) {
+            navBtn.classList.remove('border-transparent', 'text-brandDark/70');
+            navBtn.classList.add('border-brandDark', 'text-brandDark');
+          }
+        } else {
+          el.classList.add('hidden');
+          if (navBtn) {
+            navBtn.classList.remove('border-brandDark', 'text-brandDark');
+            navBtn.classList.add('border-transparent', 'text-brandDark/70');
+          }
+        }
+      });
+
+      // Mettre à jour l'URL sans recharger pour faciliter le partage
+      window.location.hash = viewName;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Scroll direct vers la section profil sur la page d'accueil
+    function scrollToProfile() {
+      // Si on n'est pas sur la vue accueil, on l'affiche d'abord
+      showView('accueil');
+      setTimeout(() => {
+        const profileEl = document.getElementById('profil-section');
+        if (profileEl) {
+          profileEl.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 50);
+    }
+
+    // Gestion de la soumission du formulaire de contact
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const feedback = document.getElementById('form-feedback');
+      const submitBtn = document.getElementById('btn-submit');
+      
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Transmission en cours...";
+      
+      setTimeout(() => {
+        feedback.classList.remove('hidden');
+        submitBtn.textContent = "Message envoyé !";
+        submitBtn.classList.add('bg-emerald-800');
+        event.target.reset();
+      }, 700);
+    }
+
+    // Gestion de la modale de téléchargement du CV
+    function telechargerCV() {
+      // Déclenche l'affichage d'un message informatif ou le téléchargement si le fichier est présent
+      const modal = document.getElementById('cv-modal');
+      modal.classList.remove('hidden');
+    }
+
+    function closeCvModal() {
+      document.getElementById('cv-modal').classList.add('hidden');
+    }
+
+    // Logique des carrousels d'images par projet
+    const carouselsState = {
+      'carousel-1': { current: 0, total: 3 },
+      'carousel-2': { current: 0, total: 3 },
+      'carousel-3': { current: 0, total: 2 }
+    };
+
+    function updateCarouselDOM(id) {
+      const carouselEl = document.getElementById(id);
+      if (!carouselEl) return;
+
+      const slidesEl = carouselEl.querySelector('.carousel-slides');
+      const dots = carouselEl.querySelectorAll('.carousel-dot');
+      const currentIndex = carouselsState[id].current;
+
+      slidesEl.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+    }
+
+    function moveSlide(id, direction) {
+      const state = carouselsState[id];
+      state.current = (state.current + direction + state.total) % state.total;
+      updateCarouselDOM(id);
+    }
+
+    function goToSlide(id, index) {
+      carouselsState[id].current = index;
+      updateCarouselDOM(id);
+    }
+
+    // Lecture du hash dans l'URL au chargement pour afficher la bonne vue
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (['projets', 'contact'].includes(hash)) {
+        showView(hash);
+      } else {
+        showView('accueil');
+      }
+    });
+  </script>
+
+</body>
+</html>
