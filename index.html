@@ -1,881 +1,1400 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Camille Philippe — Portfolio Ingénieure Cyber & IA</title>
-  
-  <!-- Google Fonts: Space Mono (Titres/Accents) & Space Grotesk (Textes) -->
+
+  <!-- Polices Google : Space Mono (technique/titres) & Space Grotesk (lecture fluide) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brandBg: '#fae7e4',
-            brandCard: '#f4d8d4',
-            brandCardAlt: '#edd0cb',
-            brandDark: '#1a1f42',
-            brandBlue: '#1e265c',
-            brandAccent: '#2b3990',
-            brandHighlight: '#3730a3',
-            brandLine: '#dfc0bb',
-          },
-          fontFamily: {
-            mono: ['"Space Mono"', 'monospace'],
-            sans: ['"Space Grotesk"', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
 
   <style>
-    /* Application des polices selon la DA choisie */
+    :root {
+      --bg-base: #fff5f2;
+      --sunset-pink: #ff5e8e;
+      --sunset-coral: #ff7e67;
+      --sunset-violet: #845ec2;
+      --sunset-gradient: linear-gradient(135deg, #ff5e8e 0%, #ff8066 50%, #845ec2 100%);
+      --sunset-gradient-subtle: linear-gradient(135deg, rgba(255, 94, 142, 0.15) 0%, rgba(255, 126, 103, 0.12) 100%);
+      
+      --text-main: #251229;
+      --text-muted: rgba(37, 18, 41, 0.72);
+      
+      --glass-card: rgba(255, 255, 255, 0.75);
+      --glass-border: rgba(255, 255, 255, 0.85);
+      --glass-border-subtle: rgba(255, 94, 142, 0.2);
+      --glass-shadow: 0 16px 36px -8px rgba(132, 94, 194, 0.12);
+      
+      --pill-bg: rgba(255, 255, 255, 0.85);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
       font-family: 'Space Grotesk', sans-serif;
-      background-color: #fae7e4;
-      color: #1a1f42;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    h1, h2, h3, h4, .font-mono-custom, .nav-item, .tech-badge, button {
+    /* ORBES LUMINEUX D'ARRIÈRE-PLAN (EFFET SUNSET GLOW) */
+    .ambient-glow {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    .glow-1 {
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(255, 94, 142, 0.45) 0%, transparent 70%);
+      top: -120px;
+      right: -80px;
+    }
+
+    .glow-2 {
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(255, 126, 103, 0.35) 0%, transparent 70%);
+      bottom: -150px;
+      left: -100px;
+    }
+
+    .glow-3 {
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(132, 94, 194, 0.25) 0%, transparent 70%);
+      top: 40%;
+      left: 30%;
+    }
+
+    /* EN-TÊTE ET NAVIGATION */
+    header {
+      width: 100%;
+      padding: 1.8rem 4rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background-color: rgba(255, 245, 242, 0.82);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 94, 142, 0.15);
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-main);
       font-family: 'Space Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
     }
 
-    /* Effets de carte et transitions soignées */
-    .card-hover {
-      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .card-hover:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 28px -10px rgba(26, 31, 66, 0.18);
+    .logo-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--sunset-gradient);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(255, 94, 142, 0.35);
     }
 
-    /* Animation subtile pour la flèche Canva */
-    @keyframes nudgeDown {
+    nav {
+      display: flex;
+      gap: 2.2rem;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      position: relative;
+      padding: 0.4rem 0.2rem;
+      transition: all 0.25s ease;
+    }
+
+    nav button:hover {
+      color: var(--sunset-pink);
+      transform: translateY(-1px);
+    }
+
+    nav button.active {
+      color: var(--text-main);
+    }
+
+    nav button.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--sunset-gradient);
+      border-radius: 3px;
+    }
+
+    /* CONTENEUR PRINCIPAL */
+    main {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 3rem 5rem;
+    }
+
+    .tab-content {
+      display: none;
+      animation: tabFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================================
+       PAGE 1 : ACCUEIL
+    ============================================================ */
+    .hero-split {
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: 4.5rem;
+      align-items: center;
+      min-height: 70vh;
+    }
+
+    .status-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      background: var(--glass-card);
+      border: 1px solid var(--glass-border-subtle);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 1.8rem;
+      box-shadow: 0 4px 14px rgba(255, 94, 142, 0.1);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #00d26a;
+      box-shadow: 0 0 10px #00d26a;
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.6; }
+    }
+
+    .hero-text h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #251229 30%, #ff5e8e 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+      font-size: 1.2rem;
+      font-weight: 400;
+      line-height: 1.75;
+      max-width: 580px;
+      margin-bottom: 3rem;
+      color: var(--text-main);
+    }
+
+    .hero-description strong {
+      font-weight: 700;
+      color: #b52b65;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .btn-sunset {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: var(--sunset-gradient);
+      padding: 0.95rem 1.8rem;
+      border-radius: 14px;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(255, 94, 142, 0.3);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-sunset:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 26px rgba(255, 94, 142, 0.45);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      color: var(--text-main);
+      padding: 0.95rem 1.6rem;
+      border-radius: 14px;
+      border: 1.5px solid var(--glass-border-subtle);
+      background: var(--glass-card);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--sunset-pink);
+      color: var(--sunset-pink);
+      transform: translateY(-2px);
+    }
+
+    /* VITRINE PROJET ACCUEIL */
+    .hero-showcase {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .showcase-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+
+    .showcase-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sunset-pink);
+    }
+
+    .curved-arrow {
+      width: 36px;
+      height: 24px;
+      stroke: var(--sunset-pink);
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      animation: nudgeArrow 1.8s ease-in-out infinite;
+    }
+
+    @keyframes nudgeArrow {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(4px); }
     }
-    .animate-arrow {
-      display: inline-block;
-      animation: nudgeDown 1.6s ease-in-out infinite;
+
+    .showcase-card {
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 1/1;
+      background: var(--glass-card);
+      border-radius: 26px;
+      padding: 1.2rem;
+      box-shadow: var(--glass-shadow);
+      border: 2px solid var(--glass-border);
+      backdrop-filter: blur(14px);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
     }
 
-    /* Styles dédiés aux carrousels d'images */
-    .carousel-container {
+    .showcase-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 24px 48px -10px rgba(255, 94, 142, 0.3);
+    }
+
+    .showcase-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(145deg, #251229 0%, #461b47 50%, #ff5e8e 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.8rem;
+      color: #fff;
+    }
+
+    .showcase-badge-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .showcase-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.35rem 0.8rem;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .showcase-mini-terminal {
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 1.2rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 0.6rem;
+    }
+
+    .terminal-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .showcase-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      z-index: 2;
+      color: #fff;
+    }
+
+    /* ============================================================
+       TITRES DE SECTIONS
+    ============================================================ */
+    .section-header {
+      margin-bottom: 3.5rem;
+    }
+
+    .section-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--sunset-pink);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .section-title {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(2rem, 3.2vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-main);
+    }
+
+    /* ============================================================
+       PAGE 2 : PROFIL & PARCOURS (PAGE SÉPARÉE)
+    ============================================================ */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    .glass-card {
+      background: var(--glass-card);
+      border: 2px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2.5rem;
+      backdrop-filter: blur(14px);
+      box-shadow: var(--glass-shadow);
+    }
+
+    .glass-card h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.35rem;
+      text-transform: uppercase;
+      margin-bottom: 1.8rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 2px solid rgba(255, 94, 142, 0.25);
+      color: var(--text-main);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 2rem;
+      border-left: 2px solid rgba(255, 94, 142, 0.35);
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -6px;
+      top: 4px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--sunset-gradient);
+      box-shadow: 0 0 8px rgba(255, 94, 142, 0.6);
+    }
+
+    .timeline-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--sunset-pink);
+      letter-spacing: 0.08em;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-title {
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text-main);
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline-sub {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .skills-group {
+      margin-bottom: 1.6rem;
+    }
+
+    .skills-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .skills-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--sunset-pink);
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+      display: block;
+    }
+
+    .tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: var(--pill-bg);
+      color: var(--text-main);
+      padding: 0.4rem 0.9rem;
+      border-radius: 10px;
+      border: 1px solid var(--glass-border-subtle);
+      box-shadow: 0 2px 8px rgba(255, 94, 142, 0.06);
+    }
+
+    /* ============================================================
+       PAGE 3 : PROJETS & ENGAGEMENTS
+    ============================================================ */
+    .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+      margin-bottom: 5rem;
+    }
+
+    .project-card {
+      background: var(--glass-card);
+      border: 2px solid var(--glass-border);
+      border-radius: 28px;
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 3rem;
+      align-items: center;
+      backdrop-filter: blur(14px);
+      box-shadow: var(--glass-shadow);
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+    }
+
+    /* CARROUSEL STYLISÉ */
+    .carousel {
       position: relative;
       width: 100%;
       aspect-ratio: 4/3;
-      border-radius: 1rem;
+      border-radius: 20px;
       overflow: hidden;
-      background-color: #edd0cb;
-      border: 1px solid #dfc0bb;
+      background: #fae4e1;
+      border: 1px solid var(--glass-border-subtle);
+      box-shadow: 0 10px 24px rgba(255, 94, 142, 0.12);
     }
+
     .carousel-slides {
       display: flex;
       width: 100%;
       height: 100%;
-      transition: transform 0.4s ease-in-out;
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
     .carousel-slide {
       min-width: 100%;
       height: 100%;
     }
+
     .carousel-slide img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
+
     .carousel-btn {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(26, 31, 66, 0.75);
-      color: #ffffff;
-      border: none;
-      width: 34px;
-      height: 34px;
-      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--text-main);
+      border: 1px solid var(--glass-border-subtle);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      line-height: 1;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       z-index: 10;
-      transition: background-color 0.2s, transform 0.2s;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s ease;
     }
+
     .carousel-btn:hover {
-      background: #1a1f42;
+      background: #ffffff;
+      color: var(--sunset-pink);
       transform: translateY(-50%) scale(1.1);
     }
-    .carousel-btn.prev { left: 10px; }
-    .carousel-btn.next { right: 10px; }
+
+    .carousel-btn.prev { left: 12px; }
+    .carousel-btn.next { right: 12px; }
+
     .carousel-dots {
       position: absolute;
-      bottom: 10px;
+      bottom: 12px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 6px;
+      gap: 7px;
       z-index: 10;
     }
-    .carousel-dot {
+
+    .dot {
       width: 8px;
       height: 8px;
-      border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.6);
       cursor: pointer;
-      transition: background-color 0.2s, transform 0.2s;
+      transition: all 0.25s ease;
     }
-    .carousel-dot.active {
+
+    .dot.active {
+      background: var(--sunset-pink);
+      transform: scale(1.3);
+      box-shadow: 0 0 8px var(--sunset-pink);
+    }
+
+    .project-info h3 {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.65rem;
+      margin-bottom: 0.6rem;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    .project-meta {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--sunset-pink);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .project-desc {
+      font-size: 1.05rem;
+      color: var(--text-main);
+      margin-bottom: 1.3rem;
+      line-height: 1.65;
+    }
+
+    .project-takeaway {
+      background: var(--sunset-gradient-subtle);
+      border-left: 3px solid var(--sunset-pink);
+      padding: 0.9rem 1.2rem;
+      border-radius: 0 12px 12px 0;
+      font-size: 0.95rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+
+    .btn-project {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.65rem 1.3rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-project-fill {
+      background: var(--sunset-gradient);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(255, 94, 142, 0.25);
+    }
+
+    .btn-project-fill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(255, 94, 142, 0.35);
+    }
+
+    .btn-project-line {
+      background: var(--pill-bg);
+      border: 1.5px solid var(--glass-border-subtle);
+      color: var(--text-main);
+    }
+
+    .btn-project-line:hover {
+      border-color: var(--sunset-pink);
+      color: var(--sunset-pink);
+      transform: translateY(-2px);
+    }
+
+    /* ENGAGEMENTS ASSOCIATIFS */
+    .engagements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .engagement-card {
+      background: var(--glass-card);
+      border: 2px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2.4rem;
+      backdrop-filter: blur(14px);
+      box-shadow: var(--glass-shadow);
+    }
+
+    .engagement-badge {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--sunset-gradient);
+      padding: 0.3rem 0.8rem;
+      border-radius: 6px;
+      margin-bottom: 1.2rem;
+    }
+
+    .engagement-card h3 {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.35rem;
+      margin-bottom: 0.8rem;
+      color: var(--text-main);
+    }
+
+    .engagement-card p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ============================================================
+       PAGE 4 : CONTACT
+    ============================================================ */
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 4rem;
+      background: var(--glass-card);
+      border: 2px solid var(--glass-border);
+      border-radius: 28px;
+      padding: 3.5rem;
+      backdrop-filter: blur(16px);
+      box-shadow: var(--glass-shadow);
+    }
+
+    .contact-info h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: 2.2rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      color: var(--text-main);
+    }
+
+    .contact-info p {
+      font-size: 1.1rem;
+      margin-bottom: 2.2rem;
+      color: var(--text-muted);
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      text-decoration: none;
+      color: var(--text-main);
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
+      background: var(--pill-bg);
+      border: 1px solid var(--glass-border-subtle);
+      transition: all 0.25s ease;
+    }
+
+    .contact-link:hover {
+      border-color: var(--sunset-pink);
+      color: var(--sunset-pink);
+      transform: translateX(4px);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-main);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1.5px solid rgba(255, 94, 142, 0.2);
+      border-radius: 12px;
+      padding: 0.95rem 1.1rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--sunset-pink);
+      box-shadow: 0 0 0 3px rgba(255, 94, 142, 0.15);
       background: #ffffff;
-      transform: scale(1.25);
+    }
+
+    .btn-submit {
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--sunset-gradient);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      padding: 1.1rem 2rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      align-self: flex-start;
+      box-shadow: 0 6px 18px rgba(255, 94, 142, 0.3);
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(255, 94, 142, 0.45);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 94, 142, 0.12);
+      margin-top: auto;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      header {
+        padding: 1.2rem 1.8rem;
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+      nav {
+        gap: 1.2rem;
+      }
+      main {
+        padding: 1.5rem 1.5rem 4rem;
+      }
+      .hero-split,
+      .profile-grid,
+      .project-card,
+      .contact-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .contact-container {
+        padding: 2rem;
+      }
     }
   </style>
 </head>
+<body>
 
-<body class="min-h-screen flex flex-col bg-brandBg text-brandDark selection:bg-brandBlue selection:text-white">
+  <!-- ORBES LUMINEUX (SUNSET GLOW) -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
 
-  <header class="sticky top-0 z-50 bg-brandBg/90 backdrop-blur-md border-b border-brandLine/70">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-      
-      <!-- Logo / Monogramme -->
-      <a href="#accueil" onclick="showView('accueil')" class="text-xl font-bold tracking-wider uppercase font-mono-custom flex items-center gap-2 group">
-        <span class="w-8 h-8 rounded-lg bg-brandDark text-brandBg flex items-center justify-center text-sm font-bold shadow-sm transition-transform group-hover:scale-105">CP</span>
-        <span>Camille Philippe</span>
-      </a>
-
-      <!-- Menu Principal -->
-      <nav class="flex items-center gap-2 sm:gap-6 font-mono-custom text-xs sm:text-sm tracking-wider font-semibold uppercase">
-        <button onclick="showView('accueil')" id="nav-accueil" class="nav-item px-3 py-1.5 rounded-lg border-b-2 border-brandDark text-brandDark transition-all">
-          Accueil
-        </button>
-        <button onclick="showView('projets')" id="nav-projets" class="nav-item px-3 py-1.5 rounded-lg border-b-2 border-transparent text-brandDark/70 hover:text-brandDark transition-all">
-          Projets
-        </button>
-        <button onclick="scrollToProfile()" id="nav-profil" class="nav-item px-3 py-1.5 rounded-lg border-b-2 border-transparent text-brandDark/70 hover:text-brandDark transition-all">
-          Profil
-        </button>
-        <button onclick="showView('contact')" id="nav-contact" class="nav-item px-3 py-1.5 rounded-lg border-b-2 border-transparent text-brandDark/70 hover:text-brandDark transition-all">
-          Contact
-        </button>
-      </nav>
-    </div>
+  <!-- NAVIGATION -->
+  <header>
+    <a href="#" class="logo" onclick="switchTab('tab-accueil'); return false;">
+      <div class="logo-badge">CP</div>
+      <span>CAMILLE PHILIPPE</span>
+    </a>
+    <nav>
+      <button class="nav-btn active" data-target="tab-accueil">ACCUEIL</button>
+      <button class="nav-btn" data-target="tab-profil">PROFIL</button>
+      <button class="nav-btn" data-target="tab-projets">PROJETS</button>
+      <button class="nav-btn" data-target="tab-contact">CONTACT</button>
+    </nav>
   </header>
 
-  <!-- CONTENEUR PRINCIPAL -->
-  <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
-
-    <!-- ========================================================= -->
-    <!-- VUE 1 : ACCUEIL & PROFIL (Page d'accueil selon ta maquette) -->
-    <!-- ========================================================= -->
-    <div id="view-accueil" class="space-y-24 transition-opacity duration-300">
-      
-      <section id="accueil" class="pt-6 sm:pt-12 pb-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-        
-        <!-- Bloc Gauche : Texte & Bouton (Fidèle à ta maquette) -->
-        <div class="lg:col-span-7 space-y-7">
-          <div class="space-y-4">
-            <h1 class="text-3xl sm:text-5xl lg:text-5xl font-extrabold tracking-tight font-mono-custom uppercase text-brandDark leading-tight">
-              Bienvenue sur mon portfolio !
-            </h1>
+  <main>
+    <!-- ============================================================
+         ONGLET 1 : ACCUEIL
+    ============================================================ -->
+    <section id="tab-accueil" class="tab-content active">
+      <div class="hero-split">
+        <div class="hero-text">
+          <div class="status-tag">
+            <span class="status-dot"></span>
+            <span>Recherche d'alternance • Cyber &amp; IA</span>
           </div>
 
-          <p class="text-base sm:text-lg text-brandDark/90 leading-relaxed max-w-xl font-medium">
-            Je suis <strong class="font-bold text-brandBlue">Camille</strong>, étudiante en deuxième année de 
-            <span class="font-bold text-brandBlue">prépa intégrée</span> à l’école d’ingénieur Léonard de Vinci (<span class="font-bold text-brandBlue">ESILV</span>). 
-            Je suis passionnée par <span class="font-bold text-brandBlue">l’informatique</span>, et je suivrai l’année prochaine une spécialisation en 
-            <span class="font-bold text-brandBlue">cybersécurité et IA</span>.
+          <h1>BIENVENUE SUR MON PORTFOLIO !</h1>
+
+          <p class="hero-description">
+            Je suis Camille, étudiante en deuxième année de <strong>prépa intégrée</strong> à l'école d'ingénieur Léonard de Vinci (<strong>ESILV</strong>). Je suis passionnée par <strong>l'informatique</strong>, et je suivrai l'année prochaine une spécialisation en <strong>cybersécurité</strong> et <strong>IA</strong>.
           </p>
 
-          <!-- Bouton CTA principal -->
-          <div class="pt-2 flex flex-wrap items-center gap-4">
-            <a href="#cv" onclick="telechargerCV()" class="inline-flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl bg-brandDark text-brandBg font-mono-custom font-bold text-sm tracking-wide uppercase transition-all duration-200 hover:bg-brandBlue hover:shadow-lg active:scale-95 group">
-              <svg class="w-4 h-4 transition-transform group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-              </svg>
+          <div class="hero-actions">
+            <a href="assets/cv-camille-philippe.pdf" class="btn-sunset" target="_blank" download>
               <span>Téléchargez mon CV !</span>
-            </a>
-            
-            <button onclick="scrollToProfile()" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl border-2 border-brandDark font-mono-custom font-semibold text-sm tracking-wide uppercase text-brandDark hover:bg-brandDark/5 transition-all">
-              <span>Voir mon profil</span>
               <span>↓</span>
+            </a>
+            <button class="btn-outline" onclick="switchTab('tab-profil')">
+              <span>Voir mon profil</span>
+              <span>→</span>
             </button>
           </div>
         </div>
 
-        <!-- Bloc Droit : Vitrine Projet Interactive avec animation au survol -->
-        <div class="lg:col-span-5 flex flex-col items-start lg:items-center">
-          
-          <!-- Titre au-dessus avec flèche stylisée -->
-          <div class="mb-3 flex items-center gap-2 text-brandDark font-mono-custom text-sm font-bold uppercase tracking-wider">
-            <span>Découvrir mes projets</span>
-            <span class="text-xl animate-arrow">⤵</span>
+        <!-- Vitrine interactive -->
+        <div class="hero-showcase">
+          <div class="showcase-header" onclick="switchTab('tab-projets')">
+            <span class="showcase-title">DÉCOUVRIR MES PROJETS</span>
+            <svg class="curved-arrow" viewBox="0 0 50 30">
+              <path d="M 5 20 Q 35 -5 42 18" />
+              <path d="M 36 12 L 42 18 L 47 11" />
+            </svg>
           </div>
 
-          <!-- Carte visuelle interactive cliquable menant vers l'onglet projets -->
-          <div onclick="showView('projets')" class="card-hover w-full max-w-sm rounded-3xl overflow-hidden cursor-pointer border-2 border-brandDark/20 bg-brandCard shadow-md relative group">
-            
-            <!-- Aperçu d'un projet tech (SVG illustratif stylisé et soigné) -->
-            <div class="h-64 sm:h-72 w-full bg-gradient-to-br from-indigo-900 via-brandBlue to-slate-900 p-6 flex flex-col justify-between relative overflow-hidden">
-              
-              <!-- Effet de grille cyber en fond -->
-              <div class="absolute inset-0 opacity-15" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 16px 16px;"></div>
-              
-              <!-- Badge en haut -->
-              <div class="relative z-10 flex justify-between items-center">
-                <span class="px-2.5 py-1 rounded-md bg-white/10 backdrop-blur-md text-white font-mono-custom text-xs font-semibold uppercase tracking-wider border border-white/20">
-                  Projet Phare
-                </span>
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <div class="showcase-card" onclick="switchTab('tab-projets')">
+            <div class="showcase-inner">
+              <div class="showcase-badge-row">
+                <span class="showcase-badge">Projet Phare</span>
+                <span class="showcase-badge" style="background: rgba(0, 210, 106, 0.25); border-color: #00d26a;">● En ligne</span>
               </div>
 
-              <!-- Terminal / Aperçu stylisé du site d'organisation -->
-              <div class="relative z-10 space-y-2 p-3 rounded-xl bg-black/40 backdrop-blur-sm border border-white/10 font-mono-custom text-xs text-white/90 transform transition-transform duration-300 group-hover:scale-105">
-                <div class="flex items-center gap-1.5 pb-1 border-b border-white/10 text-white/50 text-[10px]">
-                  <span class="w-2 h-2 rounded-full bg-rose-500"></span>
-                  <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                  <span class="ml-2">app-orga.js</span>
+              <div class="showcase-mini-terminal">
+                <div class="terminal-dots">
+                  <span class="terminal-dot" style="background:#ff5f56;"></span>
+                  <span class="terminal-dot" style="background:#ffbd2e;"></span>
+                  <span class="terminal-dot" style="background:#27c93f;"></span>
                 </div>
-                <p class="text-emerald-300 font-bold">$ init StudyPlanner()</p>
-                <p class="text-white/70">✓ Modules chargés : 3/3</p>
-                <p class="text-indigo-200">→ Déploiement : GitHub Pages</p>
+                <p style="color:#a8ff78;">$ run StudyPlanner()</p>
+                <p style="opacity:0.75;">&gt; Web app générée via Antigravity</p>
+                <p style="opacity:0.75;">&gt; Déploiement : GitHub Pages</p>
               </div>
 
-              <!-- Action au survol (Hover Overlay) -->
-              <div class="relative z-10 flex items-center justify-between text-white font-mono-custom text-xs font-bold pt-2">
-                <span class="group-hover:translate-x-1 transition-transform">Explorer les 3 réalisations</span>
-                <span class="text-base group-hover:translate-x-1 transition-transform">→</span>
+              <div class="showcase-footer">
+                <span>Explorer les 3 réalisations</span>
+                <span>→</span>
               </div>
-            </div>
-
-            <!-- Légende sous la carte -->
-            <div class="p-4 bg-brandCard flex items-center justify-between">
-              <div>
-                <p class="font-mono-custom text-xs uppercase font-bold text-brandDark">Site d'orga • Échelle PIX • Pong</p>
-                <p class="text-xs text-brandDark/70">Cliquez pour voir les études de cas</p>
-              </div>
-              <span class="text-xs font-mono-custom font-bold px-2 py-1 rounded bg-brandDark text-brandBg">3 projets</span>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-      </section>
-
-      <section id="profil-section" class="pt-8 border-t border-brandLine space-y-12">
-        
-        <div class="max-w-2xl space-y-3">
-          <span class="text-xs font-mono-custom uppercase tracking-widest font-bold text-brandAccent">01 / Profil & Parcours</span>
-          <h2 class="text-2xl sm:text-4xl font-bold font-mono-custom uppercase text-brandDark">
-            Mon Parcours & Compétences
-          </h2>
-          <p class="text-brandDark/80 text-sm sm:text-base">
-            De la modélisation rigoureuse en prépa intégrée jusqu'au développement de solutions concrètes, découvrez mon profil académique et technique.
-          </p>
-        </div>
-
-        <!-- Grille Parcours / Formations -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          <div class="p-6 rounded-2xl bg-brandCard border border-brandLine/60 space-y-3 card-hover">
-            <span class="text-xs font-mono-custom font-bold text-brandAccent">2024 — Présent</span>
-            <h3 class="font-bold text-lg font-mono-custom text-brandDark">Prépa Intégrée (2e année)</h3>
-            <p class="text-xs font-semibold text-brandDark/70 font-mono-custom">ESILV — École Supérieure d'Ingénieurs Léonard de Vinci</p>
-            <p class="text-sm text-brandDark/80">
-              Sciences de l'ingénieur, algorithmique avancée, mathématiques appliquées et projets pluridisciplinaires en équipe.
-            </p>
-          </div>
-
-          <div class="p-6 rounded-2xl bg-brandCard border border-brandLine/60 space-y-3 card-hover">
-            <span class="text-xs font-mono-custom font-bold text-brandAccent">Orientation 2027</span>
-            <h3 class="font-bold text-lg font-mono-custom text-brandDark">Spécialisation Cyber & IA</h3>
-            <p class="text-xs font-semibold text-brandDark/70 font-mono-custom">Cycle Ingénieur (Majeure visée)</p>
-            <p class="text-sm text-brandDark/80">
-              Sécurité des systèmes informatiques, cryptographie, apprentissage automatique et protection des infrastructures.
-            </p>
-          </div>
-
-          <div class="p-6 rounded-2xl bg-brandCard border border-brandLine/60 space-y-3 card-hover">
-            <span class="text-xs font-mono-custom font-bold text-brandAccent">Formation continue</span>
-            <h3 class="font-bold text-lg font-mono-custom text-brandDark">CS50x — Harvard University</h3>
-            <p class="text-xs font-semibold text-brandDark/70 font-mono-custom">Introduction to Computer Science</p>
-            <p class="text-sm text-brandDark/80">
-              Fondements informatiques : gestion de mémoire (C), structures de données, programmation système et web.
-            </p>
-          </div>
-
-        </div>
-
-        <!-- Grille des compétences techniques organisées -->
-        <div class="space-y-6">
-          <h3 class="text-xl font-bold font-mono-custom uppercase text-brandDark">Boîte à outils & Compétences</h3>
-          
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            
-            <!-- Dev & Web -->
-            <div class="p-5 rounded-2xl bg-brandCard/90 border border-brandLine/60 space-y-3">
-              <h4 class="font-mono-custom text-xs font-bold uppercase tracking-wider text-brandAccent">Programmation</h4>
-              <div class="flex flex-wrap gap-1.5">
-                <span class="px-2.5 py-1 rounded-lg bg-brandDark text-brandBg font-mono-custom text-xs font-semibold">Python</span>
-                <span class="px-2.5 py-1 rounded-lg bg-brandDark text-brandBg font-mono-custom text-xs font-semibold">C#</span>
-                <span class="px-2.5 py-1 rounded-lg bg-brandDark text-brandBg font-mono-custom text-xs font-semibold">HTML5 / CSS3</span>
-                <span class="px-2.5 py-1 rounded-lg bg-brandDark text-brandBg font-mono-custom text-xs font-semibold">SQL</span>
-              </div>
-            </div>
-
-            <!-- Systèmes & Outils -->
-            <div class="p-5 rounded-2xl bg-brandCard/90 border border-brandLine/60 space-y-3">
-              <h4 class="font-mono-custom text-xs font-bold uppercase tracking-wider text-brandAccent">Outils</h4>
-              <div class="flex flex-wrap gap-1.5">
-                <span class="px-2.5 py-1 rounded-lg bg-brandDark text-brandBg font-mono-custom text-xs font-semibold">Git & GitHub</span>
-                <span class="px-2.5 py-1 rounded-lg bg-brandDark text-brandBg font-mono-custom text-xs font-semibold">Linux (Bash)</span>
-                <span class="px-2.5 py-1 rounded-lg bg-brandDark text-brandBg font-mono-custom text-xs font-semibold">SolidWorks 3D</span>
-                <span class="px-2.5 py-1 rounded-lg bg-brandDark text-brandBg font-mono-custom text-xs font-semibold">VS Code</span>
-              </div>
-            </div>
-
-            <!-- Langues -->
-            <div class="p-5 rounded-2xl bg-brandCard/90 border border-brandLine/60 space-y-3">
-              <h4 class="font-mono-custom text-xs font-bold uppercase tracking-wider text-brandAccent">Langues</h4>
-              <div class="space-y-1.5 text-xs font-mono-custom">
-                <p><strong class="font-bold text-brandDark">Anglais :</strong> Niveau B2 (TOEFEL en préparation)</p>
-                <p><strong class="font-bold text-brandDark">Espagnol :</strong> Niveau B1</p>
-              </div>
-            </div>
-
-            <!-- Soft skills / Rigueur -->
-            <div class="p-5 rounded-2xl bg-brandCard/90 border border-brandLine/60 space-y-3">
-              <h4 class="font-mono-custom text-xs font-bold uppercase tracking-wider text-brandAccent">Atouts & Méthode</h4>
-              <div class="flex flex-wrap gap-1.5 text-xs">
-                <span class="px-2.5 py-1 rounded-lg bg-brandBg border border-brandLine font-mono-custom font-semibold">Ecoute</span>
-                <span class="px-2.5 py-1 rounded-lg bg-brandBg border border-brandLine font-mono-custom font-semibold">Curiosité </span>
-                <span class="px-2.5 py-1 rounded-lg bg-brandBg border border-brandLine font-mono-custom font-semibold">Esprit d'équipe</span>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </section>
-
-    </div>
-
-
-    <!-- ========================================================= -->
-    <!-- VUE 2 : PROJETS & ENGAGEMENTS ASSOCIATIFS (NOUVELLE VERSION) -->
-    <!-- ========================================================= -->
-    <div id="view-projets" class="hidden space-y-16 transition-opacity duration-300">
-      
-      <div class="max-w-3xl space-y-3">
-        <span class="text-xs font-mono-custom uppercase tracking-widest font-bold text-brandAccent">02 / Réalisations & Engagements</span>
-        <h2 class="text-3xl sm:text-5xl font-bold font-mono-custom uppercase text-brandDark">
-          Mes Projets & Engagements
-        </h2>
-        <p class="text-brandDark/80 text-sm sm:text-base leading-relaxed">
-          Trois projets concrets mettant en valeur mon autonomie en développement web, ma capacité de travail en équipe sur un défi d'ingénierie mécanique, et mes bases solides en algorithmique.
-        </p>
+    <!-- ============================================================
+         ONGLET 2 : PROFIL (DÉSORMAIS SUR SA PROPRE PAGE)
+    ============================================================ -->
+    <section id="tab-profil" class="tab-content">
+      <div class="section-header">
+        <span class="section-num">01 / Parcours Académique &amp; Compétences</span>
+        <h2 class="section-title">Mon Profil</h2>
       </div>
 
-      <div class="space-y-12">
+      <div class="profile-grid">
+        <!-- Formations -->
+        <div class="glass-card">
+          <h2>Formation</h2>
 
-        <!-- PROJET 1 : SITE D'ORGANISATION (Web App) -->
-        <article class="p-6 sm:p-8 rounded-3xl bg-brandCard border border-brandLine/70 card-hover space-y-6">
-          <div class="flex flex-wrap items-start justify-between gap-4 border-b border-brandLine/50 pb-4">
-            <div>
-              <div class="flex items-center gap-2 mb-1">
-                <span class="text-xs font-mono-custom font-bold px-2.5 py-0.5 rounded bg-brandDark text-brandBg">AOÛT 2026</span>
-                <span class="text-xs font-mono-custom text-brandAccent font-bold">APPLICATION WEB PERSONNELLE</span>
-              </div>
-              <h3 class="text-xl sm:text-2xl font-bold font-mono-custom text-brandDark">
-                Site d'Organisation &amp; Gestion de Cours
-              </h3>
-            </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Antigravity</span>
-              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">HTML5 / CSS3</span>
-              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">JavaScript</span>
-              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Git / GitHub Pages</span>
+          <div class="timeline-item">
+            <span class="timeline-year">2024 – PRÉSENT</span>
+            <div class="timeline-title">Cycle Préparatoire Intégré (2e année)</div>
+            <div class="timeline-sub">ESILV — École Supérieure d'Ingénieurs Léonard de Vinci (Paris La Défense)</div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-year">ORIENTATION 2027</span>
+            <div class="timeline-title">Spécialisation Cybersécurité &amp; IA</div>
+            <div class="timeline-sub">Cycle Ingénieur majeur : sécurité des architectures, cryptographie, modèles IA</div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-year">FORMATION CONTINUE</span>
+            <div class="timeline-title">CS50x — Harvard University Online</div>
+            <div class="timeline-sub">Introduction to Computer Science (C, Python, structures de données, mémoire, SQL)</div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-year">2025</span>
+            <div class="timeline-title">Baccalauréat Général — Mention Très Bien</div>
+            <div class="timeline-sub">Spécialités Scientifiques • Options Mathématiques Expertes &amp; DNL</div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-year">2021</span>
+            <div class="timeline-title">Brevet d'Initiation à l'Aéronautique (BIA)</div>
+            <div class="timeline-sub">Mention Très Bien</div>
+          </div>
+        </div>
+
+        <!-- Compétences -->
+        <div class="glass-card">
+          <h2>Compétences &amp; Atouts</h2>
+
+          <div class="skills-group">
+            <span class="skills-label">Langages &amp; Développement</span>
+            <div class="tags-container">
+              <span class="tag">Python</span>
+              <span class="tag">C#</span>
+              <span class="tag">SQL</span>
+              <span class="tag">HTML5 / CSS3</span>
+              <span class="tag">JavaScript</span>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <!-- Carrousel d'images Projet 1 -->
-            <div class="lg:col-span-5">
-              <div class="carousel-container" id="carousel-1">
-                <div class="carousel-slides">
-                  <div class="carousel-slide">
-                    <img src="assets/orga-1.jpg" onerror="this.src='https://placehold.co/800x600/fae7e4/151d65?text=Site+Orga+Vue+1'" alt="Site d'organisation capture 1">
-                  </div>
-                  <div class="carousel-slide">
-                    <img src="assets/orga-2.jpg" onerror="this.src='https://placehold.co/800x600/fae7e4/151d65?text=Site+Orga+Vue+2'" alt="Site d'organisation capture 2">
-                  </div>
-                  <div class="carousel-slide">
-                    <img src="assets/orga-3.jpg" onerror="this.src='https://placehold.co/800x600/fae7e4/151d65?text=Site+Orga+Vue+3'" alt="Site d'organisation capture 3">
-                  </div>
-                </div>
-                <button class="carousel-btn prev" onclick="moveSlide('carousel-1', -1)">‹</button>
-                <button class="carousel-btn next" onclick="moveSlide('carousel-1', 1)">›</button>
-                <div class="carousel-dots">
-                  <span class="carousel-dot active" onclick="goToSlide('carousel-1', 0)"></span>
-                  <span class="carousel-dot" onclick="goToSlide('carousel-1', 1)"></span>
-                  <span class="carousel-dot" onclick="goToSlide('carousel-1', 2)"></span>
-                </div>
+          <div class="skills-group">
+            <span class="skills-label">Outils &amp; Environnements</span>
+            <div class="tags-container">
+              <span class="tag">Antigravity (AI Dev)</span>
+              <span class="tag">Git &amp; GitHub</span>
+              <span class="tag">Linux (Bash)</span>
+              <span class="tag">SolidWorks 3D</span>
+              <span class="tag">VS Code</span>
+            </div>
+          </div>
+
+          <div class="skills-group">
+            <span class="skills-label">Langues</span>
+            <div class="tags-container">
+              <span class="tag">Anglais (B2 • TOEFL en préparation)</span>
+              <span class="tag">Espagnol (B1)</span>
+            </div>
+          </div>
+
+          <div class="skills-group">
+            <span class="skills-label">Soft Skills &amp; Méthode</span>
+            <div class="tags-container">
+              <span class="tag">Écoute active</span>
+              <span class="tag">Curiosité technique</span>
+              <span class="tag">Esprit d'équipe</span>
+              <span class="tag">Rigueur &amp; Logique</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ONGLET 3 : PROJETS & ENGAGEMENTS
+    ============================================================ -->
+    <section id="tab-projets" class="tab-content">
+      <div class="section-header">
+        <span class="section-num">02 / Réalisations &amp; Engagements</span>
+        <h2 class="section-title">Mes Projets</h2>
+      </div>
+
+      <div class="projects-list">
+        <!-- PROJET 1 : SITE D'ORGA -->
+        <article class="project-card">
+          <div class="carousel" id="carousel-1">
+            <div class="carousel-slides">
+              <div class="carousel-slide">
+                <img src="assets/orga-1.jpg" onerror="this.src='https://placehold.co/800x600/ffeedd/251229?text=Site+Orga+Aperçu+1'" alt="Site organisation aperçu 1">
+              </div>
+              <div class="carousel-slide">
+                <img src="assets/orga-2.jpg" onerror="this.src='https://placehold.co/800x600/ffeedd/251229?text=Site+Orga+Aperçu+2'" alt="Site organisation aperçu 2">
+              </div>
+              <div class="carousel-slide">
+                <img src="assets/orga-3.jpg" onerror="this.src='https://placehold.co/800x600/ffeedd/251229?text=Site+Orga+Aperçu+3'" alt="Site organisation aperçu 3">
               </div>
             </div>
+            <button class="carousel-btn prev" onclick="moveSlide('carousel-1', -1)">‹</button>
+            <button class="carousel-btn next" onclick="moveSlide('carousel-1', 1)">›</button>
+            <div class="carousel-dots">
+              <span class="dot active" onclick="goToSlide('carousel-1', 0)"></span>
+              <span class="dot" onclick="goToSlide('carousel-1', 1)"></span>
+              <span class="dot" onclick="goToSlide('carousel-1', 2)"></span>
+            </div>
+          </div>
 
-            <!-- Description & Retours Projet 1 -->
-            <div class="lg:col-span-7 space-y-4 text-sm">
-              <p class="text-brandDark/85 leading-relaxed">
-                Conception et déploiement d'une application web sur-mesure répondant à mes besoins quotidiens d'organisation étudiante. Le projet a été modélisé et architecturé de bout en bout grâce à <strong>Antigravity</strong>, en formulant des prompts itératifs précis pour générer une interface fluide, responsive et modulaire, adaptée à la planification de mes cours et de mes révisions.
-              </p>
+          <div class="project-info">
+            <span class="project-meta">AOÛT 2026 • APPLICATION WEB PERSONNELLE</span>
+            <h3>Site d'Organisation &amp; Gestion de Cours</h3>
+            
+            <p class="project-desc">
+              Conception et déploiement d'une application web sur-mesure répondant à mes besoins quotidiens d'organisation étudiante. Le projet a été modélisé et architecturé de bout en bout grâce à <strong>Antigravity</strong>, en formulant des prompts itératifs précis pour générer une interface fluide, responsive et modulaire, adaptée à la planification de mes cours et de mes révisions.
+            </p>
 
-              <div class="p-4 rounded-xl bg-brandBg border-l-4 border-brandDark space-y-1">
-                <h4 class="font-mono-custom font-bold uppercase text-xs text-brandAccent">Ce que j'en retire</h4>
-                <p class="text-brandDark/85 leading-relaxed">
-                  Maîtrise de l'ingénierie de prompt appliquée au code, intégration d'outils d'IA pour accélérer le prototypage fonctionnel, gestion de versions sous Git et déploiement automatisé sur GitHub Pages.
-                </p>
-              </div>
+            <div class="project-takeaway">
+              <strong>Ce que j'en retire :</strong> Maîtrise de l'ingénierie de prompt appliquée au code, intégration d'outils d'IA pour accélérer le prototypage fonctionnel, gestion de versions sous Git et déploiement automatisé sur GitHub Pages.
+            </div>
 
-              <div class="pt-2 flex flex-wrap items-center gap-4">
-                <a href="https://camillephp15.github.io/mon-site-orga/" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brandDark text-brandBg text-xs font-mono-custom font-bold uppercase hover:bg-brandBlue transition-all">
-                  <span>Voir la Démo ↗</span>
-                </a>
-                <a href="https://github.com/camillephp15/mon-site-orga" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-brandDark text-brandDark text-xs font-mono-custom font-bold uppercase hover:bg-brandDark/5 transition-all">
-                  <span>Code GitHub ↗</span>
-                </a>
-              </div>
+            <div class="tags-container">
+              <span class="tag">Antigravity</span>
+              <span class="tag">HTML5 / CSS3</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">GitHub Pages</span>
+            </div>
+
+            <div class="project-links">
+              <a href="https://camillephp15.github.io/mon-site-orga/" target="_blank" class="btn-project btn-project-fill">Voir la Démo ↗</a>
+              <a href="https://github.com/camillephp15/mon-site-orga" target="_blank" class="btn-project btn-project-line">Code GitHub ↗</a>
             </div>
           </div>
         </article>
 
-        <!-- PROJET 2 : ÉCHELLE DE POMPIER (Projet PIX ESILV) -->
-        <article class="p-6 sm:p-8 rounded-3xl bg-brandCard border border-brandLine/70 card-hover space-y-6">
-          <div class="flex flex-wrap items-start justify-between gap-4 border-b border-brandLine/50 pb-4">
-            <div>
-              <div class="flex items-center gap-2 mb-1">
-                <span class="text-xs font-mono-custom font-bold px-2.5 py-0.5 rounded bg-brandDark text-brandBg">2026</span>
-                <span class="text-xs font-mono-custom text-brandAccent font-bold">PROJET D'INGÉNIERIE PIX (ESILV)</span>
+        <!-- PROJET 2 : ÉCHELLE PIX -->
+        <article class="project-card">
+          <div class="carousel" id="carousel-2">
+            <div class="carousel-slides">
+              <div class="carousel-slide">
+                <img src="assets/pix-1.jpg" onerror="this.src='https://placehold.co/800x600/ffeedd/251229?text=Échelle+PIX+Modélisation+3D'" alt="Modélisation 3D échelle pompier">
               </div>
-              <h3 class="text-xl sm:text-2xl font-bold font-mono-custom text-brandDark">
-                Échelle de Pompier à Déploiement Manuel
-              </h3>
+              <div class="carousel-slide">
+                <img src="assets/pix-2.jpg" onerror="this.src='https://placehold.co/800x600/ffeedd/251229?text=Échelle+PIX+Prototype'" alt="Prototype échelle pompier">
+              </div>
+              <div class="carousel-slide">
+                <img src="assets/pix-3.jpg" onerror="this.src='https://placehold.co/800x600/ffeedd/251229?text=Échelle+PIX+Équipe'" alt="Travail équipe échelle pompier">
+              </div>
             </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">SolidWorks</span>
-              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Ingénierie Mécanique</span>
-              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Gestion d'Équipe</span>
-              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Prototypage</span>
+            <button class="carousel-btn prev" onclick="moveSlide('carousel-2', -1)">‹</button>
+            <button class="carousel-btn next" onclick="moveSlide('carousel-2', 1)">›</button>
+            <div class="carousel-dots">
+              <span class="dot active" onclick="goToSlide('carousel-2', 0)"></span>
+              <span class="dot" onclick="goToSlide('carousel-2', 1)"></span>
+              <span class="dot" onclick="goToSlide('carousel-2', 2)"></span>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <!-- Carrousel d'images Projet 2 -->
-            <div class="lg:col-span-5">
-              <div class="carousel-container" id="carousel-2">
-                <div class="carousel-slides">
-                  <div class="carousel-slide">
-                    <img src="assets/pix-1.jpg" onerror="this.src='https://placehold.co/800x600/fae7e4/151d65?text=Échelle+PIX+Vue+3D'" alt="Modélisation 3D échelle pompier">
-                  </div>
-                  <div class="carousel-slide">
-                    <img src="assets/pix-2.jpg" onerror="this.src='https://placehold.co/800x600/fae7e4/151d65?text=Échelle+PIX+Prototype'" alt="Prototype échelle pompier">
-                  </div>
-                  <div class="carousel-slide">
-                    <img src="assets/pix-3.jpg" onerror="this.src='https://placehold.co/800x600/fae7e4/151d65?text=Échelle+PIX+Équipe'" alt="Travail d'équipe PIX">
-                  </div>
-                </div>
-                <button class="carousel-btn prev" onclick="moveSlide('carousel-2', -1)">‹</button>
-                <button class="carousel-btn next" onclick="moveSlide('carousel-2', 1)">›</button>
-                <div class="carousel-dots">
-                  <span class="carousel-dot active" onclick="goToSlide('carousel-2', 0)"></span>
-                  <span class="carousel-dot" onclick="goToSlide('carousel-2', 1)"></span>
-                  <span class="carousel-dot" onclick="goToSlide('carousel-2', 2)"></span>
-                </div>
-              </div>
+          <div class="project-info">
+            <span class="project-meta">2026 • PROJET D'INGÉNIERIE PIX (ESILV)</span>
+            <h3>Échelle de Pompier à Déploiement Manuel</h3>
+            
+            <p class="project-desc">
+              Projet d'ingénierie collaborative mené au sein d'une équipe de 5 étudiants. De l'étude du cahier des charges fonctionnel jusqu'à la fabrication du prototype physique, nous avons imaginé, dimensionné et modélisé en 3D un mécanisme d'échelle télescopique à élongation manuelle.
+            </p>
+
+            <div class="project-takeaway">
+              <strong>Ce que j'en retire :</strong> Gestion de projet en équipe pluridisciplinaire, modélisation volumique sous contraintes mécaniques sur SolidWorks, prototypage rapide et validation expérimentale des tolérances.
             </div>
 
-            <!-- Description & Retours Projet 2 -->
-            <div class="lg:col-span-7 space-y-4 text-sm">
-              <p class="text-brandDark/85 leading-relaxed">
-                Projet d'ingénierie collaborative mené au sein d'une équipe de 5 étudiants. De l'étude du cahier des charges fonctionnel jusqu'à la fabrication du prototype physique, nous avons imaginé, dimensionné et modélisé en 3D un mécanisme d'échelle télescopique à élongation manuelle.
-              </p>
-
-              <div class="p-4 rounded-xl bg-brandBg border-l-4 border-brandDark space-y-1">
-                <h4 class="font-mono-custom font-bold uppercase text-xs text-brandAccent">Ce que j'en retire</h4>
-                <p class="text-brandDark/85 leading-relaxed">
-                  Gestion de projet en équipe pluridisciplinaire, modélisation volumique sous contraintes mécaniques sur SolidWorks, prototypage rapide et validation expérimentale des tolérances.
-                </p>
-              </div>
-
-              <div class="pt-2 flex items-center gap-3 text-xs font-mono-custom font-bold text-brandDark/80">
-                <span class="px-3 py-1.5 rounded-lg bg-brandBg border border-brandLine">Projet PIX validé avec succès</span>
-              </div>
+            <div class="tags-container">
+              <span class="tag">SolidWorks</span>
+              <span class="tag">Ingénierie Mécanique</span>
+              <span class="tag">Travail en Groupe</span>
+              <span class="tag">Prototypage</span>
             </div>
           </div>
         </article>
 
         <!-- PROJET 3 : PONG PYTHON -->
-        <article class="p-6 sm:p-8 rounded-3xl bg-brandCard border border-brandLine/70 card-hover space-y-6">
-          <div class="flex flex-wrap items-start justify-between gap-4 border-b border-brandLine/50 pb-4">
-            <div>
-              <div class="flex items-center gap-2 mb-1">
-                <span class="text-xs font-mono-custom font-bold px-2.5 py-0.5 rounded bg-brandDark text-brandBg">JUIN 2025</span>
-                <span class="text-xs font-mono-custom text-brandAccent font-bold">PROJET INFORMATIQUE TERMINALE</span>
+        <article class="project-card">
+          <div class="carousel" id="carousel-3">
+            <div class="carousel-slides">
+              <div class="carousel-slide">
+                <img src="assets/pong-1.jpg" onerror="this.src='https://placehold.co/800x600/ffeedd/251229?text=Pong+Python+Jeu'" alt="Pong Python partie">
               </div>
-              <h3 class="text-xl sm:text-2xl font-bold font-mono-custom text-brandDark">
-                Jeu de Pong Graphique Solo
-              </h3>
+              <div class="carousel-slide">
+                <img src="assets/pong-2.jpg" onerror="this.src='https://placehold.co/800x600/ffeedd/251229?text=Pong+Python+Code'" alt="Pong Python code source">
+              </div>
             </div>
-            <div class="flex flex-wrap gap-2">
-              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Python</span>
-              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Algorithmique</span>
-              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Game Loop</span>
-              <span class="tech-badge px-2.5 py-1 rounded-md bg-brandBg text-xs font-bold text-brandBlue border border-brandLine">Physique des collisions</span>
+            <button class="carousel-btn prev" onclick="moveSlide('carousel-3', -1)">‹</button>
+            <button class="carousel-btn next" onclick="moveSlide('carousel-3', 1)">›</button>
+            <div class="carousel-dots">
+              <span class="dot active" onclick="goToSlide('carousel-3', 0)"></span>
+              <span class="dot" onclick="goToSlide('carousel-3', 1)"></span>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <!-- Carrousel d'images Projet 3 -->
-            <div class="lg:col-span-5">
-              <div class="carousel-container" id="carousel-3">
-                <div class="carousel-slides">
-                  <div class="carousel-slide">
-                    <img src="assets/pong-1.jpg" onerror="this.src='https://placehold.co/800x600/fae7e4/151d65?text=Pong+Python+Jeu'" alt="Pong Python en cours">
-                  </div>
-                  <div class="carousel-slide">
-                    <img src="assets/pong-2.jpg" onerror="this.src='https://placehold.co/800x600/fae7e4/151d65?text=Pong+Python+Code'" alt="Extrait de code Pong">
-                  </div>
-                </div>
-                <button class="carousel-btn prev" onclick="moveSlide('carousel-3', -1)">‹</button>
-                <button class="carousel-btn next" onclick="moveSlide('carousel-3', 1)">›</button>
-                <div class="carousel-dots">
-                  <span class="carousel-dot active" onclick="goToSlide('carousel-3', 0)"></span>
-                  <span class="carousel-dot" onclick="goToSlide('carousel-3', 1)"></span>
-                </div>
-              </div>
+          <div class="project-info">
+            <span class="project-meta">JUIN 2025 • PROJET INFORMATIQUE TERMINALE</span>
+            <h3>Jeu de Pong Graphique Solo</h3>
+            
+            <p class="project-desc">
+              Développement d'un jeu d'arcade type Pong à un joueur avec interface graphique en Python. Implémentation de la boucle principale du moteur de jeu (*game loop*), de la détection de trajectoires et de collisions élastiques avec rebonds vectoriels, de la gestion du score et des conditions d'accélération progressive de la balle.
+            </p>
+
+            <div class="project-takeaway">
+              <strong>Ce que j'en retire :</strong> Consolidation des fondations algorithmiques, découpage modulaire du code, gestion d'événements clavier en temps réel et passion confirmée pour le développement logiciel.
             </div>
 
-            <!-- Description & Retours Projet 3 -->
-            <div class="lg:col-span-7 space-y-4 text-sm">
-              <p class="text-brandDark/85 leading-relaxed">
-                Développement d'un jeu d'arcade type Pong à un joueur avec interface graphique en Python. Implémentation de la boucle principale du moteur de jeu (<em>game loop</em>), de la détection de trajectoires et de collisions élastiques avec rebonds vectoriels, de la gestion du score et des conditions d'accélération progressive de la balle.
-              </p>
-
-              <div class="p-4 rounded-xl bg-brandBg border-l-4 border-brandDark space-y-1">
-                <h4 class="font-mono-custom font-bold uppercase text-xs text-brandAccent">Ce que j'en retire</h4>
-                <p class="text-brandDark/85 leading-relaxed">
-                  Consolidation des fondations algorithmiques, découpage modulaire du code, gestion d'événements clavier en temps réel et rendu graphique.
-                </p>
-              </div>
-
-              <div class="pt-2 flex items-center gap-3 text-xs font-mono-custom font-bold text-brandDark/80">
-                <span class="px-3 py-1.5 rounded-lg bg-brandBg border border-brandLine">Projet fondateur de mon orientation tech</span>
-              </div>
+            <div class="tags-container">
+              <span class="tag">Python</span>
+              <span class="tag">Algorithmique</span>
+              <span class="tag">Game Loop</span>
+              <span class="tag">Collisions</span>
             </div>
           </div>
         </article>
-
       </div>
 
-      <!-- SECTION ENGAGEMENTS & ÉGALITÉ DES CHANCES -->
-      <section class="pt-8 border-t border-brandLine space-y-8">
-        
-        <div class="space-y-2">
-          <span class="text-xs font-mono-custom uppercase tracking-widest font-bold text-brandAccent">Au-delà du code</span>
-          <h3 class="text-2xl sm:text-3xl font-bold font-mono-custom uppercase text-brandDark">
-            Engagements &amp; Égalité des Chances
-          </h3>
+      <!-- SECTION ENGAGEMENTS -->
+      <div class="section-header" style="margin-top: 5rem;">
+        <span class="section-num">03 / Égalité des chances &amp; Mixité</span>
+        <h2 class="section-title">Engagements Associatifs</h2>
+      </div>
+
+      <div class="engagements-grid">
+        <div class="engagement-card">
+          <span class="engagement-badge">Association Nationale</span>
+          <h3>Elles bougent</h3>
+          <p>
+            Engagée en tant que <strong>marraine étudiante</strong> pour promouvoir la place des femmes dans les carrières scientifiques, numériques et technologiques. Témoignages et animations auprès de collégiennes et lycéennes pour déconstruire les stéréotypes de genre et susciter des vocations d'ingénieures.
+          </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          <!-- Association Elles Bougent -->
-          <div class="p-6 sm:p-7 rounded-3xl bg-brandCard border-2 border-brandDark/20 space-y-4 card-hover">
-            <div class="flex items-center justify-between">
-              <span class="px-3 py-1 rounded-lg bg-rose-500/10 text-rose-800 border border-rose-300 font-mono-custom text-xs font-bold uppercase">
-                Association Nationale
-              </span>
-              <span class="font-mono-custom text-xs font-bold text-brandDark/60">Engagement actif</span>
-            </div>
-            
-            <h4 class="text-xl font-bold font-mono-custom text-brandDark">Elles bougent</h4>
-            
-            <p class="text-sm text-brandDark/85 leading-relaxed">
-              Engagée en tant que <strong>marraine étudiante</strong> pour promouvoir la place des femmes dans les carrières scientifiques, numériques et technologiques. Témoignages et animations auprès de collégiennes et lycéennes pour déconstruire les stéréotypes de genre et susciter des vocations d'ingénieures.
-            </p>
-            
-            <div class="pt-2 flex items-center gap-2 text-xs font-mono-custom font-bold text-brandBlue">
-              <span>● Pédagogie</span>
-              <span>● Prise de parole</span>
-              <span>● Mixité scientifique</span>
+        <div class="engagement-card">
+          <span class="engagement-badge">Pôle Léonard de Vinci</span>
+          <h3>La Cordée Mona Lisa</h3>
+          <p>
+            Implication dans le dispositif des <em>Cordées de la réussite</em>. Accompagnement, tutorat et ateliers pédagogiques auprès d'élèves de collèges et lycées partenaires pour lutter contre l'autocensure, préparer leur orientation vers l'enseignement supérieur et leur donner confiance dans les filières d'avenir.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ONGLET 4 : CONTACT
+    ============================================================ -->
+    <section id="tab-contact" class="tab-content">
+      <div class="section-header">
+        <span class="section-num">04 / Me joindre</span>
+        <h2 class="section-title">Contact</h2>
+      </div>
+
+      <div class="contact-container">
+        <div class="contact-info">
+          <h2>Échangeons sur une opportunité</h2>
+          <p>
+            À la recherche d'une <strong>alternance de 3 ans</strong> en <strong>cybersécurité &amp; informatique</strong> pour la rentrée de septembre 2027. N'hésitez pas à m'écrire !
+          </p>
+
+          <div class="contact-details">
+            <a href="mailto:camille.philippe34@gmail.com" class="contact-link">
+              <span>✉</span>
+              <span>camille.philippe34@gmail.com</span>
+            </a>
+
+            <a href="https://github.com/camillephp15" target="_blank" class="contact-link">
+              <span>GH</span>
+              <span>github.com/camillephp15</span>
+            </a>
+
+            <div class="contact-link" style="cursor: default;">
+              <span>📍</span>
+              <span>Paris La Défense (ESILV) / Montpellier</span>
             </div>
           </div>
 
-          <!-- La Cordée Mona Lisa -->
-          <div class="p-6 sm:p-7 rounded-3xl bg-brandCard border border-brandLine/70 space-y-4 card-hover">
-            <div class="flex items-center justify-between">
-              <span class="px-3 py-1 rounded-lg bg-brandBg text-brandDark border border-brandLine font-mono-custom text-xs font-bold uppercase">
-                Égalité des chances
-              </span>
-              <span class="font-mono-custom text-xs font-bold text-brandDark/60">Pôle Léonard de Vinci</span>
-            </div>
-            
-            <h4 class="text-xl font-bold font-mono-custom text-brandDark">La Cordée Mona Lisa</h4>
-            
-            <p class="text-sm text-brandDark/85 leading-relaxed">
-              Implication dans le dispositif des <em>Cordées de la réussite</em> porté par le Pôle Léonard de Vinci. Accompagnement, tutorat et ateliers pédagogiques auprès d'élèves de collèges et lycées partenaires pour lutter contre l'autocensure, préparer leur orientation vers l'enseignement supérieur et leur donner confiance dans les filières d'avenir.
-            </p>
-            
-            <div class="pt-2 flex items-center gap-2 text-xs font-mono-custom font-bold text-brandBlue">
-              <span>● Tutorat</span>
-              <span>● Transmission</span>
-              <span>● Égalité des chances</span>
-            </div>
-          </div>
-
+          <a href="assets/cv-camille-philippe.pdf" class="btn-sunset" target="_blank" download>
+            <span>Télécharger mon CV (PDF)</span>
+            <span>↓</span>
+          </a>
         </div>
-
-      </section>
-
-    </div>
-
-
-    <!-- ========================================================= -->
-    <!-- VUE 3 : CONTACT (Formulaire & Coordonnées directes)       -->
-    <!-- ========================================================= -->
-    <div id="view-contact" class="hidden space-y-12 transition-opacity duration-300">
-      
-      <div class="max-w-2xl space-y-3">
-        <span class="text-xs font-mono-custom uppercase tracking-widest font-bold text-brandAccent">03 / Prise de contact</span>
-        <h2 class="text-3xl sm:text-5xl font-bold font-mono-custom uppercase text-brandDark">
-          Me Contacter
-        </h2>
-        <p class="text-brandDark/80 text-sm sm:text-base leading-relaxed">
-          À la recherche d'une alternance ou d'un stage pour mon cycle ingénieur en Cybersécurité & IA, ou envie d'échanger sur un projet ? N'hésitez pas à m'écrire !
-        </p>
       </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
-        <!-- Coordonnées directes (Gauche) -->
-        <div class="lg:col-span-5 space-y-5">
-          
-          <div class="p-6 rounded-3xl bg-brandCard border border-brandLine/80 space-y-6">
-            <h3 class="font-mono-custom font-bold text-lg uppercase text-brandDark">Coordonnées</h3>
-            
-            <div class="space-y-4 text-sm">
-              
-              <!-- Email -->
-              <a href="mailto:camille.philippe34@gmail.com" class="flex items-center gap-4 p-3 rounded-2xl bg-brandBg border border-brandLine/60 hover:border-brandDark transition-all group">
-                <div class="w-10 h-10 rounded-xl bg-brandDark text-brandBg flex items-center justify-center font-bold text-base group-hover:scale-105 transition-transform">
-                  ✉
-                </div>
-                <div>
-                  <p class="text-xs font-mono-custom font-bold text-brandDark/60 uppercase">Email direct</p>
-                  <p class="font-semibold text-brandDark">camille.philippe34@gmail.com</p>
-                </div>
-              </a>
-
-              <!-- LinkedIn -->
-              <a href="https://linkedin.com" target="_blank" class="flex items-center gap-4 p-3 rounded-2xl bg-brandBg border border-brandLine/60 hover:border-brandDark transition-all group">
-                <div class="w-10 h-10 rounded-xl bg-brandDark text-brandBg flex items-center justify-center font-bold text-sm group-hover:scale-105 transition-transform">
-                  in
-                </div>
-                <div>
-                  <p class="text-xs font-mono-custom font-bold text-brandDark/60 uppercase">LinkedIn</p>
-                  <p class="font-semibold text-brandDark">Camille Philippe</p>
-                </div>
-              </a>
-
-              <!-- GitHub -->
-              <a href="https://github.com/camillephp15" target="_blank" class="flex items-center gap-4 p-3 rounded-2xl bg-brandBg border border-brandLine/60 hover:border-brandDark transition-all group">
-                <div class="w-10 h-10 rounded-xl bg-brandDark text-brandBg flex items-center justify-center font-bold text-sm group-hover:scale-105 transition-transform">
-                  GH
-                </div>
-                <div>
-                  <p class="text-xs font-mono-custom font-bold text-brandDark/60 uppercase">GitHub</p>
-                  <p class="font-semibold text-brandDark">github.com/camillephp15</p>
-                </div>
-              </a>
-
-              <!-- Localisation -->
-              <div class="flex items-center gap-4 p-3 rounded-2xl bg-brandBg/60 border border-brandLine/40">
-                <div class="w-10 h-10 rounded-xl bg-brandDark/20 text-brandDark flex items-center justify-center font-bold text-sm">
-                  📍
-                </div>
-                <div>
-                  <p class="text-xs font-mono-custom font-bold text-brandDark/60 uppercase">Localisation</p>
-                  <p class="font-semibold text-brandDark">Paris La Défense (ESILV) • Île-de-France</p>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- Télécharger le CV direct -->
-            <button onclick="telechargerCV()" class="w-full py-3.5 px-4 rounded-xl bg-brandDark text-brandBg font-mono-custom font-bold text-xs uppercase tracking-wider hover:bg-brandBlue transition-all flex items-center justify-center gap-2">
-              <span>Télécharger mon CV complet (PDF)</span>
-              <span>↓</span>
-            </button>
-          </div>
-
-        </div>
-
-        <!-- Formulaire de contact interactif (Droite) -->
-        <div class="lg:col-span-7">
-          <form id="contact-form" onsubmit="handleFormSubmit(event)" class="p-6 sm:p-8 rounded-3xl bg-brandCard border border-brandLine/80 space-y-5">
-            
-            <div class="flex items-center justify-between border-b border-brandLine/50 pb-3">
-              <h3 class="font-mono-custom font-bold text-lg uppercase text-brandDark">Envoyer un message</h3>
-              <span class="text-xs font-mono-custom text-brandDark/60 font-semibold">● Réponse rapide</span>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="space-y-1.5">
-                <label class="block text-xs font-mono-custom font-bold uppercase text-brandDark">Votre Nom / Entreprise *</label>
-                <input type="text" required placeholder="Ex : Alice Martin" class="w-full px-4 py-3 rounded-xl bg-brandBg border border-brandLine/70 focus:outline-none focus:ring-2 focus:ring-brandDark text-brandDark text-sm">
-              </div>
-              <div class="space-y-1.5">
-                <label class="block text-xs font-mono-custom font-bold uppercase text-brandDark">Votre Email *</label>
-                <input type="email" required placeholder="nom@entreprise.com" class="w-full px-4 py-3 rounded-xl bg-brandBg border border-brandLine/70 focus:outline-none focus:ring-2 focus:ring-brandDark text-brandDark text-sm">
-              </div>
-            </div>
-
-            <div class="space-y-1.5">
-              <label class="block text-xs font-mono-custom font-bold uppercase text-brandDark">Objet *</label>
-              <input type="text" required placeholder="Opportunité d'alternance / Échange technique" class="w-full px-4 py-3 rounded-xl bg-brandBg border border-brandLine/70 focus:outline-none focus:ring-2 focus:ring-brandDark text-brandDark text-sm">
-            </div>
-
-            <div class="space-y-1.5">
-              <label class="block text-xs font-mono-custom font-bold uppercase text-brandDark">Message *</label>
-              <textarea required rows="4" placeholder="Bonjour Camille, nous avons découvert votre profil d'ingénieure..." class="w-full px-4 py-3 rounded-xl bg-brandBg border border-brandLine/70 focus:outline-none focus:ring-2 focus:ring-brandDark text-brandDark text-sm resize-none"></textarea>
-            </div>
-
-            <!-- Message de feedback interactif -->
-            <div id="form-feedback" class="hidden p-4 rounded-xl bg-emerald-100 border border-emerald-300 text-emerald-900 text-sm font-mono-custom">
-              ✓ Merci pour votre message ! Une notification a été préparée et vous pouvez aussi me contacter directement par email.
-            </div>
-
-            <button type="submit" id="btn-submit" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-brandDark text-brandBg font-mono-custom font-bold text-xs uppercase tracking-wider hover:bg-brandBlue transition-all">
-              Transmettre le message
-            </button>
-
-          </form>
-        </div>
-
-      </div>
-
-    </div>
-
+    </section>
   </main>
 
-  <footer class="mt-20 border-t border-brandLine/70 bg-brandCard/50 py-8">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono-custom text-brandDark/70">
-      <div>
-        <p>© 2026 Camille Philippe — Étudiante Ingénieure ESILV (Cyber & IA)</p>
-      </div>
-      <div class="flex items-center gap-4">
-        <a href="#accueil" onclick="showView('accueil')" class="hover:text-brandDark underline">Accueil</a>
-        <a href="#projets" onclick="showView('projets')" class="hover:text-brandDark underline">Projets</a>
-        <a href="#contact" onclick="showView('contact')" class="hover:text-brandDark underline">Contact</a>
-        <a href="https://github.com/camillephp15" target="_blank" class="hover:text-brandDark underline">GitHub</a>
-      </div>
-    </div>
+  <footer>
+    <p>© 2026 Camille Philippe • Étudiante Ingénieure ESILV • Portfolio développé avec Antigravity</p>
   </footer>
 
-  <!-- Modal personnalisée pour simulation du CV -->
-  <div id="cv-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-brandCard max-w-md w-full rounded-3xl p-6 border-2 border-brandDark shadow-2xl space-y-4">
-      <div class="flex justify-between items-center border-b border-brandLine pb-3">
-        <h4 class="font-mono-custom font-bold text-brandDark uppercase text-sm">Téléchargement CV</h4>
-        <button onclick="closeCvModal()" class="text-brandDark font-mono-custom font-bold text-lg hover:opacity-70">✕</button>
-      </div>
-      <p class="text-sm text-brandDark/85">
-        Pour lier votre vrai fichier PDF dans votre projet GitHub, déposez simplement votre fichier dans le dossier racine sous le nom <code class="px-1.5 py-0.5 rounded bg-brandBg font-mono text-xs font-bold">cv-camille-philippe.pdf</code>.
-      </p>
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="closeCvModal()" class="px-4 py-2 rounded-xl bg-brandDark text-brandBg text-xs font-mono-custom font-bold uppercase">
-          Fermer
-        </button>
-      </div>
-    </div>
-  </div>
-
+  <!-- GESTION DE LA NAVIGATION ET DES CARROUSELS MULTIPLES -->
   <script>
-    // Navigation dynamique entre les 3 vues
-    function showView(viewName) {
-      const views = ['accueil', 'projets', 'contact'];
-      
-      views.forEach(v => {
-        const el = document.getElementById('view-' + v);
-        const navBtn = document.getElementById('nav-' + v);
-        
-        if (v === viewName) {
-          el.classList.remove('hidden');
-          if (navBtn) {
-            navBtn.classList.remove('border-transparent', 'text-brandDark/70');
-            navBtn.classList.add('border-brandDark', 'text-brandDark');
-          }
-        } else {
-          el.classList.add('hidden');
-          if (navBtn) {
-            navBtn.classList.remove('border-brandDark', 'text-brandDark');
-            navBtn.classList.add('border-transparent', 'text-brandDark/70');
-          }
+    // 1. Navigation par onglets (Accueil, Profil, Projets, Contact)
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    function switchTab(targetId) {
+      tabContents.forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.id === targetId) {
+          tab.classList.add('active');
         }
       });
 
-      // Mettre à jour l'URL sans recharger pour faciliter le partage
-      window.location.hash = viewName;
+      navButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-target') === targetId) {
+          btn.classList.add('active');
+        }
+      });
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Scroll direct vers la section profil sur la page d'accueil
-    function scrollToProfile() {
-      // Si on n'est pas sur la vue accueil, on l'affiche d'abord
-      showView('accueil');
-      setTimeout(() => {
-        const profileEl = document.getElementById('profil-section');
-        if (profileEl) {
-          profileEl.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 50);
-    }
+    navButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-target');
+        switchTab(targetId);
+      });
+    });
 
-    // Gestion de la soumission du formulaire de contact
-    function handleFormSubmit(event) {
-      event.preventDefault();
-      const feedback = document.getElementById('form-feedback');
-      const submitBtn = document.getElementById('btn-submit');
-      
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Transmission en cours...";
-      
-      setTimeout(() => {
-        feedback.classList.remove('hidden');
-        submitBtn.textContent = "Message envoyé !";
-        submitBtn.classList.add('bg-emerald-800');
-        event.target.reset();
-      }, 700);
-    }
-
-    // Gestion de la modale de téléchargement du CV
-    function telechargerCV() {
-      // Déclenche l'affichage d'un message informatif ou le téléchargement si le fichier est présent
-      const modal = document.getElementById('cv-modal');
-      modal.classList.remove('hidden');
-    }
-
-    function closeCvModal() {
-      document.getElementById('cv-modal').classList.add('hidden');
-    }
-
-    // Logique des carrousels d'images par projet
+    // 2. Gestion des carrousels d'images par projet
     const carouselsState = {
       'carousel-1': { current: 0, total: 3 },
       'carousel-2': { current: 0, total: 3 },
@@ -887,7 +1406,7 @@
       if (!carouselEl) return;
 
       const slidesEl = carouselEl.querySelector('.carousel-slides');
-      const dots = carouselEl.querySelectorAll('.carousel-dot');
+      const dots = carouselEl.querySelectorAll('.dot');
       const currentIndex = carouselsState[id].current;
 
       slidesEl.style.transform = `translateX(-${currentIndex * 100}%)`;
@@ -907,17 +1426,6 @@
       carouselsState[id].current = index;
       updateCarouselDOM(id);
     }
-
-    // Lecture du hash dans l'URL au chargement pour afficher la bonne vue
-    window.addEventListener('DOMContentLoaded', () => {
-      const hash = window.location.hash.replace('#', '');
-      if (['projets', 'contact'].includes(hash)) {
-        showView(hash);
-      } else {
-        showView('accueil');
-      }
-    });
   </script>
-
 </body>
 </html>
