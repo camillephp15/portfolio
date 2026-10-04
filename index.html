@@ -5,29 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Camille Philippe — Portfolio Ingénieure Cyber & IA</title>
 
-  <!-- Polices Google : Space Mono (technique/titres) & Space Grotesk (lecture fluide) -->
+  <!-- Google Fonts : Space Mono & Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg-base: #fff5f2;
-      --sunset-pink: #ff5e8e;
-      --sunset-coral: #ff7e67;
-      --sunset-violet: #845ec2;
-      --sunset-gradient: linear-gradient(135deg, #ff5e8e 0%, #ff8066 50%, #845ec2 100%);
-      --sunset-gradient-subtle: linear-gradient(135deg, rgba(255, 94, 142, 0.15) 0%, rgba(255, 126, 103, 0.12) 100%);
+      --bg-base: #fff7f5;
+      --primary-coral: #E96F6A;
+      --primary-coral-dark: #E44E49;
+      --primary-coral-light: rgba(233, 111, 106, 0.12);
       
-      --text-main: #251229;
-      --text-muted: rgba(37, 18, 41, 0.72);
+      --text-main: #241616;
+      --text-muted: rgba(36, 22, 22, 0.72);
       
-      --glass-card: rgba(255, 255, 255, 0.75);
-      --glass-border: rgba(255, 255, 255, 0.85);
-      --glass-border-subtle: rgba(255, 94, 142, 0.2);
-      --glass-shadow: 0 16px 36px -8px rgba(132, 94, 194, 0.12);
+      --glass-card: rgba(255, 255, 255, 0.88);
+      --glass-border: rgba(255, 255, 255, 0.95);
+      --glass-border-subtle: rgba(233, 111, 106, 0.22);
+      --glass-shadow: 0 16px 36px -8px rgba(233, 111, 106, 0.14);
       
-      --pill-bg: rgba(255, 255, 255, 0.85);
+      --pill-bg: #ffffff;
     }
 
     * {
@@ -48,20 +46,52 @@
       overflow-x: hidden;
     }
 
-    /* ORBES LUMINEUX D'ARRIÈRE-PLAN (EFFET SUNSET GLOW) */
+    /* CURSEUR PERSONNALISÉ */
+    @media (pointer: fine) {
+      body {
+        cursor: none;
+      }
+      a, button, .flip-card, .interactive-el, input, textarea {
+        cursor: none !important;
+      }
+    }
+
+    #custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--primary-coral);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.18s ease, height 0.18s ease, background 0.18s ease, border-color 0.18s ease, transform 0.08s linear;
+    }
+
+    /* Rétrécit en pastille pleine sans texte au survol */
+    #custom-cursor.hovered {
+      width: 10px;
+      height: 10px;
+      background: var(--primary-coral-dark);
+      border-color: var(--primary-coral-dark);
+    }
+
+    /* HALOS D'ARRIÈRE-PLAN UNIS */
     .ambient-glow {
       position: fixed;
       border-radius: 50%;
-      filter: blur(100px);
+      filter: blur(120px);
       z-index: -1;
       pointer-events: none;
-      opacity: 0.55;
+      opacity: 0.45;
     }
 
     .glow-1 {
-      width: 480px;
-      height: 480px;
-      background: radial-gradient(circle, rgba(255, 94, 142, 0.45) 0%, transparent 70%);
+      width: 520px;
+      height: 520px;
+      background: rgba(233, 111, 106, 0.28);
       top: -120px;
       right: -80px;
     }
@@ -69,31 +99,23 @@
     .glow-2 {
       width: 520px;
       height: 520px;
-      background: radial-gradient(circle, rgba(255, 126, 103, 0.35) 0%, transparent 70%);
+      background: rgba(228, 78, 73, 0.22);
       bottom: -150px;
       left: -100px;
     }
 
-    .glow-3 {
-      width: 380px;
-      height: 380px;
-      background: radial-gradient(circle, rgba(132, 94, 194, 0.25) 0%, transparent 70%);
-      top: 40%;
-      left: 30%;
-    }
-
-    /* EN-TÊTE ET NAVIGATION */
+    /* HEADER & NAVIGATION */
     header {
       width: 100%;
-      padding: 1.8rem 4rem 1.2rem;
+      padding: 1.6rem 4rem 1.2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
-      background-color: rgba(255, 245, 242, 0.82);
+      background-color: rgba(255, 247, 245, 0.9);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255, 94, 142, 0.15);
+      border-bottom: 1px solid rgba(233, 111, 106, 0.18);
       z-index: 100;
     }
 
@@ -104,7 +126,7 @@
       text-decoration: none;
       color: var(--text-main);
       font-family: 'Space Mono', monospace;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       letter-spacing: 0.08em;
     }
@@ -113,19 +135,19 @@
       width: 34px;
       height: 34px;
       border-radius: 10px;
-      background: var(--sunset-gradient);
+      background: var(--primary-coral);
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.85rem;
       font-weight: 700;
-      box-shadow: 0 4px 12px rgba(255, 94, 142, 0.35);
+      box-shadow: 0 4px 12px rgba(233, 111, 106, 0.3);
     }
 
     nav {
       display: flex;
-      gap: 2.2rem;
+      gap: 2rem;
     }
 
     nav button {
@@ -137,14 +159,13 @@
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      cursor: pointer;
       position: relative;
       padding: 0.4rem 0.2rem;
       transition: all 0.25s ease;
     }
 
     nav button:hover {
-      color: var(--sunset-pink);
+      color: var(--primary-coral);
       transform: translateY(-1px);
     }
 
@@ -159,8 +180,39 @@
       left: 0;
       width: 100%;
       height: 3px;
-      background: var(--sunset-gradient);
+      background: var(--primary-coral);
       border-radius: 3px;
+    }
+
+    /* BANDEAU DÉFILANT CONTINU (MARQUEE TICKER) */
+    .marquee-container {
+      width: 100%;
+      overflow: hidden;
+      background: rgba(233, 111, 106, 0.08);
+      border-bottom: 1px solid rgba(233, 111, 106, 0.18);
+      padding: 0.55rem 0;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .marquee-content {
+      display: inline-block;
+      animation: marqueeScroll 28s linear infinite;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary-coral);
+    }
+
+    .marquee-content span {
+      margin: 0 1.5rem;
+    }
+
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
     }
 
     /* CONTENEUR PRINCIPAL */
@@ -191,26 +243,53 @@
     ============================================================ */
     .hero-split {
       display: grid;
-      grid-template-columns: 1.2fr 0.9fr;
+      grid-template-columns: 1.25fr 0.9fr;
       gap: 4.5rem;
       align-items: center;
-      min-height: 70vh;
+      min-height: 68vh;
+    }
+
+    .profile-avatar-row {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      border-radius: 26px;
+      padding: 5px;
+      background: var(--primary-coral);
+      box-shadow: 0 12px 28px rgba(233, 111, 106, 0.28);
+      flex-shrink: 0;
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 22px;
+      object-fit: cover;
+      background-color: #ffd8d5;
+      border: 3px solid #ffffff;
+      display: block;
     }
 
     .status-tag {
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      padding: 0.4rem 1rem;
+      padding: 0.5rem 1.2rem;
       border-radius: 999px;
       background: var(--glass-card);
       border: 1px solid var(--glass-border-subtle);
       font-family: 'Space Mono', monospace;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 700;
       color: var(--text-main);
-      margin-bottom: 1.8rem;
-      box-shadow: 0 4px 14px rgba(255, 94, 142, 0.1);
+      box-shadow: 0 4px 14px rgba(233, 111, 106, 0.1);
     }
 
     .status-dot {
@@ -229,39 +308,37 @@
 
     .hero-text h1 {
       font-family: 'Space Mono', monospace;
-      font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+      font-size: clamp(2.1rem, 3.6vw, 3.2rem);
       font-weight: 700;
       letter-spacing: 0.04em;
-      line-height: 1.2;
-      margin-bottom: 2rem;
+      line-height: 1.22;
+      margin-bottom: 1.8rem;
       text-transform: uppercase;
-      background: linear-gradient(135deg, #251229 30%, #ff5e8e 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--text-main);
     }
 
     .hero-description {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 400;
       line-height: 1.75;
       max-width: 580px;
-      margin-bottom: 3rem;
+      margin-bottom: 2.8rem;
       color: var(--text-main);
     }
 
     .hero-description strong {
       font-weight: 700;
-      color: #b52b65;
+      color: var(--primary-coral);
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1.4rem;
     }
 
-    .btn-sunset {
+    .btn-coral {
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
@@ -271,19 +348,19 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: #ffffff;
-      background: var(--sunset-gradient);
+      background: var(--primary-coral);
       padding: 0.95rem 1.8rem;
       border-radius: 14px;
       text-decoration: none;
-      box-shadow: 0 8px 20px rgba(255, 94, 142, 0.3);
+      box-shadow: 0 8px 20px rgba(233, 111, 106, 0.28);
       transition: all 0.25s ease;
-      cursor: pointer;
       border: none;
     }
 
-    .btn-sunset:hover {
+    .btn-coral:hover {
+      background: var(--primary-coral-dark);
       transform: translateY(-3px);
-      box-shadow: 0 12px 26px rgba(255, 94, 142, 0.45);
+      box-shadow: 0 12px 26px rgba(233, 111, 106, 0.38);
     }
 
     .btn-outline {
@@ -300,13 +377,12 @@
       border: 1.5px solid var(--glass-border-subtle);
       background: var(--glass-card);
       backdrop-filter: blur(8px);
-      cursor: pointer;
       transition: all 0.25s ease;
     }
 
     .btn-outline:hover {
-      border-color: var(--sunset-pink);
-      color: var(--sunset-pink);
+      border-color: var(--primary-coral);
+      color: var(--primary-coral);
       transform: translateY(-2px);
     }
 
@@ -315,39 +391,47 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
     }
 
     .showcase-header {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 1rem;
-      cursor: pointer;
+      gap: 0.65rem;
+      margin-bottom: 1.2rem;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      background: var(--glass-card);
+      border: 1.5px solid var(--primary-coral);
+      box-shadow: 0 4px 14px rgba(233, 111, 106, 0.15);
+      transition: all 0.25s ease;
+    }
+
+    .showcase-header:hover {
+      transform: translateY(-2px);
+      background: #ffffff;
+      box-shadow: 0 6px 18px rgba(233, 111, 106, 0.25);
     }
 
     .showcase-title {
       font-family: 'Space Mono', monospace;
-      font-size: 1.1rem;
+      font-size: 0.95rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--sunset-pink);
+      color: var(--primary-coral);
     }
 
-    .curved-arrow {
-      width: 36px;
-      height: 24px;
-      stroke: var(--sunset-pink);
-      fill: none;
-      stroke-width: 2.2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      animation: nudgeArrow 1.8s ease-in-out infinite;
+    .pointer-icon {
+      width: 18px;
+      height: 18px;
+      fill: var(--primary-coral);
+      animation: pulseClick 1.6s ease-in-out infinite;
     }
 
-    @keyframes nudgeArrow {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(4px); }
+    @keyframes pulseClick {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2) rotate(-6deg); }
     }
 
     .showcase-card {
@@ -360,7 +444,6 @@
       box-shadow: var(--glass-shadow);
       border: 2px solid var(--glass-border);
       backdrop-filter: blur(14px);
-      cursor: pointer;
       position: relative;
       overflow: hidden;
       transition: transform 0.35s ease, box-shadow 0.35s ease;
@@ -368,7 +451,7 @@
 
     .showcase-card:hover {
       transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 24px 48px -10px rgba(255, 94, 142, 0.3);
+      box-shadow: 0 24px 48px -10px rgba(233, 111, 106, 0.25);
     }
 
     .showcase-inner {
@@ -377,7 +460,7 @@
       border-radius: 18px;
       overflow: hidden;
       position: relative;
-      background: linear-gradient(145deg, #251229 0%, #461b47 50%, #ff5e8e 100%);
+      background: #241616;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -398,15 +481,15 @@
       font-weight: 700;
       padding: 0.35rem 0.8rem;
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(6px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
 
     .showcase-mini-terminal {
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(0, 0, 0, 0.55);
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 14px;
       padding: 1.2rem;
@@ -440,11 +523,47 @@
       color: #fff;
     }
 
-    /* ============================================================
-       TITRES DE SECTIONS
-    ============================================================ */
+    /* MINI WIDGET D'AMBIANCE / PLAYLIST D'ÉTUDE */
+    .study-player {
+      margin-top: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--glass-border-subtle);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      box-shadow: 0 4px 12px rgba(233, 111, 106, 0.08);
+    }
+
+    .player-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 14px;
+    }
+
+    .player-bar {
+      width: 3px;
+      background: var(--primary-coral);
+      border-radius: 2px;
+      animation: equalizerJump 1.2s ease-in-out infinite;
+    }
+    .player-bar:nth-child(2) { animation-delay: 0.2s; height: 70%; }
+    .player-bar:nth-child(3) { animation-delay: 0.4s; height: 100%; }
+    .player-bar:nth-child(4) { animation-delay: 0.1s; height: 40%; }
+
+    @keyframes equalizerJump {
+      0%, 100% { height: 25%; }
+      50% { height: 100%; }
+    }
+
+    /* TITRES DE SECTIONS */
     .section-header {
-      margin-bottom: 3.5rem;
+      margin-bottom: 3rem;
     }
 
     .section-num {
@@ -452,7 +571,7 @@
       font-size: 0.85rem;
       font-weight: 700;
       letter-spacing: 0.15em;
-      color: var(--sunset-pink);
+      color: var(--primary-coral);
       text-transform: uppercase;
       display: block;
       margin-bottom: 0.4rem;
@@ -468,84 +587,135 @@
     }
 
     /* ============================================================
-       PAGE 2 : PROFIL & PARCOURS (PAGE SÉPARÉE)
+       PAGE 2 : PROFIL (FORMATION PLEINE LARGEUR & COMPÉTENCES EN 2 RANGS)
     ============================================================ */
-    .profile-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
+    .profile-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
     }
 
     .glass-card {
       background: var(--glass-card);
       border: 2px solid var(--glass-border);
-      border-radius: 24px;
-      padding: 2.5rem;
+      border-radius: 26px;
+      padding: 2.8rem;
       backdrop-filter: blur(14px);
       box-shadow: var(--glass-shadow);
     }
 
     .glass-card h2 {
       font-family: 'Space Mono', monospace;
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       text-transform: uppercase;
-      margin-bottom: 1.8rem;
+      margin-bottom: 2.2rem;
       padding-bottom: 0.8rem;
-      border-bottom: 2px solid rgba(255, 94, 142, 0.25);
+      border-bottom: 2px solid rgba(233, 111, 106, 0.25);
       color: var(--text-main);
+    }
+
+    /* TIMELINE PLEINE LARGEUR */
+    .timeline-container {
+      display: flex;
+      flex-direction: column;
+      position: relative;
     }
 
     .timeline-item {
       position: relative;
-      padding-left: 1.5rem;
-      margin-bottom: 2rem;
-      border-left: 2px solid rgba(255, 94, 142, 0.35);
+      padding-left: 2.2rem;
+      padding-bottom: 2.5rem;
+      border-left: 2px solid var(--primary-coral);
     }
 
     .timeline-item:last-child {
-      margin-bottom: 0;
+      padding-bottom: 0;
+      border-left-color: transparent;
+    }
+
+    .timeline-item.future-step {
+      border-left: 2.5px dashed var(--primary-coral);
+      background: rgba(233, 111, 106, 0.04);
+      padding: 1.2rem 1.4rem 2rem 2.2rem;
+      border-radius: 0 16px 16px 0;
+      margin-bottom: 0.5rem;
     }
 
     .timeline-item::before {
       content: '';
       position: absolute;
-      left: -6px;
-      top: 4px;
-      width: 10px;
-      height: 10px;
+      left: -7px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
-      background: var(--sunset-gradient);
-      box-shadow: 0 0 8px rgba(255, 94, 142, 0.6);
+      background: var(--primary-coral);
+      box-shadow: 0 0 10px rgba(233, 111, 106, 0.5);
+    }
+
+    .timeline-item.future-step::before {
+      background: #ffffff;
+      border: 2.5px solid var(--primary-coral);
+      box-shadow: 0 0 0 3px rgba(233, 111, 106, 0.15);
+    }
+
+    .future-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: var(--primary-coral);
+      color: #ffffff;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      margin-left: 0.6rem;
     }
 
     .timeline-year {
       font-family: 'Space Mono', monospace;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 700;
-      color: var(--sunset-pink);
+      color: var(--primary-coral);
       letter-spacing: 0.08em;
-      display: block;
+      display: inline-block;
       margin-bottom: 0.3rem;
     }
 
     .timeline-title {
       font-weight: 700;
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       color: var(--text-main);
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.3rem;
     }
 
     .timeline-sub {
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: var(--text-muted);
     }
 
-    .skills-group {
-      margin-bottom: 1.6rem;
+    /* RANGÉE 1 : TECHNIQUE (3 COLONNES) */
+    .skills-grid-top {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.8rem;
+      margin-bottom: 2rem;
     }
 
-    .skills-group:last-child {
-      margin-bottom: 0;
+    /* RANGÉE 2 : LANGUES & SOFT SKILLS (2 COLONNES) */
+    .skills-grid-bottom {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.8rem;
+    }
+
+    .skills-col {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid var(--glass-border-subtle);
+      border-radius: 20px;
+      padding: 1.5rem;
     }
 
     .skills-label {
@@ -553,32 +723,98 @@
       font-size: 0.85rem;
       font-weight: 700;
       letter-spacing: 0.08em;
-      color: var(--sunset-pink);
+      color: var(--primary-coral);
       text-transform: uppercase;
-      margin-bottom: 0.7rem;
+      margin-bottom: 1.2rem;
       display: block;
+      border-bottom: 1px dashed rgba(233, 111, 106, 0.25);
+      padding-bottom: 0.5rem;
     }
 
-    .tags-container {
+    .tech-pill-list {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
+      flex-direction: column;
+      gap: 0.85rem;
     }
 
-    .tag {
+    .tech-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      background: var(--pill-bg);
+      border: 1px solid rgba(233, 111, 106, 0.18);
+      padding: 0.65rem 0.9rem;
+      border-radius: 12px;
       font-family: 'Space Mono', monospace;
       font-size: 0.85rem;
       font-weight: 600;
-      background: var(--pill-bg);
       color: var(--text-main);
-      padding: 0.4rem 0.9rem;
-      border-radius: 10px;
-      border: 1px solid var(--glass-border-subtle);
-      box-shadow: 0 2px 8px rgba(255, 94, 142, 0.06);
+      box-shadow: 0 2px 6px rgba(233, 111, 106, 0.05);
+      transition: all 0.2s ease;
+    }
+
+    .tech-pill:hover {
+      border-color: var(--primary-coral);
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(233, 111, 106, 0.15);
+    }
+
+    .tech-pill-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* Images de logos officiels fixes et nettes */
+    .tech-pill img, .tech-pill svg {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .tech-pill-score {
+      font-size: 0.75rem;
+      color: var(--primary-coral);
+      font-weight: 700;
+    }
+
+    /* Effet hover actif sur les cartes simples (Langues et Soft Skills) */
+    .simple-pill {
+      background: var(--pill-bg);
+      border: 1px solid rgba(233, 111, 106, 0.18);
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.92rem;
+      color: var(--text-main);
+      box-shadow: 0 2px 6px rgba(233, 111, 106, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .simple-pill:hover {
+      border-color: var(--primary-coral);
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(233, 111, 106, 0.15);
+    }
+
+    .simple-pill span:first-child {
+      font-weight: 600;
+    }
+
+    .simple-pill span:last-child {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--primary-coral);
+      font-weight: 700;
     }
 
     /* ============================================================
-       PAGE 3 : PROJETS & ENGAGEMENTS
+       PAGE 3 : PROJETS & SLIDER AVANT/APRÈS
     ============================================================ */
     .projects-list {
       display: flex;
@@ -605,7 +841,83 @@
       transform: translateY(-4px);
     }
 
-    /* CARROUSEL STYLISÉ */
+    /* SLIDER COMPARATIF AVANT/APRÈS PIX (3D vs RÉEL) */
+    .split-slider-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4/3;
+      border-radius: 20px;
+      overflow: hidden;
+      user-select: none;
+      border: 1px solid var(--glass-border-subtle);
+      box-shadow: 0 10px 24px rgba(233, 111, 106, 0.12);
+      background: #f0e6e6;
+    }
+
+    .split-slider-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .split-slider-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      border-right: 3px solid #ffffff;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.25);
+    }
+
+    .split-slider-overlay .split-slider-img {
+      width: 100%;
+      max-width: none;
+    }
+
+    .split-slider-handle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary-coral);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translate(-50%, -50%);
+      font-size: 0.85rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .split-slider-badge-left,
+    .split-slider-badge-right {
+      position: absolute;
+      bottom: 12px;
+      padding: 0.3rem 0.75rem;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.65);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      z-index: 5;
+      backdrop-filter: blur(4px);
+    }
+    .split-slider-badge-left { left: 12px; }
+    .split-slider-badge-right { right: 12px; }
+
+    /* CARROUSEL STANDARD */
     .carousel {
       position: relative;
       width: 100%;
@@ -614,7 +926,7 @@
       overflow: hidden;
       background: #fae4e1;
       border: 1px solid var(--glass-border-subtle);
-      box-shadow: 0 10px 24px rgba(255, 94, 142, 0.12);
+      box-shadow: 0 10px 24px rgba(233, 111, 106, 0.12);
     }
 
     .carousel-slides {
@@ -640,7 +952,7 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.88);
       color: var(--text-main);
       border: 1px solid var(--glass-border-subtle);
       width: 36px;
@@ -651,7 +963,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
       z-index: 10;
       backdrop-filter: blur(6px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -660,7 +971,7 @@
 
     .carousel-btn:hover {
       background: #ffffff;
-      color: var(--sunset-pink);
+      color: var(--primary-coral);
       transform: translateY(-50%) scale(1.1);
     }
 
@@ -682,14 +993,13 @@
       height: 8px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.6);
-      cursor: pointer;
       transition: all 0.25s ease;
     }
 
     .dot.active {
-      background: var(--sunset-pink);
+      background: var(--primary-coral);
       transform: scale(1.3);
-      box-shadow: 0 0 8px var(--sunset-pink);
+      box-shadow: 0 0 8px var(--primary-coral);
     }
 
     .project-info h3 {
@@ -704,7 +1014,7 @@
       font-family: 'Space Mono', monospace;
       font-size: 0.8rem;
       font-weight: 700;
-      color: var(--sunset-pink);
+      color: var(--primary-coral);
       letter-spacing: 0.08em;
       text-transform: uppercase;
       display: block;
@@ -719,8 +1029,8 @@
     }
 
     .project-takeaway {
-      background: var(--sunset-gradient-subtle);
-      border-left: 3px solid var(--sunset-pink);
+      background: var(--primary-coral-light);
+      border-left: 3px solid var(--primary-coral);
       padding: 0.9rem 1.2rem;
       border-radius: 0 12px 12px 0;
       font-size: 0.95rem;
@@ -745,14 +1055,14 @@
     }
 
     .btn-project-fill {
-      background: var(--sunset-gradient);
+      background: var(--primary-coral);
       color: #fff;
-      box-shadow: 0 4px 14px rgba(255, 94, 142, 0.25);
+      box-shadow: 0 4px 14px rgba(233, 111, 106, 0.25);
     }
 
     .btn-project-fill:hover {
+      background: var(--primary-coral-dark);
       transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(255, 94, 142, 0.35);
     }
 
     .btn-project-line {
@@ -762,12 +1072,12 @@
     }
 
     .btn-project-line:hover {
-      border-color: var(--sunset-pink);
-      color: var(--sunset-pink);
+      border-color: var(--primary-coral);
+      color: var(--primary-coral);
       transform: translateY(-2px);
     }
 
-    /* ENGAGEMENTS ASSOCIATIFS */
+    /* ENGAGEMENTS ASSOCIATIFS - STYLE ÉDITORIAL AVEC AUTEUR */
     .engagements-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -778,9 +1088,10 @@
       background: var(--glass-card);
       border: 2px solid var(--glass-border);
       border-radius: 24px;
-      padding: 2.4rem;
+      padding: 2.6rem;
       backdrop-filter: blur(14px);
       box-shadow: var(--glass-shadow);
+      position: relative;
     }
 
     .engagement-badge {
@@ -791,7 +1102,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: #fff;
-      background: var(--sunset-gradient);
+      background: var(--primary-coral);
       padding: 0.3rem 0.8rem;
       border-radius: 6px;
       margin-bottom: 1.2rem;
@@ -799,9 +1110,33 @@
 
     .engagement-card h3 {
       font-family: 'Space Mono', monospace;
-      font-size: 1.35rem;
+      font-size: 1.45rem;
       margin-bottom: 0.8rem;
       color: var(--text-main);
+    }
+
+    .quote-box {
+      margin-bottom: 1.4rem;
+      padding-left: 1.1rem;
+      border-left: 3px solid var(--primary-coral);
+    }
+
+    .engagement-quote {
+      font-style: italic;
+      color: var(--primary-coral-dark);
+      font-weight: 500;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      margin-bottom: 0.35rem;
+    }
+
+    .quote-author {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-align: right;
+      display: block;
     }
 
     .engagement-card p {
@@ -813,19 +1148,25 @@
     /* ============================================================
        PAGE 4 : CONTACT
     ============================================================ */
-    .contact-container {
-      display: grid;
-      grid-template-columns: 1fr 1.15fr;
-      gap: 4rem;
+    .contact-wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .contact-card-centered {
       background: var(--glass-card);
       border: 2px solid var(--glass-border);
       border-radius: 28px;
       padding: 3.5rem;
       backdrop-filter: blur(16px);
       box-shadow: var(--glass-shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
     }
 
-    .contact-info h2 {
+    .contact-card-centered h2 {
       font-family: 'Space Mono', monospace;
       font-size: 2.2rem;
       line-height: 1.2;
@@ -834,110 +1175,88 @@
       color: var(--text-main);
     }
 
-    .contact-info p {
+    .contact-card-centered p {
       font-size: 1.1rem;
-      margin-bottom: 2.2rem;
+      margin-bottom: 2.5rem;
       color: var(--text-muted);
+      max-width: 520px;
     }
 
-    .contact-details {
+    .contact-details-full {
+      width: 100%;
       display: flex;
       flex-direction: column;
       gap: 1.2rem;
       margin-bottom: 2.5rem;
     }
 
-    .contact-link {
+    .contact-link-full {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      justify-content: space-between;
+      gap: 1.2rem;
       font-family: 'Space Mono', monospace;
       font-size: 1rem;
       text-decoration: none;
       color: var(--text-main);
-      padding: 0.8rem 1.2rem;
-      border-radius: 12px;
+      padding: 1.1rem 1.4rem;
+      border-radius: 14px;
       background: var(--pill-bg);
       border: 1px solid var(--glass-border-subtle);
       transition: all 0.25s ease;
+      text-align: left;
     }
 
-    .contact-link:hover {
-      border-color: var(--sunset-pink);
-      color: var(--sunset-pink);
-      transform: translateX(4px);
-    }
-
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1.4rem;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .form-group label {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--text-main);
-    }
-
-    .form-group input,
-    .form-group textarea {
-      background: rgba(255, 255, 255, 0.85);
-      border: 1.5px solid rgba(255, 94, 142, 0.2);
-      border-radius: 12px;
-      padding: 0.95rem 1.1rem;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1rem;
-      color: var(--text-main);
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: var(--sunset-pink);
-      box-shadow: 0 0 0 3px rgba(255, 94, 142, 0.15);
-      background: #ffffff;
-    }
-
-    .btn-submit {
-      font-family: 'Space Mono', monospace;
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      background: var(--sunset-gradient);
-      color: #ffffff;
-      border: none;
-      border-radius: 12px;
-      padding: 1.1rem 2rem;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      align-self: flex-start;
-      box-shadow: 0 6px 18px rgba(255, 94, 142, 0.3);
-    }
-
-    .btn-submit:hover {
+    .contact-link-full:hover {
+      border-color: var(--primary-coral);
+      color: var(--primary-coral);
       transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(255, 94, 142, 0.45);
+      box-shadow: 0 6px 16px rgba(233, 111, 106, 0.16);
+    }
+
+    .contact-link-left {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .contact-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--primary-coral-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-icon-box svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--primary-coral);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .copy-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--primary-coral);
+      background: var(--primary-coral-light);
+      padding: 0.35rem 0.7rem;
+      border-radius: 6px;
+      transition: all 0.2s ease;
     }
 
     /* FOOTER */
     footer {
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 2.2rem 1rem;
       font-family: 'Space Mono', monospace;
       font-size: 0.85rem;
       color: var(--text-muted);
-      border-top: 1px solid rgba(255, 94, 142, 0.12);
+      border-top: 1px solid rgba(233, 111, 106, 0.18);
       margin-top: auto;
     }
 
@@ -955,38 +1274,60 @@
         padding: 1.5rem 1.5rem 4rem;
       }
       .hero-split,
-      .profile-grid,
       .project-card,
-      .contact-container {
+      .skills-grid-top,
+      .skills-grid-bottom {
         grid-template-columns: 1fr;
-        gap: 2.5rem;
+        gap: 2rem;
       }
-      .contact-container {
-        padding: 2rem;
+      .contact-card-centered {
+        padding: 2.2rem 1.5rem;
+      }
+      #custom-cursor {
+        display: none !important;
+      }
+      body, a, button {
+        cursor: auto !important;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- ORBES LUMINEUX (SUNSET GLOW) -->
+  <!-- CURSEUR INTERACTIF (RÉTRÉCIT EN PASTILLE PLEINE SANS TEXTE) -->
+  <div id="custom-cursor"></div>
+
+  <!-- HALOS D'ARRIÈRE-PLAN CORAIL -->
   <div class="ambient-glow glow-1"></div>
   <div class="ambient-glow glow-2"></div>
-  <div class="ambient-glow glow-3"></div>
 
   <!-- NAVIGATION -->
   <header>
-    <a href="#" class="logo" onclick="switchTab('tab-accueil'); return false;">
+    <a href="#" class="logo interactive-el" onclick="switchTab('tab-accueil'); return false;">
       <div class="logo-badge">CP</div>
       <span>CAMILLE PHILIPPE</span>
     </a>
     <nav>
-      <button class="nav-btn active" data-target="tab-accueil">ACCUEIL</button>
-      <button class="nav-btn" data-target="tab-profil">PROFIL</button>
-      <button class="nav-btn" data-target="tab-projets">PROJETS</button>
-      <button class="nav-btn" data-target="tab-contact">CONTACT</button>
+      <button class="nav-btn interactive-el active" data-target="tab-accueil">ACCUEIL</button>
+      <button class="nav-btn interactive-el" data-target="tab-profil">PROFIL</button>
+      <button class="nav-btn interactive-el" data-target="tab-projets">PROJETS</button>
+      <button class="nav-btn interactive-el" data-target="tab-contact">CONTACT</button>
     </nav>
   </header>
+
+  <!-- BANDEAU CONTINU DÉFILANT (MARQUEE) -->
+  <div class="marquee-container">
+    <div class="marquee-content">
+      <span>✦ ÉTUDIANTE INGÉNIEURE ESILV</span>
+      <span>✦ SPÉCIALISATION CYBER &amp; IA 2027</span>
+      <span>✦ RECHERCHE ALTERNANCE 3 ANS</span>
+      <span>✦ RECHERCHE STAGE 8 SEMAINES MINIMUM</span>
+      <span>✦ ÉTUDIANTE INGÉNIEURE ESILV</span>
+      <span>✦ SPÉCIALISATION CYBER &amp; IA 2027</span>
+      <span>✦ RECHERCHE ALTERNANCE 3 ANS</span>
+      <span>✦ RECHERCHE STAGE 8 SEMAINES MINIMUM</span>
+    </div>
+  </div>
 
   <main>
     <!-- ============================================================
@@ -995,9 +1336,16 @@
     <section id="tab-accueil" class="tab-content active">
       <div class="hero-split">
         <div class="hero-text">
-          <div class="status-tag">
-            <span class="status-dot"></span>
-            <span>Recherche d'alternance • Cyber &amp; IA</span>
+          
+          <!-- Photo de profil + Statut -->
+          <div class="profile-avatar-row">
+            <div class="avatar-wrapper">
+              <img src="assets/photo-camille.jpg" onerror="this.src='https://placehold.co/300x300/ffd8d5/E96F6A?text=Camille+Philippe'" alt="Photo de Camille Philippe" class="avatar-img">
+            </div>
+            <div class="status-tag">
+              <span class="status-dot"></span>
+              <span>Recherche d'alternance • Cyber &amp; IA</span>
+            </div>
           </div>
 
           <h1>BIENVENUE SUR MON PORTFOLIO !</h1>
@@ -1007,28 +1355,28 @@
           </p>
 
           <div class="hero-actions">
-            <a href="assets/cv-camille-philippe.pdf" class="btn-sunset" target="_blank" download>
+            <a href="assets/cv-camille-philippe.pdf" class="btn-coral interactive-el" target="_blank" download>
               <span>Téléchargez mon CV !</span>
               <span>↓</span>
             </a>
-            <button class="btn-outline" onclick="switchTab('tab-profil')">
+            <button class="btn-outline interactive-el" onclick="switchTab('tab-profil')">
               <span>Voir mon profil</span>
               <span>→</span>
             </button>
           </div>
         </div>
 
-        <!-- Vitrine interactive -->
+        <!-- Vitrine interactive droite -->
         <div class="hero-showcase">
-          <div class="showcase-header" onclick="switchTab('tab-projets')">
-            <span class="showcase-title">DÉCOUVRIR MES PROJETS</span>
-            <svg class="curved-arrow" viewBox="0 0 50 30">
-              <path d="M 5 20 Q 35 -5 42 18" />
-              <path d="M 36 12 L 42 18 L 47 11" />
+          <div class="showcase-header interactive-el" onclick="switchTab('tab-projets')">
+            <svg class="pointer-icon" viewBox="0 0 24 24">
+              <path d="M9 11.24V7.5a2.5 2.5 0 0 1 5 0v3.74a4 4 0 0 1 4 4v3.26a4.5 4.5 0 0 1-4.5 4.5h-4A4.5 4.5 0 0 1 5 18.5v-3.26a4 4 0 0 1 4-4z"/>
+              <path d="M11 2v3M7.05 3.05l2.12 2.12M16.95 3.05l-2.12 2.12" stroke="#E96F6A" stroke-width="2" stroke-linecap="round"/>
             </svg>
+            <span class="showcase-title">DÉCOUVRIR MES PROJETS</span>
           </div>
 
-          <div class="showcase-card" onclick="switchTab('tab-projets')">
+          <div class="showcase-card interactive-el" onclick="switchTab('tab-projets')">
             <div class="showcase-inner">
               <div class="showcase-badge-row">
                 <span class="showcase-badge">Projet Phare</span>
@@ -1052,12 +1400,23 @@
               </div>
             </div>
           </div>
+
+          <!-- Petit widget focus ambiance -->
+          <div class="study-player">
+            <div class="player-bars">
+              <div class="player-bar"></div>
+              <div class="player-bar"></div>
+              <div class="player-bar"></div>
+              <div class="player-bar"></div>
+            </div>
+            <span>Session de code • Focus Lofi</span>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         ONGLET 2 : PROFIL (DÉSORMAIS SUR SA PROPRE PAGE)
+         ONGLET 2 : PROFIL (FORMATION + COMPÉTENCES SUR 2 RANGÉES)
     ============================================================ -->
     <section id="tab-profil" class="tab-content">
       <div class="section-header">
@@ -1065,86 +1424,221 @@
         <h2 class="section-title">Mon Profil</h2>
       </div>
 
-      <div class="profile-grid">
-        <!-- Formations -->
+      <div class="profile-stack">
+        
+        <!-- 1. FORMATION PLEINE LARGEUR -->
         <div class="glass-card">
-          <h2>Formation</h2>
+          <h2>Formation &amp; Évolution</h2>
 
-          <div class="timeline-item">
-            <span class="timeline-year">2024 – PRÉSENT</span>
-            <div class="timeline-title">Cycle Préparatoire Intégré (2e année)</div>
-            <div class="timeline-sub">ESILV — École Supérieure d'Ingénieurs Léonard de Vinci (Paris La Défense)</div>
-          </div>
+          <div class="timeline-container">
+            
+            <!-- Étape 2027 (Future) -->
+            <div class="timeline-item future-step">
+              <span class="timeline-year">SEPTEMBRE 2027</span>
+              <span class="future-badge">⏳ À VENIR / OBJECTIF</span>
+              <div class="timeline-title">Spécialisation Cybersécurité &amp; Intelligence Artificielle</div>
+              <div class="timeline-sub">Cycle Ingénieur (Majeure) • ESILV • Sécurité des infrastructures, tests d'intrusion, cryptographie et modèles d'apprentissage automatique.</div>
+            </div>
 
-          <div class="timeline-item">
-            <span class="timeline-year">ORIENTATION 2027</span>
-            <div class="timeline-title">Spécialisation Cybersécurité &amp; IA</div>
-            <div class="timeline-sub">Cycle Ingénieur majeur : sécurité des architectures, cryptographie, modèles IA</div>
-          </div>
+            <!-- Étape Actuelle -->
+            <div class="timeline-item">
+              <span class="timeline-year">2024 – PRÉSENT (ACTUEL)</span>
+              <div class="timeline-title">Cycle Préparatoire Intégré (2e année)</div>
+              <div class="timeline-sub">ESILV — École Supérieure d'Ingénieurs Léonard de Vinci (Paris La Défense) • Mathématiques, physique, algorithmique appliquée et projets d'ingénierie collaborative.</div>
+            </div>
 
-          <div class="timeline-item">
-            <span class="timeline-year">FORMATION CONTINUE</span>
-            <div class="timeline-title">CS50x — Harvard University Online</div>
-            <div class="timeline-sub">Introduction to Computer Science (C, Python, structures de données, mémoire, SQL)</div>
-          </div>
+            <!-- Étape CS50x -->
+            <div class="timeline-item">
+              <span class="timeline-year">FORMATION CONTINUE</span>
+              <div class="timeline-title">CS50x — Harvard University Online</div>
+              <div class="timeline-sub">Introduction to Computer Science • Fondamentaux bas niveau (C), allocation mémoire, structures de données, algorithmique et SQL.</div>
+            </div>
 
-          <div class="timeline-item">
-            <span class="timeline-year">2025</span>
-            <div class="timeline-title">Baccalauréat Général — Mention Très Bien</div>
-            <div class="timeline-sub">Spécialités Scientifiques • Options Mathématiques Expertes &amp; DNL</div>
-          </div>
+            <!-- Étape Bac -->
+            <div class="timeline-item">
+              <span class="timeline-year">2025</span>
+              <div class="timeline-title">Baccalauréat Général — Mention Très Bien</div>
+              <div class="timeline-sub">Spécialités Scientifiques • Options Mathématiques Expertes &amp; DNL Anglais.</div>
+            </div>
 
-          <div class="timeline-item">
-            <span class="timeline-year">2021</span>
-            <div class="timeline-title">Brevet d'Initiation à l'Aéronautique (BIA)</div>
-            <div class="timeline-sub">Mention Très Bien</div>
+            <!-- Étape BIA -->
+            <div class="timeline-item">
+              <span class="timeline-year">2021</span>
+              <div class="timeline-title">Brevet d'Initiation à l'Aéronautique (BIA) — Mention Très Bien</div>
+              <div class="timeline-sub">Aérodynamique, mécanique du vol, navigation et histoire aéronautique.</div>
+            </div>
+
           </div>
         </div>
 
-        <!-- Compétences -->
+        <!-- 2. BOÎTE À OUTILS & COMPÉTENCES (2 RANGÉES) -->
         <div class="glass-card">
-          <h2>Compétences &amp; Atouts</h2>
+          <h2>Boîte à outils &amp; Compétences</h2>
 
-          <div class="skills-group">
-            <span class="skills-label">Langages &amp; Développement</span>
-            <div class="tags-container">
-              <span class="tag">Python</span>
-              <span class="tag">C#</span>
-              <span class="tag">SQL</span>
-              <span class="tag">HTML5 / CSS3</span>
-              <span class="tag">JavaScript</span>
+          <!-- RANGÉE DU HAUT : TECHNIQUE (3 COLONNES AVEC IMAGES DE VRAIS LOGOS) -->
+          <div class="skills-grid-top">
+            
+            <!-- Langages avec vrais logos via <img> -->
+            <div class="skills-col">
+              <span class="skills-label">Langages</span>
+              <div class="tech-pill-list">
+                
+                <div class="tech-pill interactive-el">
+                  <div class="tech-pill-content">
+                    <img src="assets/logos/python.png" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'" alt="Logo Python">
+                    <span>Python</span>
+                  </div>
+                  <span class="tech-pill-score">5/5</span>
+                </div>
+
+                <div class="tech-pill interactive-el">
+                  <div class="tech-pill-content">
+                    <img src="assets/logos/c.png" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg'" alt="Logo C">
+                    <span>Langage C</span>
+                  </div>
+                  <span class="tech-pill-score">4/5</span>
+                </div>
+
+                <div class="tech-pill interactive-el">
+                  <div class="tech-pill-content">
+                    <img src="assets/logos/csharp.png" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg'" alt="Logo C#">
+                    <span>C#</span>
+                  </div>
+                  <span class="tech-pill-score">4/5</span>
+                </div>
+
+                <div class="tech-pill interactive-el">
+                  <div class="tech-pill-content">
+                    <img src="assets/logos/sql.png" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'" alt="Logo SQL">
+                    <span>SQL</span>
+                  </div>
+                  <span class="tech-pill-score">4/5</span>
+                </div>
+
+                <div class="tech-pill interactive-el">
+                  <div class="tech-pill-content">
+                    <img src="assets/logos/html-css.png" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg'" alt="Logo HTML5">
+                    <span>HTML / CSS</span>
+                  </div>
+                  <span class="tech-pill-score">5/5</span>
+                </div>
+
+              </div>
             </div>
+
+            <!-- Environnements avec vrais logos via <img> -->
+            <!-- Environnements avec images locales du dépôt -->
+            <div class="skills-col">
+            <span class="skills-label">Environnements</span>
+            <div class="tech-pill-list">
+                
+                <div class="tech-pill interactive-el">
+                <div class="tech-pill-content">
+                    <img src="assets/logos/github.png" alt="Logo Git">
+                    <span>Git &amp; GitHub</span>
+                </div>
+                </div>
+
+                <div class="tech-pill interactive-el">
+                <div class="tech-pill-content">
+                    <img src="assets/logos/linux.png" alt="Logo Linux">
+                    <span>Linux (Bash)</span>
+                </div>
+                </div>
+
+                <div class="tech-pill interactive-el">
+                <div class="tech-pill-content">
+                    <img src="assets/logos/vscode.webp" alt="Logo VS Code">
+                    <span>VS Code</span>
+                </div>
+                </div>
+
+                <div class="tech-pill interactive-el">
+                <div class="tech-pill-content">
+                    <img src="assets/logos/solidworks.png" alt="Logo SolidWorks">
+                    <span>SolidWorks 3D</span>
+                </div>
+                </div>
+
+                <div class="tech-pill interactive-el">
+                <div class="tech-pill-content">
+                    <img src="assets/logos/antigravity.png" alt="Logo Antigravity">
+                    <span>Antigravity</span>
+                </div>
+                </div>
+
+            </div>
+            </div>
+
+            <!-- Maths & Sciences -->
+            <div class="skills-col">
+              <span class="skills-label">Maths &amp; Sciences</span>
+              <div class="tech-pill-list">
+                
+                <div class="tech-pill interactive-el">
+                  <div class="tech-pill-content">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#E96F6A" stroke-width="2"><path d="M4 19L19 4M4 4h7M13 20h7"/></svg>
+                    <span>Algèbre linéaire</span>
+                  </div>
+                  <span class="tech-pill-score">Prépa</span>
+                </div>
+
+                <div class="tech-pill interactive-el">
+                  <div class="tech-pill-content">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#E96F6A" stroke-width="2"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+                    <span>Analyse réelle</span>
+                  </div>
+                  <span class="tech-pill-score">Prépa</span>
+                </div>
+
+                <div class="tech-pill interactive-el">
+                  <div class="tech-pill-content">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#E96F6A" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                    <span>Probabilités</span>
+                  </div>
+                  <span class="tech-pill-score">Prépa</span>
+                </div>
+
+                <div class="tech-pill interactive-el">
+                  <div class="tech-pill-content">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#E96F6A" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5"/></svg>
+                    <span>Mécanique / RDM</span>
+                  </div>
+                  <span class="tech-pill-score">Physique</span>
+                </div>
+
+              </div>
+            </div>
+
           </div>
 
-          <div class="skills-group">
-            <span class="skills-label">Outils &amp; Environnements</span>
-            <div class="tags-container">
-              <span class="tag">Antigravity (AI Dev)</span>
-              <span class="tag">Git &amp; GitHub</span>
-              <span class="tag">Linux (Bash)</span>
-              <span class="tag">SolidWorks 3D</span>
-              <span class="tag">VS Code</span>
+          <!-- RANGÉE DU BAS : LANGUES & SOFT SKILLS (2 COLONNES AVEC EFFET HOVER) -->
+          <div class="skills-grid-bottom">
+            
+            <!-- Langues parlées -->
+            <div class="skills-col">
+              <span class="skills-label">Langues</span>
+              <div class="tech-pill-list">
+                <div class="simple-pill interactive-el"><span>Anglais</span><span>B2 (TOEFL)</span></div>
+                <div class="simple-pill interactive-el"><span>Espagnol</span><span>B1</span></div>
+              </div>
             </div>
+
+            <!-- Savoir-être -->
+            <div class="skills-col">
+              <span class="skills-label">Savoir-être</span>
+              <div class="tech-pill-list">
+                <div class="simple-pill interactive-el"><span>Rigueur</span><span>Analytique</span></div>
+                <div class="simple-pill interactive-el"><span>Écoute active</span><span>Collectif</span></div>
+                <div class="simple-pill interactive-el"><span>Curiosité</span><span>Veille &amp; Logique</span></div>
+                <div class="simple-pill interactive-el"><span>Esprit d'équipe</span><span>Projets</span></div>
+              </div>
+            </div>
+
           </div>
 
-          <div class="skills-group">
-            <span class="skills-label">Langues</span>
-            <div class="tags-container">
-              <span class="tag">Anglais (B2 • TOEFL en préparation)</span>
-              <span class="tag">Espagnol (B1)</span>
-            </div>
-          </div>
-
-          <div class="skills-group">
-            <span class="skills-label">Soft Skills &amp; Méthode</span>
-            <div class="tags-container">
-              <span class="tag">Écoute active</span>
-              <span class="tag">Curiosité technique</span>
-              <span class="tag">Esprit d'équipe</span>
-              <span class="tag">Rigueur &amp; Logique</span>
-            </div>
-          </div>
         </div>
+
       </div>
     </section>
 
@@ -1158,22 +1652,23 @@
       </div>
 
       <div class="projects-list">
+        
         <!-- PROJET 1 : SITE D'ORGA -->
         <article class="project-card">
           <div class="carousel" id="carousel-1">
             <div class="carousel-slides">
               <div class="carousel-slide">
-                <img src="assets/orga-1.jpg" onerror="this.src='https://placehold.co/800x600/ffeedd/251229?text=Site+Orga+Aperçu+1'" alt="Site organisation aperçu 1">
+                <img src="assets/orga-1.jpg" onerror="this.src='https://placehold.co/800x600/ffd8d5/241616?text=Site+Orga+Aperçu+1'" alt="Site organisation aperçu 1">
               </div>
               <div class="carousel-slide">
-                <img src="assets/orga-2.jpg" onerror="this.src='https://placehold.co/800x600/ffeedd/251229?text=Site+Orga+Aperçu+2'" alt="Site organisation aperçu 2">
+                <img src="assets/orga-2.jpg" onerror="this.src='https://placehold.co/800x600/ffd8d5/241616?text=Site+Orga+Aperçu+2'" alt="Site organisation aperçu 2">
               </div>
               <div class="carousel-slide">
-                <img src="assets/orga-3.jpg" onerror="this.src='https://placehold.co/800x600/ffeedd/251229?text=Site+Orga+Aperçu+3'" alt="Site organisation aperçu 3">
+                <img src="assets/orga-3.jpg" onerror="this.src='https://placehold.co/800x600/ffd8d5/241616?text=Site+Orga+Aperçu+3'" alt="Site organisation aperçu 3">
               </div>
             </div>
-            <button class="carousel-btn prev" onclick="moveSlide('carousel-1', -1)">‹</button>
-            <button class="carousel-btn next" onclick="moveSlide('carousel-1', 1)">›</button>
+            <button class="carousel-btn prev interactive-el" onclick="moveSlide('carousel-1', -1)">‹</button>
+            <button class="carousel-btn next interactive-el" onclick="moveSlide('carousel-1', 1)">›</button>
             <div class="carousel-dots">
               <span class="dot active" onclick="goToSlide('carousel-1', 0)"></span>
               <span class="dot" onclick="goToSlide('carousel-1', 1)"></span>
@@ -1193,41 +1688,25 @@
               <strong>Ce que j'en retire :</strong> Maîtrise de l'ingénierie de prompt appliquée au code, intégration d'outils d'IA pour accélérer le prototypage fonctionnel, gestion de versions sous Git et déploiement automatisé sur GitHub Pages.
             </div>
 
-            <div class="tags-container">
-              <span class="tag">Antigravity</span>
-              <span class="tag">HTML5 / CSS3</span>
-              <span class="tag">JavaScript</span>
-              <span class="tag">GitHub Pages</span>
-            </div>
-
             <div class="project-links">
-              <a href="https://camillephp15.github.io/mon-site-orga/" target="_blank" class="btn-project btn-project-fill">Voir la Démo ↗</a>
-              <a href="https://github.com/camillephp15/mon-site-orga" target="_blank" class="btn-project btn-project-line">Code GitHub ↗</a>
+              <a href="https://camillephp15.github.io/mon-site-orga/" target="_blank" class="btn-project btn-project-fill interactive-el">Voir la Démo ↗</a>
+              <a href="https://github.com/camillephp15/mon-site-orga" target="_blank" class="btn-project btn-project-line interactive-el">Code GitHub ↗</a>
             </div>
           </div>
         </article>
 
-        <!-- PROJET 2 : ÉCHELLE PIX -->
+        <!-- PROJET 2 : ÉCHELLE PIX AVEC COMPARATEUR SLIDER (3D vs RÉEL) -->
         <article class="project-card">
-          <div class="carousel" id="carousel-2">
-            <div class="carousel-slides">
-              <div class="carousel-slide">
-                <img src="assets/pix-1.jpg" onerror="this.src='https://placehold.co/800x600/ffeedd/251229?text=Échelle+PIX+Modélisation+3D'" alt="Modélisation 3D échelle pompier">
-              </div>
-              <div class="carousel-slide">
-                <img src="assets/pix-2.jpg" onerror="this.src='https://placehold.co/800x600/ffeedd/251229?text=Échelle+PIX+Prototype'" alt="Prototype échelle pompier">
-              </div>
-              <div class="carousel-slide">
-                <img src="assets/pix-3.jpg" onerror="this.src='https://placehold.co/800x600/ffeedd/251229?text=Échelle+PIX+Équipe'" alt="Travail équipe échelle pompier">
-              </div>
+          <div class="split-slider-wrapper interactive-el" id="pix-split-slider">
+            <img src="assets/pix-2.jpg" onerror="this.src='https://placehold.co/800x600/241616/ffffff?text=Prototype+Physique+Atelier'" class="split-slider-img" alt="Prototype réel échelle">
+            
+            <div class="split-slider-overlay" id="pix-slider-overlay">
+              <img src="assets/pix-1.jpg" onerror="this.src='https://placehold.co/800x600/E96F6A/ffffff?text=Modélisation+SolidWorks+3D'" class="split-slider-img" alt="Modèle SolidWorks 3D">
             </div>
-            <button class="carousel-btn prev" onclick="moveSlide('carousel-2', -1)">‹</button>
-            <button class="carousel-btn next" onclick="moveSlide('carousel-2', 1)">›</button>
-            <div class="carousel-dots">
-              <span class="dot active" onclick="goToSlide('carousel-2', 0)"></span>
-              <span class="dot" onclick="goToSlide('carousel-2', 1)"></span>
-              <span class="dot" onclick="goToSlide('carousel-2', 2)"></span>
-            </div>
+
+            <div class="split-slider-handle" id="pix-slider-handle">↔</div>
+            <span class="split-slider-badge-left">3D SolidWorks</span>
+            <span class="split-slider-badge-right">Prototype Réel</span>
           </div>
 
           <div class="project-info">
@@ -1242,11 +1721,9 @@
               <strong>Ce que j'en retire :</strong> Gestion de projet en équipe pluridisciplinaire, modélisation volumique sous contraintes mécaniques sur SolidWorks, prototypage rapide et validation expérimentale des tolérances.
             </div>
 
-            <div class="tags-container">
-              <span class="tag">SolidWorks</span>
-              <span class="tag">Ingénierie Mécanique</span>
-              <span class="tag">Travail en Groupe</span>
-              <span class="tag">Prototypage</span>
+            <div class="project-links">
+              <span class="btn-project btn-project-line" style="cursor: default;">SolidWorks 3D</span>
+              <span class="btn-project btn-project-line" style="cursor: default;">Équipe de 5</span>
             </div>
           </div>
         </article>
@@ -1256,14 +1733,14 @@
           <div class="carousel" id="carousel-3">
             <div class="carousel-slides">
               <div class="carousel-slide">
-                <img src="assets/pong-1.jpg" onerror="this.src='https://placehold.co/800x600/ffeedd/251229?text=Pong+Python+Jeu'" alt="Pong Python partie">
+                <img src="assets/pong-1.jpg" onerror="this.src='https://placehold.co/800x600/ffd8d5/241616?text=Pong+Python+Jeu'" alt="Pong Python partie">
               </div>
               <div class="carousel-slide">
-                <img src="assets/pong-2.jpg" onerror="this.src='https://placehold.co/800x600/ffeedd/251229?text=Pong+Python+Code'" alt="Pong Python code source">
+                <img src="assets/pong-2.jpg" onerror="this.src='https://placehold.co/800x600/ffd8d5/241616?text=Pong+Python+Code'" alt="Pong Python code">
               </div>
             </div>
-            <button class="carousel-btn prev" onclick="moveSlide('carousel-3', -1)">‹</button>
-            <button class="carousel-btn next" onclick="moveSlide('carousel-3', 1)">›</button>
+            <button class="carousel-btn prev interactive-el" onclick="moveSlide('carousel-3', -1)">‹</button>
+            <button class="carousel-btn next interactive-el" onclick="moveSlide('carousel-3', 1)">›</button>
             <div class="carousel-dots">
               <span class="dot active" onclick="goToSlide('carousel-3', 0)"></span>
               <span class="dot" onclick="goToSlide('carousel-3', 1)"></span>
@@ -1282,17 +1759,15 @@
               <strong>Ce que j'en retire :</strong> Consolidation des fondations algorithmiques, découpage modulaire du code, gestion d'événements clavier en temps réel et passion confirmée pour le développement logiciel.
             </div>
 
-            <div class="tags-container">
-              <span class="tag">Python</span>
-              <span class="tag">Algorithmique</span>
-              <span class="tag">Game Loop</span>
-              <span class="tag">Collisions</span>
+            <div class="project-links">
+              <span class="btn-project btn-project-line" style="cursor: default;">Python</span>
+              <span class="btn-project btn-project-line" style="cursor: default;">Algorithmique</span>
             </div>
           </div>
         </article>
       </div>
 
-      <!-- SECTION ENGAGEMENTS -->
+      <!-- SECTION ENGAGEMENTS ÉDITORIALE AVEC ZONE AUTEUR -->
       <div class="section-header" style="margin-top: 5rem;">
         <span class="section-num">03 / Égalité des chances &amp; Mixité</span>
         <h2 class="section-title">Engagements Associatifs</h2>
@@ -1302,16 +1777,32 @@
         <div class="engagement-card">
           <span class="engagement-badge">Association Nationale</span>
           <h3>Elles bougent</h3>
+          
+          <div class="quote-box">
+            <div class="engagement-quote">
+              « Démystifier les carrières d'ingénieures et susciter des vocations auprès des jeunes filles. »
+            </div>
+            <span class="quote-author">— Association Elles bougent</span>
+          </div>
+
           <p>
-            Engagée en tant que <strong>marraine étudiante</strong> pour promouvoir la place des femmes dans les carrières scientifiques, numériques et technologiques. Témoignages et animations auprès de collégiennes et lycéennes pour déconstruire les stéréotypes de genre et susciter des vocations d'ingénieures.
+            Engagée en tant que <strong>marraine étudiante</strong> pour promouvoir la place des femmes dans les carrières scientifiques et numériques. Témoignages et animations auprès de collégiennes et lycéennes pour déconstruire les stéréotypes de genre.
           </p>
         </div>
 
         <div class="engagement-card">
           <span class="engagement-badge">Pôle Léonard de Vinci</span>
           <h3>La Cordée Mona Lisa</h3>
+          
+          <div class="quote-box">
+            <div class="engagement-quote">
+              « Combattre l'autocensure et accompagner les élèves vers l'excellence scientifique. »
+            </div>
+            <span class="quote-author">— Dispositif Cordées de la réussite</span>
+          </div>
+
           <p>
-            Implication dans le dispositif des <em>Cordées de la réussite</em>. Accompagnement, tutorat et ateliers pédagogiques auprès d'élèves de collèges et lycées partenaires pour lutter contre l'autocensure, préparer leur orientation vers l'enseignement supérieur et leur donner confiance dans les filières d'avenir.
+            Implication active dans le dispositif des <em>Cordées de la réussite</em>. Tutorat pédagogique, aide méthodologique et ateliers d'ouverture scientifique auprès d'élèves de lycées partenaires.
           </p>
         </div>
       </div>
@@ -1321,37 +1812,79 @@
          ONGLET 4 : CONTACT
     ============================================================ -->
     <section id="tab-contact" class="tab-content">
-      <div class="section-header">
+      <div class="section-header" style="text-align: center;">
         <span class="section-num">04 / Me joindre</span>
         <h2 class="section-title">Contact</h2>
       </div>
 
-      <div class="contact-container">
-        <div class="contact-info">
+      <div class="contact-wrapper">
+        <div class="contact-card-centered">
           <h2>Échangeons sur une opportunité</h2>
           <p>
-            À la recherche d'une <strong>alternance de 3 ans</strong> en <strong>cybersécurité &amp; informatique</strong> pour la rentrée de septembre 2027. N'hésitez pas à m'écrire !
+            À la recherche d'une <strong>alternance de 3 ans</strong> en <strong>cybersécurité &amp; informatique</strong> pour la rentrée de septembre 2027. N'hésitez pas à me contacter par email ou via mes réseaux !
           </p>
 
-          <div class="contact-details">
-            <a href="mailto:camille.philippe34@gmail.com" class="contact-link">
-              <span>✉</span>
-              <span>camille.philippe34@gmail.com</span>
+          <div class="contact-details-full">
+            
+            <!-- Email direct avec bouton copier -->
+            <a href="mailto:camille.philippe34@gmail.com" class="contact-link-full interactive-el" id="copy-email-btn" onclick="copyEmail(event)">
+              <div class="contact-link-left">
+                <div class="contact-icon-box">
+                  <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </div>
+                <div>
+                  <small style="font-size:0.75rem; color:var(--primary-coral); font-weight:700;">EMAIL DIRECT</small>
+                  <div id="email-text">camille.philippe34@gmail.com</div>
+                </div>
+              </div>
+              <span class="copy-badge" id="copy-badge-label">Copier 📋</span>
             </a>
 
-            <a href="https://github.com/camillephp15" target="_blank" class="contact-link">
-              <span>GH</span>
-              <span>github.com/camillephp15</span>
+            <!-- GitHub -->
+            <a href="https://github.com/camillephp15" target="_blank" class="contact-link-full interactive-el">
+              <div class="contact-link-left">
+                <div class="contact-icon-box">
+                  <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </div>
+                <div>
+                  <small style="font-size:0.75rem; color:var(--primary-coral); font-weight:700;">GITHUB</small>
+                  <div>github.com/camillephp15</div>
+                </div>
+              </div>
+              <span class="copy-badge">Visiter ↗</span>
             </a>
 
-            <div class="contact-link" style="cursor: default;">
-              <span>📍</span>
-              <span>Paris La Défense (ESILV) / Montpellier</span>
+            <!-- LinkedIn -->
+            <a href="https://linkedin.com" target="_blank" class="contact-link-full interactive-el">
+              <div class="contact-link-left">
+                <div class="contact-icon-box">
+                  <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </div>
+                <div>
+                  <small style="font-size:0.75rem; color:var(--primary-coral); font-weight:700;">LINKEDIN</small>
+                  <div>Camille Philippe</div>
+                </div>
+              </div>
+              <span class="copy-badge">Connecter ↗</span>
+            </a>
+
+            <!-- Localisation -->
+            <div class="contact-link-full" style="cursor: default;">
+              <div class="contact-link-left">
+                <div class="contact-icon-box">
+                  <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                </div>
+                <div>
+                  <small style="font-size:0.75rem; color:var(--primary-coral); font-weight:700;">LOCALISATION</small>
+                  <div>Paris La Défense (ESILV) / Montpellier</div>
+                </div>
+              </div>
             </div>
+
           </div>
 
-          <a href="assets/cv-camille-philippe.pdf" class="btn-sunset" target="_blank" download>
-            <span>Télécharger mon CV (PDF)</span>
+          <a href="assets/cv-camille-philippe.pdf" class="btn-coral interactive-el" target="_blank" download>
+            <span>Télécharger mon CV complet (PDF)</span>
             <span>↓</span>
           </a>
         </div>
@@ -1360,12 +1893,12 @@
   </main>
 
   <footer>
-    <p>© 2026 Camille Philippe • Étudiante Ingénieure ESILV • Portfolio développé avec Antigravity</p>
+    <p>© 2026 Camille Philippe • Étudiante Ingénieure ESILV (Cyber &amp; IA) • Hébergé sur GitHub Pages</p>
   </footer>
 
-  <!-- GESTION DE LA NAVIGATION ET DES CARROUSELS MULTIPLES -->
+  <!-- SCRIPTS : NAVIGATION, CURSEUR, SLIDER AVANT/APRÈS, COPIE D'EMAIL -->
   <script>
-    // 1. Navigation par onglets (Accueil, Profil, Projets, Contact)
+    // 1. Navigation onglets
     const navButtons = document.querySelectorAll('.nav-btn');
     const tabContents = document.querySelectorAll('.tab-content');
 
@@ -1394,23 +1927,79 @@
       });
     });
 
-    // 2. Gestion des carrousels d'images par projet
+    // 2. Curseur personnalisé fluide (rétrécissement sans texte au hover)
+    const cursor = document.getElementById('custom-cursor');
+    let mouseX = -100, mouseY = -100;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.left = `${mouseX}px`;
+      cursor.style.top = `${mouseY}px`;
+    });
+
+    document.querySelectorAll('.interactive-el').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.classList.add('hovered');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.classList.remove('hovered');
+      });
+    });
+
+    // 3. Comparateur dynamique Avant/Après (Projet PIX)
+    const splitSlider = document.getElementById('pix-split-slider');
+    const splitOverlay = document.getElementById('pix-slider-overlay');
+    const splitHandle = document.getElementById('pix-slider-handle');
+
+    function updateSplitSlider(clientX) {
+      const rect = splitSlider.getBoundingClientRect();
+      let pos = (clientX - rect.left) / rect.width;
+      if (pos < 0.05) pos = 0.05;
+      if (pos > 0.95) pos = 0.95;
+      const percentage = pos * 100;
+      splitOverlay.style.width = `${percentage}%`;
+      splitHandle.style.left = `${percentage}%`;
+    }
+
+    let isDragging = false;
+    splitSlider.addEventListener('mousedown', (e) => { isDragging = true; updateSplitSlider(e.clientX); });
+    window.addEventListener('mouseup', () => { isDragging = false; });
+    window.addEventListener('mousemove', (e) => { if (isDragging) updateSplitSlider(e.clientX); });
+
+    splitSlider.addEventListener('touchstart', (e) => { updateSplitSlider(e.touches[0].clientX); });
+    splitSlider.addEventListener('touchmove', (e) => { updateSplitSlider(e.touches[0].clientX); });
+
+    // 4. Copie rapide de l'adresse email
+    function copyEmail(e) {
+      e.preventDefault();
+      const email = "camille.philippe34@gmail.com";
+      navigator.clipboard.writeText(email).then(() => {
+        const badge = document.getElementById('copy-badge-label');
+        badge.textContent = "Copié ! ✨";
+        badge.style.background = "#00d26a";
+        badge.style.color = "#ffffff";
+        setTimeout(() => {
+          badge.textContent = "Copier 📋";
+          badge.style.background = "var(--primary-coral-light)";
+          badge.style.color = "var(--primary-coral)";
+        }, 2200);
+      });
+    }
+
+    // 5. Gestion des carrousels classiques (Orga & Pong)
     const carouselsState = {
       'carousel-1': { current: 0, total: 3 },
-      'carousel-2': { current: 0, total: 3 },
       'carousel-3': { current: 0, total: 2 }
     };
 
     function updateCarouselDOM(id) {
       const carouselEl = document.getElementById(id);
       if (!carouselEl) return;
-
       const slidesEl = carouselEl.querySelector('.carousel-slides');
       const dots = carouselEl.querySelectorAll('.dot');
       const currentIndex = carouselsState[id].current;
-
       slidesEl.style.transform = `translateX(-${currentIndex * 100}%)`;
-
       dots.forEach((dot, index) => {
         dot.classList.toggle('active', index === currentIndex);
       });
