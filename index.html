@@ -705,10 +705,30 @@
     }
 
     /* RANGÉE 2 : LANGUES & SOFT SKILLS (2 COLONNES) */
+    /* RANGÉE 2 : LANGUES & SOFT SKILLS CENTRÉES AVEC LA MÊME LARGEUR */
     .skills-grid-bottom {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      /* On réutilise la grille à 3 colonnes identique à celle du haut */
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.8rem;
+    }
+
+    /* Le 1er cadre (Langues) démarre sur la colonne centrale-gauche */
+    .skills-grid-bottom .skills-col:nth-child(1) {
+      grid-column: 1 / 2;
+    }
+
+    /* Ou pour un vrai centrage parfait au milieu de la rangée de 3 colonnes : */
+    .skills-grid-bottom {
+      display: flex;
+      justify-content: center;
+      gap: 1.8rem;
+    }
+
+    .skills-grid-bottom .skills-col {
+      /* Calcule exactement 1/3 de la largeur moins les espacements pour égaler le haut */
+      width: calc((100% - (2 * 1.8rem)) / 3);
+      max-width: 100%;
     }
 
     .skills-col {
@@ -1488,15 +1508,13 @@
                     <img src="assets/logos/python.png" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'" alt="Logo Python">
                     <span>Python</span>
                   </div>
-                  <span class="tech-pill-score">5/5</span>
                 </div>
 
                 <div class="tech-pill interactive-el">
                   <div class="tech-pill-content">
-                    <img src="assets/logos/c.png" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg'" alt="Logo C">
+                    <img src="c.png" alt="Logo C">
                     <span>Langage C</span>
                   </div>
-                  <span class="tech-pill-score">4/5</span>
                 </div>
 
                 <div class="tech-pill interactive-el">
@@ -1504,15 +1522,13 @@
                     <img src="assets/logos/csharp.png" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg'" alt="Logo C#">
                     <span>C#</span>
                   </div>
-                  <span class="tech-pill-score">4/5</span>
                 </div>
 
                 <div class="tech-pill interactive-el">
                   <div class="tech-pill-content">
-                    <img src="assets/logos/sql.png" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg'" alt="Logo SQL">
+                    <img src="sql.png" alt="Logo SQL">
                     <span>SQL</span>
                   </div>
-                  <span class="tech-pill-score">4/5</span>
                 </div>
 
                 <div class="tech-pill interactive-el">
@@ -1520,9 +1536,7 @@
                     <img src="assets/logos/html-css.png" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg'" alt="Logo HTML5">
                     <span>HTML / CSS</span>
                   </div>
-                  <span class="tech-pill-score">5/5</span>
                 </div>
-
               </div>
             </div>
 
@@ -1580,7 +1594,6 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="#E96F6A" stroke-width="2"><path d="M4 19L19 4M4 4h7M13 20h7"/></svg>
                     <span>Algèbre linéaire</span>
                   </div>
-                  <span class="tech-pill-score">Prépa</span>
                 </div>
 
                 <div class="tech-pill interactive-el">
@@ -1588,7 +1601,6 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="#E96F6A" stroke-width="2"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
                     <span>Analyse réelle</span>
                   </div>
-                  <span class="tech-pill-score">Prépa</span>
                 </div>
 
                 <div class="tech-pill interactive-el">
@@ -1596,7 +1608,6 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="#E96F6A" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
                     <span>Probabilités</span>
                   </div>
-                  <span class="tech-pill-score">Prépa</span>
                 </div>
 
                 <div class="tech-pill interactive-el">
@@ -1604,7 +1615,6 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="#E96F6A" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5"/></svg>
                     <span>Mécanique / RDM</span>
                   </div>
-                  <span class="tech-pill-score">Physique</span>
                 </div>
 
               </div>
