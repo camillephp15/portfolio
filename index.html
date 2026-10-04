@@ -1420,17 +1420,6 @@
               </div>
             </div>
           </div>
-
-          <!-- Petit widget focus ambiance -->
-          <div class="study-player">
-            <div class="player-bars">
-              <div class="player-bar"></div>
-              <div class="player-bar"></div>
-              <div class="player-bar"></div>
-              <div class="player-bar"></div>
-            </div>
-            <span>Session de code • Focus Lofi</span>
-          </div>
         </div>
       </div>
     </section>
@@ -1707,16 +1696,21 @@
 
         <!-- PROJET 2 : ÉCHELLE PIX AVEC COMPARATEUR SLIDER (3D vs RÉEL) -->
         <article class="project-card">
-          <div class="split-slider-wrapper interactive-el" id="pix-split-slider">
-            <img src="EchelleReelle.png" alt="Prototype réel échelle">
-            
-            <div class="split-slider-overlay" id="pix-slider-overlay">
-              <img src="EchelleSolidworks.png" alt="Modèle SolidWorks 3D">
+          <div class="carousel" id="carousel-3">
+            <div class="carousel-slides">
+              <div class="carousel-slide">
+                <img src="EchelleSolidworks.png" alt="Prototype échelle">
+              </div>
+              <div class="carousel-slide">
+                <img src="EchelleReelle.png" alt="PEchelle finale">
+              </div>
             </div>
-
-            <div class="split-slider-handle" id="pix-slider-handle">↔</div>
-            <span class="split-slider-badge-left">3D SolidWorks</span>
-            <span class="split-slider-badge-right">Prototype Réel</span>
+            <button class="carousel-btn prev interactive-el" onclick="moveSlide('carousel-3', -1)">‹</button>
+            <button class="carousel-btn next interactive-el" onclick="moveSlide('carousel-3', 1)">›</button>
+            <div class="carousel-dots">
+              <span class="dot active" onclick="goToSlide('carousel-3', 0)"></span>
+              <span class="dot" onclick="goToSlide('carousel-3', 1)"></span>
+            </div>
           </div>
 
           <div class="project-info">
