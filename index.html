@@ -70,7 +70,6 @@
       transition: width 0.18s ease, height 0.18s ease, background 0.18s ease, border-color 0.18s ease, transform 0.08s linear;
     }
 
-    /* Rétrécit en pastille pleine sans texte au survol */
     #custom-cursor.hovered {
       width: 10px;
       height: 10px;
@@ -78,7 +77,7 @@
       border-color: var(--primary-coral-dark);
     }
 
-    /* HALOS D'ARRIÈRE-PLAN UNIS */
+    /* HALOS D'ARRIÈRE-PLAN */
     .ambient-glow {
       position: fixed;
       border-radius: 50%;
@@ -184,7 +183,7 @@
       border-radius: 3px;
     }
 
-    /* BANDEAU DÉFILANT CONTINU (MARQUEE TICKER) */
+    /* BANDEAU DÉFILANT CONTINU */
     .marquee-container {
       width: 100%;
       overflow: hidden;
@@ -386,12 +385,13 @@
       transform: translateY(-2px);
     }
 
-    /* VITRINE PROJET ACCUEIL */
+    /* VITRINE PROJET ACCUEIL & CARROUSEL AUTO */
     .hero-showcase {
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
+      width: 100%;
     }
 
     .showcase-header {
@@ -422,143 +422,99 @@
       color: var(--primary-coral);
     }
 
-    .pointer-icon {
-      width: 18px;
-      height: 18px;
-      fill: var(--primary-coral);
-      animation: pulseClick 1.6s ease-in-out infinite;
-    }
-
-    @keyframes pulseClick {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.2) rotate(-6deg); }
-    }
-
-    .showcase-card {
+    /* Carrousel Accueil Auto-play */
+    .hero-carousel-container {
+      position: relative;
       width: 100%;
-      max-width: 420px;
-      aspect-ratio: 1/1;
-      background: var(--glass-card);
-      border-radius: 26px;
-      padding: 1.2rem;
+      max-width: 480px;
+      aspect-ratio: 4 / 3;
+      border-radius: 24px;
+      overflow: hidden;
       box-shadow: var(--glass-shadow);
       border: 2px solid var(--glass-border);
+      background: #111;
       backdrop-filter: blur(14px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hero-carousel-container:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(233, 111, 106, 0.22);
+    }
+
+    .hero-carousel-track {
+      display: flex;
+      width: 300%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .hero-carousel-slide {
       position: relative;
-      overflow: hidden;
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      width: 33.3333%;
+      height: 100%;
+      flex-shrink: 0;
     }
 
-    .showcase-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 24px 48px -10px rgba(233, 111, 106, 0.25);
-    }
-
-    .showcase-inner {
+    .hero-carousel-slide img {
       width: 100%;
       height: 100%;
-      border-radius: 18px;
-      overflow: hidden;
-      position: relative;
-      background: #241616;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-carousel-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2.2rem 1.4rem 1.2rem;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.35) 60%, transparent 100%);
+      color: #ffffff;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      padding: 1.8rem;
-      color: #fff;
+      gap: 0.3rem;
+      pointer-events: none;
     }
 
-    .showcase-badge-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 2;
-    }
-
-    .showcase-badge {
+    .hero-carousel-caption .caption-tag {
       font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      padding: 0.35rem 0.8rem;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: var(--primary-coral);
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
 
-    .showcase-mini-terminal {
-      background: rgba(0, 0, 0, 0.55);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 14px;
-      padding: 1.2rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.85rem;
-      line-height: 1.6;
-      backdrop-filter: blur(8px);
-      z-index: 2;
+    .hero-carousel-caption h4 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.3;
     }
 
-    .terminal-dots {
+    .hero-carousel-dots {
+      position: absolute;
+      bottom: 12px;
+      right: 14px;
       display: flex;
       gap: 6px;
-      margin-bottom: 0.6rem;
+      z-index: 10;
     }
 
-    .terminal-dot {
+    .h-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
+      background: rgba(255, 255, 255, 0.45);
+      transition: all 0.3s ease;
     }
 
-    .showcase-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.85rem;
-      font-weight: 700;
-      z-index: 2;
-      color: #fff;
-    }
-
-    /* MINI WIDGET D'AMBIANCE / PLAYLIST D'ÉTUDE */
-    .study-player {
-      margin-top: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      padding: 0.55rem 1.1rem;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.8);
-      border: 1px solid var(--glass-border-subtle);
-      font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      box-shadow: 0 4px 12px rgba(233, 111, 106, 0.08);
-    }
-
-    .player-bars {
-      display: flex;
-      align-items: flex-end;
-      gap: 3px;
-      height: 14px;
-    }
-
-    .player-bar {
-      width: 3px;
+    .h-dot.active {
       background: var(--primary-coral);
-      border-radius: 2px;
-      animation: equalizerJump 1.2s ease-in-out infinite;
-    }
-    .player-bar:nth-child(2) { animation-delay: 0.2s; height: 70%; }
-    .player-bar:nth-child(3) { animation-delay: 0.4s; height: 100%; }
-    .player-bar:nth-child(4) { animation-delay: 0.1s; height: 40%; }
-
-    @keyframes equalizerJump {
-      0%, 100% { height: 25%; }
-      50% { height: 100%; }
+      width: 20px;
+      border-radius: 10px;
     }
 
     /* TITRES DE SECTIONS */
@@ -587,7 +543,7 @@
     }
 
     /* ============================================================
-       PAGE 2 : PROFIL (FORMATION PLEINE LARGEUR & COMPÉTENCES EN 2 RANGS)
+       PAGE 2 : PROFIL (FORMATION + COMPÉTENCES SUR 2 RANGS)
     ============================================================ */
     .profile-stack {
       display: flex;
@@ -614,7 +570,6 @@
       color: var(--text-main);
     }
 
-    /* TIMELINE PLEINE LARGEUR */
     .timeline-container {
       display: flex;
       flex-direction: column;
@@ -696,7 +651,7 @@
       color: var(--text-muted);
     }
 
-    /* RANGÉE 1 : TECHNIQUE (3 COLONNES) */
+    /* RANGÉE 1 : TECHNIQUE */
     .skills-grid-top {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -704,21 +659,7 @@
       margin-bottom: 2rem;
     }
 
-    /* RANGÉE 2 : LANGUES & SOFT SKILLS (2 COLONNES) */
-    /* RANGÉE 2 : LANGUES & SOFT SKILLS CENTRÉES AVEC LA MÊME LARGEUR */
-    .skills-grid-bottom {
-      display: grid;
-      /* On réutilise la grille à 3 colonnes identique à celle du haut */
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.8rem;
-    }
-
-    /* Le 1er cadre (Langues) démarre sur la colonne centrale-gauche */
-    .skills-grid-bottom .skills-col:nth-child(1) {
-      grid-column: 1 / 2;
-    }
-
-    /* Ou pour un vrai centrage parfait au milieu de la rangée de 3 colonnes : */
+    /* RANGÉE 2 : LANGUES & SOFT SKILLS CENTRÉES */
     .skills-grid-bottom {
       display: flex;
       justify-content: center;
@@ -726,7 +667,6 @@
     }
 
     .skills-grid-bottom .skills-col {
-      /* Calcule exactement 1/3 de la largeur moins les espacements pour égaler le haut */
       width: calc((100% - (2 * 1.8rem)) / 3);
       max-width: 100%;
     }
@@ -786,7 +726,6 @@
       gap: 0.75rem;
     }
 
-    /* Images de logos officiels fixes et nettes */
     .tech-pill img, .tech-pill svg {
       width: 22px;
       height: 22px;
@@ -794,13 +733,6 @@
       flex-shrink: 0;
     }
 
-    .tech-pill-score {
-      font-size: 0.75rem;
-      color: var(--primary-coral);
-      font-weight: 700;
-    }
-
-    /* Effet hover actif sur les cartes simples (Langues et Soft Skills) */
     .simple-pill {
       background: var(--pill-bg);
       border: 1px solid rgba(233, 111, 106, 0.18);
@@ -834,7 +766,7 @@
     }
 
     /* ============================================================
-       PAGE 3 : PROJETS & SLIDER AVANT/APRÈS
+       PAGE 3 : PROJETS
     ============================================================ */
     .projects-list {
       display: flex;
@@ -861,83 +793,6 @@
       transform: translateY(-4px);
     }
 
-    /* SLIDER COMPARATIF AVANT/APRÈS PIX (3D vs RÉEL) */
-    .split-slider-wrapper {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 4/3;
-      border-radius: 20px;
-      overflow: hidden;
-      user-select: none;
-      border: 1px solid var(--glass-border-subtle);
-      box-shadow: 0 10px 24px rgba(233, 111, 106, 0.12);
-      background: #f0e6e6;
-    }
-
-    .split-slider-img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .split-slider-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      overflow: hidden;
-      border-right: 3px solid #ffffff;
-      box-shadow: 2px 0 12px rgba(0,0,0,0.25);
-    }
-
-    .split-slider-overlay .split-slider-img {
-      width: 100%;
-      max-width: none;
-    }
-
-    .split-slider-handle {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--primary-coral);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transform: translate(-50%, -50%);
-      font-size: 0.85rem;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
-      pointer-events: none;
-      z-index: 10;
-    }
-
-    .split-slider-badge-left,
-    .split-slider-badge-right {
-      position: absolute;
-      bottom: 12px;
-      padding: 0.3rem 0.75rem;
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.65);
-      color: #fff;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      z-index: 5;
-      backdrop-filter: blur(4px);
-    }
-    .split-slider-badge-left { left: 12px; }
-    .split-slider-badge-right { right: 12px; }
-
-    /* CARROUSEL STANDARD */
     .carousel {
       position: relative;
       width: 100%;
@@ -1014,6 +869,7 @@
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.6);
       transition: all 0.25s ease;
+      cursor: pointer;
     }
 
     .dot.active {
@@ -1097,7 +953,7 @@
       transform: translateY(-2px);
     }
 
-    /* ENGAGEMENTS ASSOCIATIFS - STYLE ÉDITORIAL AVEC AUTEUR */
+    /* ENGAGEMENTS ASSOCIATIFS */
     .engagements-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -1295,10 +1151,15 @@
       }
       .hero-split,
       .project-card,
-      .skills-grid-top,
-      .skills-grid-bottom {
+      .skills-grid-top {
         grid-template-columns: 1fr;
         gap: 2rem;
+      }
+      .skills-grid-bottom {
+        flex-direction: column;
+      }
+      .skills-grid-bottom .skills-col {
+        width: 100%;
       }
       .contact-card-centered {
         padding: 2.2rem 1.5rem;
@@ -1314,7 +1175,7 @@
 </head>
 <body>
 
-  <!-- CURSEUR INTERACTIF (RÉTRÉCIT EN PASTILLE PLEINE SANS TEXTE) -->
+  <!-- CURSEUR INTERACTIF -->
   <div id="custom-cursor"></div>
 
   <!-- HALOS D'ARRIÈRE-PLAN CORAIL -->
@@ -1335,7 +1196,7 @@
     </nav>
   </header>
 
-  <!-- BANDEAU CONTINU DÉFILANT (MARQUEE) -->
+  <!-- BANDEAU CONTINU DÉFILANT -->
   <div class="marquee-container">
     <div class="marquee-content">
       <span>✦ ÉTUDIANTE INGÉNIEURE ESILV</span>
@@ -1386,7 +1247,7 @@
           </div>
         </div>
 
-        <!-- Vitrine interactive droite -->
+        <!-- Vitrine interactive droite : CARROUSEL HERO AUTO -->
         <div class="hero-showcase">
           <div class="showcase-header interactive-el" onclick="switchTab('tab-projets')">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="#E44E49" style="flex-shrink:0;">
@@ -1395,12 +1256,10 @@
             <span class="showcase-title">DÉCOUVRIR MES PROJETS</span>
           </div>
 
-          <!-- BANDEAU PROJET À LA UNE -->
-          <!-- CARROUSEL APERÇU PROJETS (AUTO-PLAY) -->
-          <div class="hero-carousel-container interactive-el" onclick="switchTab('projets')">
+          <div class="hero-carousel-container interactive-el" onclick="switchTab('tab-projets')">
             <div class="hero-carousel-track" id="heroCarouselTrack">
               
-              <!-- SLIDE 1 : Site d'Organisation -->
+              <!-- SLIDE 1 : Pong Python -->
               <div class="hero-carousel-slide">
                 <img src="jeu4.png" alt="Extrait de la Classe Balle">
                 <div class="hero-carousel-caption">
@@ -1418,7 +1277,7 @@
                 </div>
               </div>
 
-              <!-- SLIDE 3 : Jeu Pong Python -->
+              <!-- SLIDE 3 : Site d'Organisation -->
               <div class="hero-carousel-slide">
                 <img src="site1.png" alt="Aperçu rendu site organisation">
                 <div class="hero-carousel-caption">
@@ -1441,7 +1300,7 @@
     </section>
 
     <!-- ============================================================
-         ONGLET 2 : PROFIL (FORMATION + COMPÉTENCES SUR 2 RANGÉES)
+         ONGLET 2 : PROFIL (FORMATION + COMPÉTENCES SUR 2 RANGS)
     ============================================================ -->
     <section id="tab-profil" class="tab-content">
       <div class="section-header">
@@ -1457,7 +1316,6 @@
 
           <div class="timeline-container">
             
-            <!-- Étape 2027 (Future) -->
             <div class="timeline-item future-step">
               <span class="timeline-year">SEPTEMBRE 2027</span>
               <span class="future-badge">⏳ À VENIR / OBJECTIF</span>
@@ -1465,28 +1323,24 @@
               <div class="timeline-sub">Cycle Ingénieur (Majeure) • ESILV • Sécurité des infrastructures, tests d'intrusion, cryptographie et modèles d'apprentissage automatique.</div>
             </div>
 
-            <!-- Étape Actuelle -->
             <div class="timeline-item">
               <span class="timeline-year">2024 – PRÉSENT (ACTUEL)</span>
               <div class="timeline-title">Cycle Préparatoire Intégré (2e année)</div>
               <div class="timeline-sub">ESILV — École Supérieure d'Ingénieurs Léonard de Vinci (Paris La Défense) • Mathématiques, physique, algorithmique appliquée et projets d'ingénierie collaborative.</div>
             </div>
 
-            <!-- Étape CS50x -->
             <div class="timeline-item">
               <span class="timeline-year">FORMATION CONTINUE</span>
               <div class="timeline-title">CS50x — Harvard University Online</div>
               <div class="timeline-sub">Introduction to Computer Science • Fondamentaux bas niveau (C), allocation mémoire, structures de données, algorithmique et SQL.</div>
             </div>
 
-            <!-- Étape Bac -->
             <div class="timeline-item">
               <span class="timeline-year">2025</span>
               <div class="timeline-title">Baccalauréat Général — Mention Très Bien</div>
               <div class="timeline-sub">Spécialités Scientifiques • Options Mathématiques Expertes &amp; DNL Anglais.</div>
             </div>
 
-            <!-- Étape BIA -->
             <div class="timeline-item">
               <span class="timeline-year">2021</span>
               <div class="timeline-title">Brevet d'Initiation à l'Aéronautique (BIA) — Mention Très Bien</div>
@@ -1496,21 +1350,20 @@
           </div>
         </div>
 
-        <!-- 2. BOÎTE À OUTILS & COMPÉTENCES (2 RANGÉES) -->
+        <!-- 2. BOÎTE À OUTILS & COMPÉTENCES -->
         <div class="glass-card">
           <h2>Boîte à outils &amp; Compétences</h2>
 
-          <!-- RANGÉE DU HAUT : TECHNIQUE (3 COLONNES AVEC IMAGES DE VRAIS LOGOS) -->
+          <!-- RANGÉE DU HAUT : TECHNIQUE -->
           <div class="skills-grid-top">
             
-            <!-- Langages avec vrais logos via <img> -->
             <div class="skills-col">
               <span class="skills-label">Langages</span>
               <div class="tech-pill-list">
                 
                 <div class="tech-pill interactive-el">
                   <div class="tech-pill-content">
-                    <img src="assets/logos/python.png" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'" alt="Logo Python">
+                    <img src="python.png" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'" alt="Logo Python">
                     <span>Python</span>
                   </div>
                 </div>
@@ -1524,7 +1377,7 @@
 
                 <div class="tech-pill interactive-el">
                   <div class="tech-pill-content">
-                    <img src="assets/logos/csharp.png" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg'" alt="Logo C#">
+                    <img src="c#.svg.webp" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg'" alt="Logo C#">
                     <span>C#</span>
                   </div>
                 </div>
@@ -1538,58 +1391,55 @@
 
                 <div class="tech-pill interactive-el">
                   <div class="tech-pill-content">
-                    <img src="assets/logos/html-css.png" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg'" alt="Logo HTML5">
+                    <img src="html.png" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg'" alt="Logo HTML5">
                     <span>HTML / CSS</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Environnements avec vrais logos via <img> -->
-            <!-- Environnements avec images locales du dépôt -->
             <div class="skills-col">
-            <span class="skills-label">Environnements</span>
-            <div class="tech-pill-list">
+              <span class="skills-label">Environnements</span>
+              <div class="tech-pill-list">
                 
                 <div class="tech-pill interactive-el">
-                <div class="tech-pill-content">
+                  <div class="tech-pill-content">
                     <img src="github.png" alt="Logo Git">
                     <span>Git &amp; GitHub</span>
-                </div>
+                  </div>
                 </div>
 
                 <div class="tech-pill interactive-el">
-                <div class="tech-pill-content">
+                  <div class="tech-pill-content">
                     <img src="linux.png" alt="Logo Linux">
                     <span>Linux (Bash)</span>
-                </div>
+                  </div>
                 </div>
 
                 <div class="tech-pill interactive-el">
-                <div class="tech-pill-content">
+                  <div class="tech-pill-content">
                     <img src="vscode.webp" alt="Logo VS Code">
                     <span>VS Code</span>
-                </div>
+                  </div>
                 </div>
 
                 <div class="tech-pill interactive-el">
-                <div class="tech-pill-content">
+                  <div class="tech-pill-content">
                     <img src="solidworks.png" alt="Logo SolidWorks">
                     <span>SolidWorks 3D</span>
-                </div>
+                  </div>
                 </div>
 
                 <div class="tech-pill interactive-el">
-                <div class="tech-pill-content">
+                  <div class="tech-pill-content">
                     <img src="antigravity.png" alt="Logo Antigravity">
                     <span>Antigravity</span>
-                </div>
+                  </div>
                 </div>
 
-            </div>
+              </div>
             </div>
 
-            <!-- Maths & Sciences -->
             <div class="skills-col">
               <span class="skills-label">Maths &amp; Sciences</span>
               <div class="tech-pill-list">
@@ -1627,10 +1477,8 @@
 
           </div>
 
-          <!-- RANGÉE DU BAS : LANGUES & SOFT SKILLS (2 COLONNES AVEC EFFET HOVER) -->
+          <!-- RANGÉE DU BAS : LANGUES & SOFT SKILLS -->
           <div class="skills-grid-bottom">
-            
-            <!-- Langues parlées -->
             <div class="skills-col">
               <span class="skills-label">Langues</span>
               <div class="tech-pill-list">
@@ -1639,7 +1487,6 @@
               </div>
             </div>
 
-            <!-- Savoir-être -->
             <div class="skills-col">
               <span class="skills-label">Savoir-être</span>
               <div class="tech-pill-list">
@@ -1649,11 +1496,9 @@
                 <div class="simple-pill interactive-el"><span>Esprit d'équipe</span><span>Projets</span></div>
               </div>
             </div>
-
           </div>
 
         </div>
-
       </div>
     </section>
 
@@ -1710,7 +1555,7 @@
           </div>
         </article>
 
-        <!-- PROJET 2 : ÉCHELLE PIX AVEC COMPARATEUR SLIDER (3D vs RÉEL) -->
+        <!-- PROJET 2 : ÉCHELLE PIX -->
         <article class="project-card">
           <div class="carousel" id="carousel-2">
             <div class="carousel-slides">
@@ -1718,14 +1563,14 @@
                 <img src="EchelleSolidworks.png" alt="Prototype échelle">
               </div>
               <div class="carousel-slide">
-                <img src="EchelleReelle.png" alt="PEchelle finale">
+                <img src="EchelleReelle.png" alt="Échelle finale">
               </div>
             </div>
-            <button class="carousel-btn prev interactive-el" onclick="moveSlide('carousel-3', -1)">‹</button>
-            <button class="carousel-btn next interactive-el" onclick="moveSlide('carousel-3', 1)">›</button>
+            <button class="carousel-btn prev interactive-el" onclick="moveSlide('carousel-2', -1)">‹</button>
+            <button class="carousel-btn next interactive-el" onclick="moveSlide('carousel-2', 1)">›</button>
             <div class="carousel-dots">
-              <span class="dot active" onclick="goToSlide('carousel-3', 0)"></span>
-              <span class="dot" onclick="goToSlide('carousel-3', 1)"></span>
+              <span class="dot active" onclick="goToSlide('carousel-2', 0)"></span>
+              <span class="dot" onclick="goToSlide('carousel-2', 1)"></span>
             </div>
           </div>
 
@@ -1787,7 +1632,7 @@
         </article>
       </div>
 
-      <!-- SECTION ENGAGEMENTS ÉDITORIALE AVEC ZONE AUTEUR -->
+      <!-- SECTION ENGAGEMENTS -->
       <div class="section-header" style="margin-top: 5rem;">
         <span class="section-num">03 / Égalité des chances &amp; Mixité</span>
         <h2 class="section-title">Engagements Associatifs</h2>
@@ -1846,7 +1691,6 @@
 
           <div class="contact-details-full">
             
-            <!-- Email direct avec bouton copier -->
             <a href="mailto:camille.philippe34@gmail.com" class="contact-link-full interactive-el" id="copy-email-btn" onclick="copyEmail(event)">
               <div class="contact-link-left">
                 <div class="contact-icon-box">
@@ -1860,7 +1704,6 @@
               <span class="copy-badge" id="copy-badge-label">Copier 📋</span>
             </a>
 
-            <!-- GitHub -->
             <a href="https://github.com/camillephp15" target="_blank" class="contact-link-full interactive-el">
               <div class="contact-link-left">
                 <div class="contact-icon-box">
@@ -1874,7 +1717,6 @@
               <span class="copy-badge">Visiter ↗</span>
             </a>
 
-            <!-- LinkedIn -->
             <a href="https://linkedin.com" target="_blank" class="contact-link-full interactive-el">
               <div class="contact-link-left">
                 <div class="contact-icon-box">
@@ -1888,7 +1730,6 @@
               <span class="copy-badge">Connecter ↗</span>
             </a>
 
-            <!-- Localisation -->
             <div class="contact-link-full" style="cursor: default;">
               <div class="contact-link-left">
                 <div class="contact-icon-box">
@@ -1916,9 +1757,9 @@
     <p>© 2026 Camille Philippe • Étudiante Ingénieure ESILV (Cyber &amp; IA) • Hébergé sur GitHub Pages</p>
   </footer>
 
-  <!-- SCRIPTS : NAVIGATION, CURSEUR, SLIDER AVANT/APRÈS, COPIE D'EMAIL -->
+  <!-- SCRIPTS -->
   <script>
-    // 1. Navigation onglets
+    // 1. Navigation entre onglets
     const navButtons = document.querySelectorAll('.nav-btn');
     const tabContents = document.querySelectorAll('.tab-content');
 
@@ -1947,7 +1788,7 @@
       });
     });
 
-    // 2. Curseur personnalisé fluide (rétrécissement sans texte au hover)
+    // 2. Curseur personnalisé fluide
     const cursor = document.getElementById('custom-cursor');
     let mouseX = -100, mouseY = -100;
 
@@ -1959,38 +1800,11 @@
     });
 
     document.querySelectorAll('.interactive-el').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursor.classList.add('hovered');
-      });
-      el.addEventListener('mouseleave', () => {
-        cursor.classList.remove('hovered');
-      });
+      el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
     });
 
-    // 3. Comparateur dynamique Avant/Après (Projet PIX)
-    const splitSlider = document.getElementById('pix-split-slider');
-    const splitOverlay = document.getElementById('pix-slider-overlay');
-    const splitHandle = document.getElementById('pix-slider-handle');
-
-    function updateSplitSlider(clientX) {
-      const rect = splitSlider.getBoundingClientRect();
-      let pos = (clientX - rect.left) / rect.width;
-      if (pos < 0.05) pos = 0.05;
-      if (pos > 0.95) pos = 0.95;
-      const percentage = pos * 100;
-      splitOverlay.style.width = `${percentage}%`;
-      splitHandle.style.left = `${percentage}%`;
-    }
-
-    let isDragging = false;
-    splitSlider.addEventListener('mousedown', (e) => { isDragging = true; updateSplitSlider(e.clientX); });
-    window.addEventListener('mouseup', () => { isDragging = false; });
-    window.addEventListener('mousemove', (e) => { if (isDragging) updateSplitSlider(e.clientX); });
-
-    splitSlider.addEventListener('touchstart', (e) => { updateSplitSlider(e.touches[0].clientX); });
-    splitSlider.addEventListener('touchmove', (e) => { updateSplitSlider(e.touches[0].clientX); });
-
-    // 4. Copie rapide de l'adresse email
+    // 3. Copie rapide de l'adresse email
     function copyEmail(e) {
       e.preventDefault();
       const email = "camille.philippe34@gmail.com";
@@ -2007,9 +1821,10 @@
       });
     }
 
-    // 5. Gestion des carrousels classiques (Orga & Pong)
+    // 4. Carrousels standards des projets (Orga, PIX, Pong)
     const carouselsState = {
       'carousel-1': { current: 0, total: 3 },
+      'carousel-2': { current: 0, total: 2 },
       'carousel-3': { current: 0, total: 2 }
     };
 
@@ -2027,14 +1842,58 @@
 
     function moveSlide(id, direction) {
       const state = carouselsState[id];
+      if (!state) return;
       state.current = (state.current + direction + state.total) % state.total;
       updateCarouselDOM(id);
     }
 
     function goToSlide(id, index) {
-      carouselsState[id].current = index;
+      const state = carouselsState[id];
+      if (!state) return;
+      state.current = index;
       updateCarouselDOM(id);
     }
+
+    // 5. Défilement automatique du carrousel de l'accueil
+    (function initHeroCarousel() {
+      const track = document.getElementById('heroCarouselTrack');
+      const dots = document.querySelectorAll('.h-dot');
+      const container = document.querySelector('.hero-carousel-container');
+      if (!track || dots.length === 0) return;
+
+      let currentHeroIdx = 0;
+      const totalHeroSlides = dots.length;
+      let heroTimer = null;
+
+      function updateHeroDOM(idx) {
+        currentHeroIdx = idx;
+        track.style.transform = `translateX(-${currentHeroIdx * (100 / totalHeroSlides)}%)`;
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === currentHeroIdx);
+        });
+      }
+
+      function nextHeroSlide() {
+        const next = (currentHeroIdx + 1) % totalHeroSlides;
+        updateHeroDOM(next);
+      }
+
+      function startPlay() {
+        if (!heroTimer) heroTimer = setInterval(nextHeroSlide, 3500);
+      }
+
+      function stopPlay() {
+        clearInterval(heroTimer);
+        heroTimer = null;
+      }
+
+      startPlay();
+
+      if (container) {
+        container.addEventListener('mouseenter', stopPlay);
+        container.addEventListener('mouseleave', startPlay);
+      }
+    })();
   </script>
 </body>
 </html>
