@@ -258,8 +258,8 @@
 
     .avatar-wrapper {
       position: relative;
-      width: 140px;
-      height: 140px;
+      width: 200px;
+      height: 200px;
       border-radius: 26px;
       padding: 5px;
       background: var(--primary-coral);
@@ -1389,35 +1389,51 @@
         <!-- Vitrine interactive droite -->
         <div class="hero-showcase">
           <div class="showcase-header interactive-el" onclick="switchTab('tab-projets')">
-            <svg class="pointer-icon" viewBox="0 0 24 24">
-              <path d="M9 11.24V7.5a2.5 2.5 0 0 1 5 0v3.74a4 4 0 0 1 4 4v3.26a4.5 4.5 0 0 1-4.5 4.5h-4A4.5 4.5 0 0 1 5 18.5v-3.26a4 4 0 0 1 4-4z"/>
-              <path d="M11 2v3M7.05 3.05l2.12 2.12M16.95 3.05l-2.12 2.12" stroke="#E96F6A" stroke-width="2" stroke-linecap="round"/>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="#E44E49" style="flex-shrink:0;">
+              <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/>
             </svg>
             <span class="showcase-title">DÉCOUVRIR MES PROJETS</span>
           </div>
 
-          <div class="showcase-card interactive-el" onclick="switchTab('tab-projets')">
-            <div class="showcase-inner">
-              <div class="showcase-badge-row">
-                <span class="showcase-badge">Projet Phare</span>
-                <span class="showcase-badge" style="background: rgba(0, 210, 106, 0.25); border-color: #00d26a;">● En ligne</span>
-              </div>
-
-              <div class="showcase-mini-terminal">
-                <div class="terminal-dots">
-                  <span class="terminal-dot" style="background:#ff5f56;"></span>
-                  <span class="terminal-dot" style="background:#ffbd2e;"></span>
-                  <span class="terminal-dot" style="background:#27c93f;"></span>
+          <!-- BANDEAU PROJET À LA UNE -->
+          <!-- CARROUSEL APERÇU PROJETS (AUTO-PLAY) -->
+          <div class="hero-carousel-container interactive-el" onclick="switchTab('projets')">
+            <div class="hero-carousel-track" id="heroCarouselTrack">
+              
+              <!-- SLIDE 1 : Site d'Organisation -->
+              <div class="hero-carousel-slide">
+                <img src="jeu4.png" alt="Extrait de la Classe Balle">
+                <div class="hero-carousel-caption">
+                  <span class="caption-tag">Python &amp; Algorithmique</span>
+                  <h4>Jeu d'Arcade Pong Graphique</h4>
                 </div>
-                <p style="color:#a8ff78;">$ run StudyPlanner()</p>
-                <p style="opacity:0.75;">&gt; Web app générée via Antigravity</p>
-                <p style="opacity:0.75;">&gt; Déploiement : GitHub Pages</p>
               </div>
 
-              <div class="showcase-footer">
-                <span>Explorer les 3 réalisations</span>
-                <span>→</span>
+              <!-- SLIDE 2 : Échelle SolidWorks -->
+              <div class="hero-carousel-slide">
+                <img src="EchelleDecoup.png" alt="Processus découpage des pièces">
+                <div class="hero-carousel-caption">
+                  <span class="caption-tag">Ingénierie Mécanique</span>
+                  <h4>Échelle de Pompier Déployable (SolidWorks)</h4>
+                </div>
               </div>
+
+              <!-- SLIDE 3 : Jeu Pong Python -->
+              <div class="hero-carousel-slide">
+                <img src="site1.png" alt="Aperçu rendu site organisation">
+                <div class="hero-carousel-caption">
+                  <span class="caption-tag">Web &amp; IA</span>
+                  <h4>Site d'Organisation &amp; Gestion de Cours</h4>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Indicateurs de position (dots) -->
+            <div class="hero-carousel-dots">
+              <span class="h-dot active"></span>
+              <span class="h-dot"></span>
+              <span class="h-dot"></span>
             </div>
           </div>
         </div>
@@ -1696,7 +1712,7 @@
 
         <!-- PROJET 2 : ÉCHELLE PIX AVEC COMPARATEUR SLIDER (3D vs RÉEL) -->
         <article class="project-card">
-          <div class="carousel" id="carousel-3">
+          <div class="carousel" id="carousel-2">
             <div class="carousel-slides">
               <div class="carousel-slide">
                 <img src="EchelleSolidworks.png" alt="Prototype échelle">
