@@ -1830,11 +1830,18 @@
     </section>
   </main>
 
+
   <footer>
     <p>© 2026 Camille Philippe • Étudiante Ingénieure ESILV (Cyber &amp; IA) • Hébergé sur GitHub Pages</p>
   </footer>
 
-  <!-- SCRIPTS -->
+  <!-- 1. LA POP-UP EST BIEN PLACÉE AVANT LE SCRIPT -->
+  <div id="image-modal" class="image-modal" onclick="closeImageModal()">
+    <span class="modal-close" onclick="closeImageModal()">&times;</span>
+    <img id="modal-img" class="modal-content" src="" alt="Agrandissement" onclick="event.stopPropagation()">
+  </div>
+
+  <!-- 2. TOUS LES SCRIPTS -->
   <script>
     // 1. Navigation entre onglets
     const navButtons = document.querySelectorAll('.nav-btn');
@@ -1865,28 +1872,34 @@
       });
     });
 
-    // 2. Curseur personnalisé fluide
+    // 2. Curseur personnalisé
     const cursor = document.getElementById('custom-cursor');
     let mouseX = -100, mouseY = -100;
 
     window.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      cursor.style.left = `${mouseX}px`;
-      cursor.style.top = `${mouseY}px`;
+      if (cursor) {
+        cursor.style.left = `${mouseX}px`;
+        cursor.style.top = `${mouseY}px`;
+      }
     });
 
-    document.querySelectorAll('.interactive-el').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
-    });
+    function attachCursorEvents() {
+      document.querySelectorAll('.interactive-el').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor && cursor.classList.add('hovered'));
+        el.addEventListener('mouseleave', () => cursor && cursor.classList.remove('hovered'));
+      });
+    }
+    attachCursorEvents();
 
-    // 3. Copie rapide de l'adresse email
+    // 3. Copie de l'email
     function copyEmail(e) {
       e.preventDefault();
       const email = "camille.philippe34@gmail.com";
       navigator.clipboard.writeText(email).then(() => {
         const badge = document.getElementById('copy-badge-label');
+        if (!badge) return;
         badge.textContent = "Copié ! ✨";
         badge.style.background = "#00d26a";
         badge.style.color = "#ffffff";
@@ -1898,7 +1911,7 @@
       });
     }
 
-    // 4. Carrousels standards des projets (Orga, PIX, Pong)
+    // 4. Carrousels Projets
     const carouselsState = {
       'carousel-1': { current: 0, total: 3 },
       'carousel-2': { current: 0, total: 2 },
@@ -1931,7 +1944,7 @@
       updateCarouselDOM(id);
     }
 
-    // 5. Défilement automatique du carrousel de l'accueil
+    // 5. Carrousel automatique de l'accueil
     (function initHeroCarousel() {
       const track = document.getElementById('heroCarouselTrack');
       const dots = document.querySelectorAll('.h-dot');
@@ -1972,41 +1985,36 @@
       }
     })();
 
-    // 6. Affichage des images en popup (Lightbox)
-  const modal = document.getElementById('image-modal');
-  const modalImg = document.getElementById('modal-img');
+    // 6. Gestionnaire de la Pop-up (Lightbox)
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
 
-  function openImageModal(src, alt) {
-    if (!modal || !modalImg) return;
-    modalImg.src = src;
-    modalImg.alt = alt || 'Aperçu projet';
-    modal.classList.add('active');
-  }
-
-  function closeImageModal() {
-    if (!modal) return;
-    modal.classList.remove('active');
-  }
-
-  // Fermer la popup avec la touche Échap
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
-      closeImageModal();
+    function openImageModal(src, alt) {
+      if (!modal || !modalImg) return;
+      modalImg.src = src;
+      modalImg.alt = alt || 'Agrandissement projet';
+      modal.classList.add('active');
     }
-  });
 
-  // Active automatiquement le clic sur toutes les photos des projets
-  document.querySelectorAll('.carousel-slide img').forEach((img) => {
-    img.classList.add('interactive-el');
-    img.addEventListener('click', () => {
-      openImageModal(img.src, img.alt);
+    function closeImageModal() {
+      if (!modal) return;
+      modal.classList.remove('active');
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+        closeImageModal();
+      }
     });
-  });
+
+    // Attache l'ouverture automatique sur les images de projets
+    document.querySelectorAll('.carousel-slide img').forEach((img) => {
+      img.classList.add('interactive-el');
+      img.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openImageModal(img.src, img.alt);
+      });
+    });
   </script>
-  <!-- FENÊTRE POPUP (LIGHTBOX) POUR AGRANDIR LES IMAGES -->
-  <div id="image-modal" class="image-modal" onclick="closeImageModal()">
-    <span class="modal-close" onclick="closeImageModal()">&times;</span>
-    <img id="modal-img" class="modal-content" src="" alt="Agrandissement" onclick="event.stopPropagation()">
-  </div>
 </body>
 </html>
